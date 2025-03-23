@@ -19,4 +19,6 @@ public class Athlete {
     private State homeState;
     private Country homeCountry;
     private String club;
+    private String height;
+    private String position;
 }
