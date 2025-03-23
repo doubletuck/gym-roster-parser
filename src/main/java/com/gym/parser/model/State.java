@@ -5,63 +5,65 @@ import lombok.Getter;
 @Getter
 public enum State {
 
-    AL("Alabama"),
-    AK("Alaska"),
-    AZ("Arizona"),
-    AR("Arkansas"),
-    CA("California"),
-    CO("Colorado"),
-    CT("Connecticut"),
-    DE("Delaware"),
-    DC("District of Columbia"),
-    FL("Florida"),
-    GA("Georgia"),
-    HI("Hawaii"),
-    ID("Idaho"),
-    IL("Illinois"),
-    IN("Indiana"),
-    IA("Iowa"),
-    KS("Kansas"),
-    KY("Kentucky"),
-    LA("Louisiana"),
-    ME("Maine"),
-    MD("Maryland"),
-    MA("Massachusetts"),
-    MI("Michigan"),
-    MN("Minnesota"),
-    MS("Mississippi"),
-    MO("Missouri"),
-    MT("Montana"),
-    NE("Nebraska"),
-    NV("Nevada"),
-    NH("New Hampshire"),
-    NJ("New Jersey"),
-    NM("New Mexico"),
-    NY("New York"),
-    NC("North Carolina"),
-    ND("North Dakota"),
-    OH("Ohio"),
-    OK("Oklahoma"),
-    OR("Oregon"),
-    PA("Pennsylvania"),
-    PR("Puerto Rico"),
-    RI("Rhode Island"),
-    SC("South Carolina"),
-    SD("South Dakota"),
-    TN("Tennessee"),
-    TX("Texas"),
-    UT("Utah"),
-    VT("Vermont"),
-    VA("Virginia"),
-    WA("Washington"),
-    WV("West Virginia"),
-    WI("Wisconsin"),
-    WY("Wyoming");
+    AL("Alabama", "Ala."),
+    AK("Alaska", "Alaska"),
+    AZ("Arizona", "Ariz."),
+    AR("Arkansas", "Ark."),
+    CA("California", "Calif."),
+    CO("Colorado", "Colo."),
+    CT("Connecticut", "Conn."),
+    DE("Delaware", "Del."),
+    DC("District of Columbia", "D.C."),
+    FL("Florida", "Fla."),
+    GA("Georgia", "Ga."),
+    HI("Hawaii", "Hawaii"),
+    ID("Idaho", "Idaho"),
+    IL("Illinois", "Ill."),
+    IN("Indiana", "Ind."),
+    IA("Iowa", "Iowa"),
+    KS("Kansas", "Kan."),
+    KY("Kentucky", "Ky."),
+    LA("Louisiana", "La."),
+    ME("Maine", "Maine"),
+    MD("Maryland", "Md."),
+    MA("Massachusetts", "Mass."),
+    MI("Michigan", "Mich."),
+    MN("Minnesota", "Minn."),
+    MS("Mississippi", "Miss."),
+    MO("Missouri", "Mo."),
+    MT("Montana", "Mont."),
+    NE("Nebraska", "Neb."),
+    NV("Nevada", "Nev."),
+    NH("New Hampshire", "N.H."),
+    NJ("New Jersey", "N.J."),
+    NM("New Mexico", "N.M."),
+    NY("New York", "N.Y."),
+    NC("North Carolina", "N.C."),
+    ND("North Dakota", "N.D."),
+    OH("Ohio", "Ohio"),
+    OK("Oklahoma", "Okla."),
+    OR("Oregon", "Ore."),
+    PA("Pennsylvania", "Pa."),
+    PR("Puerto Rico", "P.R."),
+    RI("Rhode Island", "R.I."),
+    SC("South Carolina", "S.C."),
+    SD("South Dakota", "S.D."),
+    TN("Tennessee", "Tenn."),
+    TX("Texas", "Texas"),
+    UT("Utah", "Utah"),
+    VT("Vermont", "Vt."),
+    VA("Virginia", "Va."),
+    WA("Washington", "Wash."),
+    WV("West Virginia", "W.Va."),
+    WI("Wisconsin", "Wis."),
+    WY("Wyoming", "Wyo.");
 
     private final String longName;
+    private final String apName;
 
-    State(String longName) {
+    State(String longName, String apName) {
         this.longName = longName;
+        this.apName = apName;
     }
 
     /**
@@ -72,10 +74,14 @@ public enum State {
      * matches are found.
      */
     public static State find(String text) {
-        for (State state : State.values()) {
-            if (state.name().equalsIgnoreCase(text) ||
-                    state.longName.equalsIgnoreCase(text)) {
-                return state;
+
+        if (text != null && !text.isEmpty()) {
+            for (State state : State.values()) {
+                if (state.name().equalsIgnoreCase(text) ||
+                        state.longName.equalsIgnoreCase(text) ||
+                        state.apName.equalsIgnoreCase(text)) {
+                    return state;
+                }
             }
         }
 
