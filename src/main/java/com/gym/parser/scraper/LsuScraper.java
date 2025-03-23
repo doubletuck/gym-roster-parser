@@ -4,6 +4,7 @@ import com.gym.parser.model.Athlete;
 import com.gym.parser.model.College;
 import com.gym.parser.model.CollegeClass;
 import com.gym.parser.util.LocationParser;
+import com.gym.parser.util.ScrapingUtil;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,9 +19,8 @@ import java.util.List;
 public class LsuScraper {
 
     private final static String BASE_ROSTER_URL = "https://lsusports.net/sports/gm/roster/season";
-    private Integer year;
-    private String rosterUrl;
-    private ArrayList<Athlete> athleteList;
+    private final Integer year;
+    private final String rosterUrl;
 
     public LsuScraper(Integer year) {
         this.year = year;
@@ -28,7 +28,7 @@ public class LsuScraper {
     }
 
     public List<Athlete> parse() {
-        athleteList = new ArrayList<>();
+        ArrayList<Athlete> athleteList = new ArrayList<>();
 
         Connection connection = Jsoup.connect(rosterUrl);
         try {
@@ -58,8 +58,13 @@ public class LsuScraper {
             athlete = new Athlete();
             athlete.setCollege(College.LSU);
             athlete.setYear(year);
-            athlete.setFirstName(cells.get(0).text());
-            athlete.setLastName(cells.get(1).text());
+
+            String[] names = ScrapingUtil.parseName(cells.get(0).text());
+            athlete.setFirstName(names[0]);
+            athlete.setLastName(names[1]);
+
+            athlete.setPosition(cells.get(1).text());
+            athlete.setHeight(cells.get(2).text());
             athlete.setCollegeClass(CollegeClass.find(cells.get(3).text()));
             athlete.setClub(cells.get(5).text());
 
