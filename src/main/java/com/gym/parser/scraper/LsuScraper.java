@@ -77,13 +77,4 @@ public class LsuScraper {
 
         return athlete;
     }
-
-    public static void main(String[] args) {
-
-        LsuScraper scraper = new LsuScraper(2025);
-        List<Athlete> roster = scraper.parse();
-        for (Athlete athlete : roster) {
-            System.out.println(athlete.toString());
-        }
-    }
 }
