@@ -2,7 +2,6 @@
 
 *.class
 
-bin/
 .settings/
 
 # Eclipse files

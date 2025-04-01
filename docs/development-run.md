@@ -29,3 +29,11 @@ java -jar target/gym-roster-parser.jar
 ```
 
 To stop the server, issue a Control-C command in the shell where the service is running.
+
+## Running as a command line interface
+
+Use the [cli.sh](../bin/cli.sh) script to run as a CLI.
+
+```shell
+cli.sh <args>
+```
