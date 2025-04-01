@@ -16,13 +16,13 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LsuScraper {
+public class KentuckyScraper {
 
-    private final static String BASE_ROSTER_URL = "https://lsusports.net/sports/gm/roster/season";
+    private final static String BASE_ROSTER_URL = "https://ukathletics.com/sports/wgym/roster/season";
     private final Integer year;
     private final String rosterUrl;
 
-    public LsuScraper(Integer year) {
+    public KentuckyScraper(Integer year) {
         this.year = year;
         this.rosterUrl = BASE_ROSTER_URL + "/" + year;
     }
@@ -33,7 +33,7 @@ public class LsuScraper {
         Connection connection = Jsoup.connect(rosterUrl);
         try {
             Document doc = connection.get();
-            Elements rows = doc.getElementById("players-table").select("tbody tr");
+            Elements rows = doc.getElementById("players-table__general").select("tbody tr");
             for (Element row : rows) {
                 Athlete athlete = parseRow(row);
                 if (athlete != null) {
@@ -41,7 +41,7 @@ public class LsuScraper {
                 }
             }
         } catch (IOException e) {
-            String errorMessage = MessageFormat.format("Accessing the LSU roster website is not successful. The page response code is {0} for url {1}.",
+            String errorMessage = MessageFormat.format("Accessing the Kentucky roster website is not successful. The page response code is {0} for url {1}.",
                     connection.response().statusCode(),
                     rosterUrl);
             throw new RuntimeException(e);
@@ -56,19 +56,17 @@ public class LsuScraper {
         Elements cells = row.select("td");
         if (!cells.isEmpty()) {
             athlete = new Athlete();
-            athlete.setCollege(College.LSU);
+            athlete.setCollege(College.KENTUCKY);
             athlete.setYear(year);
 
             String[] names = ScrapingUtil.parseName(cells.get(0).text());
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setPosition(cells.get(1).text());
-            athlete.setHeight(cells.get(2).text());
-            athlete.setCollegeClass(CollegeClass.find(cells.get(3).text()));
-            athlete.setClub(cells.get(5).text());
+            athlete.setHeight(cells.get(1).text());
+            athlete.setCollegeClass(CollegeClass.find(cells.get(2).text()));
 
-            LocationParser locationParser = new LocationParser(cells.get(6).text());
+            LocationParser locationParser = new LocationParser(cells.get(3).text());
             locationParser.parse();
             athlete.setHomeTown(locationParser.getTown());
             athlete.setHomeState(locationParser.getState());

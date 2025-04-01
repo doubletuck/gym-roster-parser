@@ -16,15 +16,15 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LsuScraper {
+public class AuburnScraper {
 
-    private final static String BASE_ROSTER_URL = "https://lsusports.net/sports/gm/roster/season";
+    private final static String BASE_ROSTER_URL = "https://auburntigers.com/sports/gymnastics/roster/season";
     private final Integer year;
     private final String rosterUrl;
 
-    public LsuScraper(Integer year) {
+    public AuburnScraper(Integer year) {
         this.year = year;
-        this.rosterUrl = BASE_ROSTER_URL + "/" + year;
+        this.rosterUrl = BASE_ROSTER_URL + "/" + year + "?view=table";
     }
 
     public List<Athlete> parseAthletes() {
@@ -32,8 +32,13 @@ public class LsuScraper {
 
         Connection connection = Jsoup.connect(rosterUrl);
         try {
+            // There are no identifiers or classes that uniquely identify
+            // the three tables on the page that contain athletes, coaches,
+            // and staff. Use the order of the tables as they appear on the
+            // page which is: athletes, coaches, staff.
             Document doc = connection.get();
-            Elements rows = doc.getElementById("players-table").select("tbody tr");
+            Elements tables = doc.select("table");
+            Elements rows = tables.get(0).select("tbody tr");
             for (Element row : rows) {
                 Athlete athlete = parseRow(row);
                 if (athlete != null) {
@@ -41,7 +46,7 @@ public class LsuScraper {
                 }
             }
         } catch (IOException e) {
-            String errorMessage = MessageFormat.format("Accessing the LSU roster website is not successful. The page response code is {0} for url {1}.",
+            String errorMessage = MessageFormat.format("Accessing the Auburn roster website is not successful. The page response code is {0} for url {1}.",
                     connection.response().statusCode(),
                     rosterUrl);
             throw new RuntimeException(e);
@@ -56,7 +61,7 @@ public class LsuScraper {
         Elements cells = row.select("td");
         if (!cells.isEmpty()) {
             athlete = new Athlete();
-            athlete.setCollege(College.LSU);
+            athlete.setCollege(College.AUBURN);
             athlete.setYear(year);
 
             String[] names = ScrapingUtil.parseName(cells.get(0).text());
@@ -64,11 +69,9 @@ public class LsuScraper {
             athlete.setLastName(names[1]);
 
             athlete.setPosition(cells.get(1).text());
-            athlete.setHeight(cells.get(2).text());
-            athlete.setCollegeClass(CollegeClass.find(cells.get(3).text()));
-            athlete.setClub(cells.get(5).text());
+            athlete.setCollegeClass(CollegeClass.find(cells.get(2).text()));
 
-            LocationParser locationParser = new LocationParser(cells.get(6).text());
+            LocationParser locationParser = new LocationParser(cells.get(3).text());
             locationParser.parse();
             athlete.setHomeTown(locationParser.getTown());
             athlete.setHomeState(locationParser.getState());
