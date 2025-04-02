@@ -4,6 +4,8 @@ public enum College {
 
     ARKANSAS,
     AUBURN,
+    CLEMSON,
+    IOWA,
     KENTUCKY,
     LSU;
 }
