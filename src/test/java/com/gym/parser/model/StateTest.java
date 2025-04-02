@@ -5,6 +5,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+/**
+ * Adding tests for AP names when they differ from the short
+ * and long names.
+ */
 public class StateTest {
 
     @Test
@@ -33,16 +37,19 @@ public class StateTest {
     }
 
     @Test
-    public void findByApName() {
-        assertEquals(State.AL, State.find("ALA."), "Uppercase");
-        assertEquals(State.AL, State.find("ala."), "Lowercase");
-        assertEquals(State.AL, State.find("aLA."), "Mixed case");
+    public void findByOtherName() {
+        assertEquals(State.AL, State.find("ALA"), "Uppercase");
+        assertEquals(State.AL, State.find("ala"), "Lowercase");
+        assertEquals(State.AL, State.find("aLA"), "Mixed case");
+        assertEquals(State.AL, State.find("Ala."), "With period");
+        assertEquals(State.AL, State.find("A.l.a."), "Lots of periods");
     }
 
     @Test
     public void findAlabama() {
         assertEquals(State.AL, State.find("AL"), "Short Name");
         assertEquals(State.AL, State.find("Alabama"), "Long Name");
+        assertEquals(State.AL, State.find("Ala"), "Other Name");
         assertEquals(State.AL, State.find("Ala."), "AP Name");
     }
 
@@ -50,13 +57,13 @@ public class StateTest {
     public void findAlaska() {
         assertEquals(State.AK, State.find("AK"), "Short Name");
         assertEquals(State.AK, State.find("Alaska"), "Long Name");
-        assertEquals(State.AK, State.find("Alaska"), "AP Name");
     }
 
     @Test
     public void findArizona() {
         assertEquals(State.AZ, State.find("AZ"), "Short Name");
         assertEquals(State.AZ, State.find("Arizona"), "Long Name");
+        assertEquals(State.AZ, State.find("Ariz"), "Other Name");
         assertEquals(State.AZ, State.find("Ariz."), "AP Name");
     }
 
@@ -64,6 +71,7 @@ public class StateTest {
     public void findArkansas() {
         assertEquals(State.AR, State.find("AR"), "Short Name");
         assertEquals(State.AR, State.find("Arkansas"), "Long Name");
+        assertEquals(State.AR, State.find("Ark"), "Other Name");
         assertEquals(State.AR, State.find("Ark."), "AP Name");
     }
 
@@ -71,6 +79,7 @@ public class StateTest {
     public void findCalifornia() {
         assertEquals(State.CA, State.find("CA"), "Short Name");
         assertEquals(State.CA, State.find("California"), "Long Name");
+        assertEquals(State.CA, State.find("Calif"), "Other Name");
         assertEquals(State.CA, State.find("Calif."), "AP Name");
     }
 
@@ -78,6 +87,7 @@ public class StateTest {
     public void findColorado() {
         assertEquals(State.CO, State.find("CO"), "Short Name");
         assertEquals(State.CO, State.find("Colorado"), "Long Name");
+        assertEquals(State.CO, State.find("Colo"), "Other Name");
         assertEquals(State.CO, State.find("Colo."), "AP Name");
     }
 
@@ -85,6 +95,7 @@ public class StateTest {
     public void findConnecticut() {
         assertEquals(State.CT, State.find("CT"), "Short Name");
         assertEquals(State.CT, State.find("Connecticut"), "Long Name");
+        assertEquals(State.CT, State.find("Conn"), "Other Name");
         assertEquals(State.CT, State.find("Conn."), "AP Name");
     }
 
@@ -92,6 +103,7 @@ public class StateTest {
     public void findDelaware() {
         assertEquals(State.DE, State.find("DE"), "Short Name");
         assertEquals(State.DE, State.find("Delaware"), "Long Name");
+        assertEquals(State.DE, State.find("Del"), "Other Name");
         assertEquals(State.DE, State.find("Del."), "AP Name");
     }
 
@@ -106,6 +118,7 @@ public class StateTest {
     public void findFlorida() {
         assertEquals(State.FL, State.find("FL"), "Short Name");
         assertEquals(State.FL, State.find("Florida"), "Long Name");
+        assertEquals(State.FL, State.find("Fla"), "Other Name");
         assertEquals(State.FL, State.find("Fla."), "AP Name");
     }
 
@@ -120,20 +133,19 @@ public class StateTest {
     public void findHawaii() {
         assertEquals(State.HI, State.find("HI"), "Short Name");
         assertEquals(State.HI, State.find("Hawaii"), "Long Name");
-        assertEquals(State.HI, State.find("Hawaii"), "AP Name");
     }
 
     @Test
     public void findIdaho() {
         assertEquals(State.ID, State.find("ID"), "Short Name");
         assertEquals(State.ID, State.find("Idaho"), "Long Name");
-        assertEquals(State.ID, State.find("Idaho"), "AP Name");
     }
 
     @Test
     public void findIllinois() {
         assertEquals(State.IL, State.find("IL"), "Short Name");
         assertEquals(State.IL, State.find("Illinois"), "Long Name");
+        assertEquals(State.IL, State.find("Ill"), "Other Name");
         assertEquals(State.IL, State.find("Ill."), "AP Name");
     }
 
@@ -141,6 +153,7 @@ public class StateTest {
     public void findIndiana() {
         assertEquals(State.IN, State.find("IN"), "Short Name");
         assertEquals(State.IN, State.find("Indiana"), "Long Name");
+        assertEquals(State.IN, State.find("Ind"), "Other Name");
         assertEquals(State.IN, State.find("Ind."), "AP Name");
     }
 
@@ -148,13 +161,13 @@ public class StateTest {
     public void findIowa() {
         assertEquals(State.IA, State.find("IA"), "Short Name");
         assertEquals(State.IA, State.find("Iowa"), "Long Name");
-        assertEquals(State.IA, State.find("Iowa"), "AP Name");
     }
 
     @Test
     public void findKansas() {
         assertEquals(State.KS, State.find("KS"), "Short Name");
         assertEquals(State.KS, State.find("Kansas"), "Long Name");
+        assertEquals(State.KS, State.find("Kan"), "Other Name");
         assertEquals(State.KS, State.find("Kan."), "AP Name");
     }
 
@@ -176,7 +189,6 @@ public class StateTest {
     public void findMaine() {
         assertEquals(State.ME, State.find("ME"), "Short Name");
         assertEquals(State.ME, State.find("Maine"), "Long Name");
-        assertEquals(State.ME, State.find("Maine"), "AP Name");
     }
 
     @Test
@@ -190,6 +202,7 @@ public class StateTest {
     public void findMassachusetts() {
         assertEquals(State.MA, State.find("MA"), "Short Name");
         assertEquals(State.MA, State.find("Massachusetts"), "Long Name");
+        assertEquals(State.MA, State.find("Mass"), "Other Name");
         assertEquals(State.MA, State.find("Mass."), "AP Name");
     }
 
@@ -197,6 +210,7 @@ public class StateTest {
     public void findMichigan() {
         assertEquals(State.MI, State.find("MI"), "Short Name");
         assertEquals(State.MI, State.find("Michigan"), "Long Name");
+        assertEquals(State.MI, State.find("Mich"), "Other Name");
         assertEquals(State.MI, State.find("Mich."), "AP Name");
     }
 
@@ -204,6 +218,7 @@ public class StateTest {
     public void findMinnesota() {
         assertEquals(State.MN, State.find("MN"), "Short Name");
         assertEquals(State.MN, State.find("Minnesota"), "Long Name");
+        assertEquals(State.MN, State.find("Minn"), "Other Name");
         assertEquals(State.MN, State.find("Minn."), "AP Name");
     }
 
@@ -211,6 +226,7 @@ public class StateTest {
     public void findMississippi() {
         assertEquals(State.MS, State.find("MS"), "Short Name");
         assertEquals(State.MS, State.find("Mississippi"), "Long Name");
+        assertEquals(State.MS, State.find("Miss"), "Other Name");
         assertEquals(State.MS, State.find("Miss."), "AP Name");
     }
 
@@ -225,6 +241,7 @@ public class StateTest {
     public void findMontana() {
         assertEquals(State.MT, State.find("MT"), "Short Name");
         assertEquals(State.MT, State.find("Montana"), "Long Name");
+        assertEquals(State.MT, State.find("Mont"), "Other Name");
         assertEquals(State.MT, State.find("Mont."), "AP Name");
     }
 
@@ -232,6 +249,7 @@ public class StateTest {
     public void findNebraska() {
         assertEquals(State.NE, State.find("NE"), "Short Name");
         assertEquals(State.NE, State.find("Nebraska"), "Long Name");
+        assertEquals(State.NE, State.find("Neb"), "Other Name");
         assertEquals(State.NE, State.find("Neb."), "AP Name");
     }
 
@@ -239,6 +257,7 @@ public class StateTest {
     public void findNevada() {
         assertEquals(State.NV, State.find("NV"), "Short Name");
         assertEquals(State.NV, State.find("Nevada"), "Long Name");
+        assertEquals(State.NV, State.find("Nev"), "Other Name");
         assertEquals(State.NV, State.find("Nev."), "AP Name");
     }
 
@@ -288,13 +307,13 @@ public class StateTest {
     public void findOhio() {
         assertEquals(State.OH, State.find("OH"), "Short Name");
         assertEquals(State.OH, State.find("Ohio"), "Long Name");
-        assertEquals(State.OH, State.find("Ohio"), "AP Name");
     }
 
     @Test
     public void findOklahoma() {
         assertEquals(State.OK, State.find("OK"), "Short Name");
         assertEquals(State.OK, State.find("Oklahoma"), "Long Name");
+        assertEquals(State.OK, State.find("Okla"), "Other Name");
         assertEquals(State.OK, State.find("Okla."), "AP Name");
     }
 
@@ -302,6 +321,7 @@ public class StateTest {
     public void findOregon() {
         assertEquals(State.OR, State.find("OR"), "Short Name");
         assertEquals(State.OR, State.find("Oregon"), "Long Name");
+        assertEquals(State.OR, State.find("Ore"), "Other Name");
         assertEquals(State.OR, State.find("Ore."), "AP Name");
     }
 
@@ -309,6 +329,7 @@ public class StateTest {
     public void findPennsylvania() {
         assertEquals(State.PA, State.find("PA"), "Short Name");
         assertEquals(State.PA, State.find("Pennsylvania"), "Long Name");
+        assertEquals(State.PA, State.find("Penn"), "Other Name");
         assertEquals(State.PA, State.find("Pa."), "AP Name");
     }
 
@@ -344,6 +365,7 @@ public class StateTest {
     public void findTennessee() {
         assertEquals(State.TN, State.find("TN"), "Short Name");
         assertEquals(State.TN, State.find("Tennessee"), "Long Name");
+        assertEquals(State.TN, State.find("Tenn"), "Other Name");
         assertEquals(State.TN, State.find("Tenn."), "AP Name");
     }
 
@@ -351,14 +373,12 @@ public class StateTest {
     public void findTexas() {
         assertEquals(State.TX, State.find("TX"), "Short Name");
         assertEquals(State.TX, State.find("Texas"), "Long Name");
-        assertEquals(State.TX, State.find("Texas"), "AP Name");
     }
 
     @Test
     public void findUtah() {
         assertEquals(State.UT, State.find("UT"), "Short Name");
         assertEquals(State.UT, State.find("Utah"), "Long Name");
-        assertEquals(State.UT, State.find("Utah"), "AP Name");
     }
 
     @Test
@@ -379,6 +399,7 @@ public class StateTest {
     public void findWashington() {
         assertEquals(State.WA, State.find("WA"), "Short Name");
         assertEquals(State.WA, State.find("Washington"), "Long Name");
+        assertEquals(State.WA, State.find("Wash"), "Other Name");
         assertEquals(State.WA, State.find("Wash."), "AP Name");
     }
 
@@ -386,6 +407,7 @@ public class StateTest {
     public void findWestVirginia() {
         assertEquals(State.WV, State.find("WV"), "Short Name");
         assertEquals(State.WV, State.find("West Virginia"), "Long Name");
+        assertEquals(State.WV, State.find("WVa"), "Other Name");
         assertEquals(State.WV, State.find("W.Va."), "AP Name");
     }
 
@@ -393,6 +415,7 @@ public class StateTest {
     public void findWisconsin() {
         assertEquals(State.WI, State.find("WI"), "Short Name");
         assertEquals(State.WI, State.find("Wisconsin"), "Long Name");
+        assertEquals(State.WI, State.find("Wis"), "Other Name");
         assertEquals(State.WI, State.find("Wis."), "AP Name");
     }
 
@@ -400,6 +423,7 @@ public class StateTest {
     public void findWyoming() {
         assertEquals(State.WY, State.find("WY"), "Short Name");
         assertEquals(State.WY, State.find("Wyoming"), "Long Name");
+        assertEquals(State.WY, State.find("Wyo"), "Other Name");
         assertEquals(State.WY, State.find("Wyo."), "AP Name");
     }
 }
