@@ -1,6 +1,7 @@
 package com.gym.parser.controller;
 
 import com.gym.parser.model.Athlete;
+import com.gym.parser.scraper.ArkansasScraper;
 import com.gym.parser.scraper.AuburnScraper;
 import com.gym.parser.scraper.KentuckyScraper;
 import com.gym.parser.scraper.LsuScraper;
@@ -11,15 +12,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/roster/parse/athletes")
 public class RosterParserController {
 
-    @PostMapping("/lsu")
-    public ResponseEntity<List<Athlete>> parseLsuAthletes(@RequestBody RosterParserParameters params) {
-        LsuScraper scraper = new LsuScraper(params.getYear());
+    @PostMapping("/arkansas")
+    public ResponseEntity<List<Athlete>> parseArkansasAthletes(@RequestBody RosterParserParameters params) {
+        ArkansasScraper scraper = new ArkansasScraper(params.getYear());
+        List<Athlete> athletes = scraper.parseAthletes();
+        return ResponseEntity.ok(athletes);
+    }
+
+    @PostMapping("/auburn")
+    public ResponseEntity<List<Athlete>> parseAuburnAthletes(@RequestBody RosterParserParameters params) {
+        AuburnScraper scraper = new AuburnScraper(params.getYear());
         List<Athlete> athletes = scraper.parseAthletes();
         return ResponseEntity.ok(athletes);
     }
@@ -31,9 +40,9 @@ public class RosterParserController {
         return ResponseEntity.ok(athletes);
     }
 
-    @PostMapping("/auburn")
-    public ResponseEntity<List<Athlete>> parseAuburnAthletes(@RequestBody RosterParserParameters params) {
-        AuburnScraper scraper = new AuburnScraper(params.getYear());
+    @PostMapping("/lsu")
+    public ResponseEntity<List<Athlete>> parseLsuAthletes(@RequestBody RosterParserParameters params) {
+        LsuScraper scraper = new LsuScraper(params.getYear());
         List<Athlete> athletes = scraper.parseAthletes();
         return ResponseEntity.ok(athletes);
     }
