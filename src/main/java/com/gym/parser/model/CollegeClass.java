@@ -3,22 +3,18 @@ package com.gym.parser.model;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 @Getter
 public enum CollegeClass {
 
     FR("Freshman", "Fr."),
-    REDSHIRT_FR("Redshirt Freshman", "R-Fr."),
+    REDSHIRT_FR("Redshirt Freshman", "R-Fr.", "RS Fr."),
     SO("Sophomore", "So."),
-    REDSHIRT_SO("Redshirt Sophomore", "R-So."),
+    REDSHIRT_SO("Redshirt Sophomore", "R-So.", "RS So."),
     JR("Junior", "Jr."),
-    REDSHIRT_JR("Redshirt Junior", "R-Jr."),
+    REDSHIRT_JR("Redshirt Junior", "R-Jr.", "RS Jr."),
     SR("Senior", "Sr."),
-    REDSHIRT_SR("Redshirt Senior", "R-Sr."),
-    FIFTH_SR("5th-Year Senior"),
+    REDSHIRT_SR("Redshirt Senior", "R-Sr.", "RS Sr."),
+    FIFTH_SR("Fifth Year", "5th-Year Senior"),
     GR("Graduate Student", "Graduate", "Gr."),
     XX("Undetected");
 
