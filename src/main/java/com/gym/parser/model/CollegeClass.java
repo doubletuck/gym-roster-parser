@@ -10,16 +10,16 @@ import java.util.List;
 @Getter
 public enum CollegeClass {
 
-    FR("Freshman"),
-    REDSHIRTFR("Redshirt Freshman"),
-    SO("Sophomore"),
-    REDSHIRTSO("Redshirt Sophomore"),
-    JR("Junior"),
-    REDSHIRTJR("Redshirt Junior"),
-    SR("Senior"),
-    REDSHIRTSR("Redshirt Senior"),
-    FIFTH("5th-Year Senior"),
-    GR("Graduate Student", "Graduate"),
+    FR("Freshman", "Fr."),
+    REDSHIRT_FR("Redshirt Freshman", "R-Fr."),
+    SO("Sophomore", "So."),
+    REDSHIRT_SO("Redshirt Sophomore", "R-So."),
+    JR("Junior", "Jr."),
+    REDSHIRT_JR("Redshirt Junior", "R-Jr."),
+    SR("Senior", "Sr."),
+    REDSHIRT_SR("Redshirt Senior", "R-Sr."),
+    FIFTH_SR("5th-Year Senior"),
+    GR("Graduate Student", "Graduate", "Gr."),
     XX("Undetected");
 
     private final String collegeClassName;
