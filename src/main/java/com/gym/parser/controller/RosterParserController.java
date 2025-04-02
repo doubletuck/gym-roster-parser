@@ -4,6 +4,7 @@ import com.gym.parser.model.Athlete;
 import com.gym.parser.scraper.ArkansasScraper;
 import com.gym.parser.scraper.AuburnScraper;
 import com.gym.parser.scraper.ClemsonScraper;
+import com.gym.parser.scraper.IowaScraper;
 import com.gym.parser.scraper.KentuckyScraper;
 import com.gym.parser.scraper.LsuScraper;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,13 @@ public class RosterParserController {
     @PostMapping("/clemson")
     public ResponseEntity<List<Athlete>> parseClemsonAthletes(@RequestBody RosterParserParameters params) {
         ClemsonScraper scraper = new ClemsonScraper(params.getYear());
+        List<Athlete> athletes = scraper.parseAthletes();
+        return ResponseEntity.ok(athletes);
+    }
+
+    @PostMapping("/iowa")
+    public ResponseEntity<List<Athlete>> parseIowaAthletes(@RequestBody RosterParserParameters params) {
+        IowaScraper scraper = new IowaScraper(params.getYear());
         List<Athlete> athletes = scraper.parseAthletes();
         return ResponseEntity.ok(athletes);
     }
