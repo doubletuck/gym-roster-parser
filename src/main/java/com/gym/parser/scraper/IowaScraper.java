@@ -5,56 +5,48 @@ import com.gym.parser.model.College;
 import com.gym.parser.model.CollegeClass;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.ScrapingUtil;
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
+public class IowaScraper extends AbstractScraper {
 
-public class IowaScraper {
-    private final static String BASE_ROSTER_URL = "https://hawkeyesports.com/sports/wgym/roster/season";
-    private final Integer year;
-    private final String rosterUrl;
+    private final static Logger logger = LoggerFactory.getLogger(IowaScraper.class);
 
     public IowaScraper(Integer year) {
-        this.year = year;
-        this.rosterUrl = String.format("%s/%d-%02d?view=table", BASE_ROSTER_URL, year-1, year%100);
+        super(year);
     }
 
-    public List<Athlete> parseAthletes() {
-        List<Athlete> athleteList = new ArrayList<>();
+    public College getCollege() {
+        return College.IOWA;
+    }
 
-        Connection connection = Jsoup.connect(this.rosterUrl);
-        try {
-            // There should be two tables on the page. The first one will
-            // contain the athletes.
-            Document doc = connection.get();
-            Elements tables = doc.select("table");
-            Elements rows = tables.get(0).select("tbody tr");
-            for (Element row : rows) {
-                Athlete athlete = parseRow(row);
-                if (athlete != null) {
-                    athleteList.add(athlete);
-                }
-            }
-        } catch (IOException e) {
-            String errorMessage = MessageFormat.format("Accessing the Iowa roster website is not successful. The page response code is {0} for url {1}.",
-                    connection.response().statusCode(),
-                    rosterUrl);
-            throw new RuntimeException(e);
+    String buildRosterUrl() {
+        return String.format("%s%d-%02d?view=table",
+                "https://hawkeyesports.com/sports/wgym/roster/season/",
+                this.year-1,
+                this.year%100);
+    }
+
+    Logger getLogger() {
+        return logger;
+    }
+
+    Elements selectAthleteTableRowsFromPage(Document document) {
+        // There should be two tables on the page. The first one will
+        // contain the athletes.
+        Elements tables = document.select("table");
+        if (tables.isEmpty()) {
+            return null;
         }
 
-        return athleteList;
+        return tables.get(0).select("tbody tr");
     }
 
-    private Athlete parseRow(Element row) {
+    Athlete parseAthleteRow(Element row) {
         Athlete athlete = null;
-
         int index_name = this.year >= 2025 ? 0 : 1;
         int index_position = this.year >= 2025 ? 1 : 2;;
         int index_class = this.year >= 2025 ? 2 : 5;;
@@ -63,8 +55,8 @@ public class IowaScraper {
         Elements cells = row.select("td");
         if (!cells.isEmpty()) {
             athlete = new Athlete();
-            athlete.setCollege(College.IOWA);
-            athlete.setYear(year);
+            athlete.setCollege(getCollege());
+            athlete.setYear(this.year);
 
             String[] names = ScrapingUtil.parseName(cells.get(index_name).text());
             athlete.setFirstName(names[0]);
@@ -79,7 +71,6 @@ public class IowaScraper {
             athlete.setHomeState(locationParser.getState());
             athlete.setHomeCountry(locationParser.getCountry());
         }
-
         return athlete;
     }
 }

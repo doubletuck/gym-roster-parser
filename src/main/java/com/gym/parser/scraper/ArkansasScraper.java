@@ -39,18 +39,16 @@ public class ArkansasScraper extends AbstractScraper {
         if (element == null) {
             return null;
         }
-
         return element.select("tbody tr");
     }
 
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
-
         Elements cells = tableRowElement.select("td");
         if (!cells.isEmpty()) {
             athlete = new Athlete();
-            athlete.setCollege(College.ARKANSAS);
-            athlete.setYear(year);
+            athlete.setCollege(getCollege());
+            athlete.setYear(this.year);
 
             String[] names = ScrapingUtil.parseName(cells.get(0).text());
             athlete.setFirstName(names[0]);
@@ -66,7 +64,6 @@ public class ArkansasScraper extends AbstractScraper {
 
             athlete.setClub(cells.get(3).text());
         }
-
         return athlete;
     }
 }

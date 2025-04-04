@@ -54,7 +54,7 @@ public abstract class AbstractScraper {
             }
         }
 
-        getLogger().info("{} - Finished scraping the athlete roster for season {}. Found {} athletes on the roster.", getCollege(), getYear(), athleteList.size());
+        getLogger().info("{} - Finished scraping the athlete roster for season {}. Found {} athletes.", getCollege(), getYear(), athleteList.size());
         return athleteList;
     }
 
@@ -76,5 +76,12 @@ public abstract class AbstractScraper {
      * @see     #parseAthleteRow(Element)
      */
     abstract Elements selectAthleteTableRowsFromPage(Document document);
+
+    /**
+     * Give the Elements selected from #selectAthleteTableRowsFromPage
+     *
+     * @param tableRowElement
+     * @return
+     */
     abstract Athlete parseAthleteRow(Element tableRowElement);
 }

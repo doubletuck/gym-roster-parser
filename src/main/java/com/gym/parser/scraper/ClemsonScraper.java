@@ -5,61 +5,53 @@ import com.gym.parser.model.College;
 import com.gym.parser.model.CollegeClass;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.ScrapingUtil;
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
+public class ClemsonScraper extends AbstractScraper {
 
-public class ClemsonScraper {
-    private final static String BASE_ROSTER_URL = "https://clemsontigers.com/sports/gymnastics/roster/season";
-    private final Integer year;
-    private final String rosterUrl;
+    private final static Logger logger = LoggerFactory.getLogger(ClemsonScraper.class);
 
     public ClemsonScraper(Integer year) {
-        this.year = year;
-        // Clemson indicates that their season starts with the Fall academic
-        // year. Thus, passing in 2025 will be for 2024-2025. The URL uses
-        // the Fall academic year.
-        this.rosterUrl = String.format("%s/%d", BASE_ROSTER_URL, year-1);
+        super(year);
     }
 
-    public List<Athlete> parseAthletes() {
-        List<Athlete> athleteList = new ArrayList<>();
+    public College getCollege() {
+        return College.CLEMSON;
+    }
 
-        Connection connection = Jsoup.connect(rosterUrl);
-        try {
-            Document doc = connection.get();
-            Elements rows = doc.getElementById("person__list_all").select("tbody tr");
-            for (Element row : rows) {
-                Athlete athlete = parseRow(row);
-                if (athlete != null) {
-                    athleteList.add(athlete);
-                }
-            }
-        } catch (IOException e) {
-            String errorMessage = MessageFormat.format("Accessing the Clemson roster website is not successful. The page response code is {0} for url {1}.",
-                    connection.response().statusCode(),
-                    rosterUrl);
-            throw new RuntimeException(e);
+    String buildRosterUrl() {
+        // The season on the website starts with the Fall academic
+        // year. For example, passing in 2025 will be for 2024-2025.
+        // But, the URL uses will need 2024 to represent 2024-2025.
+        return String.format("%s%d",
+                "https://clemsontigers.com/sports/gymnastics/roster/season/",
+                this.year-1);
+    }
+
+    Logger getLogger() {
+        return logger;
+    }
+
+    Elements selectAthleteTableRowsFromPage(Document document) {
+        Element element = document.getElementById("person__list_all");
+        if (element == null) {
+            return null;
         }
 
-        return athleteList;
+        return element.select("tbody tr");
     }
 
-    private Athlete parseRow(Element row) {
+    Athlete parseAthleteRow(Element row) {
         Athlete athlete = null;
-
         Elements cells = row.select("td");
         if (!cells.isEmpty()) {
             athlete = new Athlete();
-            athlete.setCollege(College.CLEMSON);
-            athlete.setYear(year);
+            athlete.setCollege(getCollege());
+            athlete.setYear(this.year);
 
             String[] names = ScrapingUtil.parseName(cells.get(0).text());
             athlete.setFirstName(names[0]);
@@ -74,7 +66,6 @@ public class ClemsonScraper {
             athlete.setHomeState(locationParser.getState());
             athlete.setHomeCountry(locationParser.getCountry());
         }
-
         return athlete;
     }
 }
