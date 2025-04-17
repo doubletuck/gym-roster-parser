@@ -53,7 +53,6 @@ public class KentuckyScraper extends AbstractScraper {
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setHeight(cells.get(1).text());
             athlete.setCollegeClass(CollegeClass.find(cells.get(2).text()));
 
             LocationParser locationParser = new LocationParser(cells.get(3).text());

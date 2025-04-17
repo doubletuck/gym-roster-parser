@@ -22,7 +22,7 @@ public class CsvRosterExporter {
         FIRST_NAME, LAST_NAME,
         COLLEGE_CLASS,
         HOME_TOWN, HOME_STATE, HOME_COUNTRY,
-        CLUB, HEIGHT, POSITION;
+        CLUB, POSITION;
     }
 
     public static void writeToFile(Collection<Athlete> athletes, String fileName) throws IOException {
@@ -58,7 +58,6 @@ public class CsvRosterExporter {
                         athlete.getHomeState(),
                         athlete.getHomeCountry(),
                         athlete.getClub(),
-                        athlete.getHeight(),
                         athlete.getPosition()
                 );
                 logger.debug("Writing the following row to file '{}': {}", file.getAbsolutePath(), athlete);

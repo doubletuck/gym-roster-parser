@@ -54,7 +54,6 @@ public class LsuScraper extends AbstractScraper{
             athlete.setLastName(names[1]);
 
             athlete.setPosition(cells.get(1).text());
-            athlete.setHeight(cells.get(2).text());
             athlete.setCollegeClass(CollegeClass.find(cells.get(3).text()));
             athlete.setClub(cells.get(5).text());
 

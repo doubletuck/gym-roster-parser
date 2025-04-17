@@ -80,8 +80,11 @@ public abstract class AbstractScraper {
     /**
      * Give the Elements selected from #selectAthleteTableRowsFromPage
      *
-     * @param tableRowElement
-     * @return
+     * @param   tableRowElement An html element that contains the
+     *          information about a single element, typically a table
+     *          row.
+     * @return  An instance of Athlete containing the information
+     *          parsed from the tableRowElement.
      */
     abstract Athlete parseAthleteRow(Element tableRowElement);
 }
