@@ -34,15 +34,16 @@ public class RosterController {
     }
 
     @PostMapping("/athletes/export")
-    public ResponseEntity<Void> exportAthletesToFile(@RequestBody ExportParameters params) {
+    public ResponseEntity<String> exportAthletesToFile(@RequestBody ExportParameters params) {
         File exportFile = new File(params.getFileName());
         List<Athlete> athletes = scrapeAthleteRosterFromWebsite(params.getYear(), params.getCollege());
         try {
             CsvRosterExporter.writeToFile(athletes, exportFile);
         } catch (IOException e) {
-            return ResponseEntity.internalServerError().build();
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok()
+                .body(String.format("Exported %d athletes to file %s.", athletes.size(), exportFile.getAbsolutePath()));
     }
 
     private List<Athlete> scrapeAthleteRosterFromWebsite(Integer year, College college) {
