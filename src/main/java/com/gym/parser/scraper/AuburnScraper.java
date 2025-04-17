@@ -62,7 +62,7 @@ public class AuburnScraper extends AbstractScraper {
             index_location = 6;
         }
 
-        Elements cells = row.select("td");
+        Elements cells = row.select("th, td");
         if (!cells.isEmpty()) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
