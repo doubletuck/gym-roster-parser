@@ -37,12 +37,12 @@ public class IowaScraper extends AbstractScraper {
     Elements selectAthleteTableRowsFromPage(Document document) {
         // There should be two tables on the page. The first one will
         // contain the athletes.
-        Elements tables = document.select("table");
-        if (tables.isEmpty()) {
+        Element table = document.selectFirst("div.roster-players table");
+        if (table == null) {
             return null;
         }
 
-        return tables.get(0).select("tbody tr");
+        return table.select("tbody tr");
     }
 
     Athlete parseAthleteRow(Element row) {
@@ -52,7 +52,7 @@ public class IowaScraper extends AbstractScraper {
         int index_class = this.year >= 2025 ? 2 : 5;;
         int index_location = this.year >= 2025 ? 3 : 6;
 
-        Elements cells = row.select("td");
+        Elements cells = row.select("th, td");
         if (!cells.isEmpty()) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
