@@ -1,45 +1,45 @@
 package com.gym.parser.model;
 
 import lombok.Getter;
-import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 
 /**
- * Country codes as defined by IBAN: https://www.iban.com/country-codes.
+ * Country codes as defined by <a href="https://www.iban.com/country-codes">IBAN</a>.
+ * The enumeration name is, in most cases, the alpha-3 code.
  */
 @Getter
 public enum Country {
 
-    CAN("CA", "CAN", "Canada"),
-    ENG(null, null, "England"),
-    HUN("HU", "HUN", "Hungary"),
-    GBR("GB", "GBR", "United Kingdom of Great Britain and Northern Ireland"),
-    NZL("NZ", "NZL", "New Zealand"),
-    ROM("RO", "ROM", "Romania"),
-    USA("US", "USA", "United States of America");
+    CAN("Canada", "CA"),
+    ENG("England"),
+    HUN("Hungary", "HU"),
+    GBR("Great Britain", "GB"),
+    NZL("New Zealand", "NZ"),
+    ROM("Romania", "RO"),
+    USA("United States of America", "US");
 
-    private final String alpha2Code;
-    private final String alpha3Code;
-    private final String countryName;
+    private final String longName;
+    private final String[] otherNames;
 
-    Country(String alpha2Code, String alpha3Code, String countryName) {
-        this.alpha2Code = alpha2Code;
-        this.alpha3Code = alpha3Code;
-        this.countryName = countryName;
+    Country(String longName, String... otherNames) {
+        this.longName = longName;
+        this.otherNames = otherNames;
     }
 
     /**
      * Returns the Country enum that matches the given text.
      *
-     * @param text The country alpha2, alpha3 or country name.
-     * @return The Country enum that matches the given text or null if no
-     * matches are found.
+     * @param   text The country alpha2, alpha3 or country name, case
+     *          insensitive.
+     * @return  The Country enum that matches the given text or null if no
+     *          matches are found.
      */
     public static Country find(String text) {
         if (text != null && !text.isEmpty()) {
             for (Country country : values()) {
-                if (text.equalsIgnoreCase(country.getAlpha2Code()) ||
-                        text.equalsIgnoreCase(country.getAlpha3Code()) ||
-                        text.equalsIgnoreCase(country.getCountryName())) {
+                if (country.name().equalsIgnoreCase(text) ||
+                        country.longName.equalsIgnoreCase(text) ||
+                        StringUtils.equalsAnyIgnoreCase(text, country.otherNames)) {
                     return country;
                 }
             }
