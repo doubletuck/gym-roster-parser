@@ -45,6 +45,7 @@ public class CsvRosterExporter {
             Writer fileWriter = new FileWriter(file);
             CSVFormat csvFormat = CSVFormat.RFC4180.builder()
                     .setHeader(Headers.class)
+                    .setRecordSeparator("\n")
                     .get();
             CSVPrinter csvPrinter = new CSVPrinter(fileWriter, csvFormat);
             for (Athlete athlete : athletes) {
