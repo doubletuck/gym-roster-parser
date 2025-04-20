@@ -7,13 +7,13 @@ import org.apache.commons.lang3.StringUtils;
 public enum CollegeClass {
 
     FR("Freshman", "Fr."),
-    REDSHIRT_FR("Redshirt Freshman", "R-Fr.", "RS Fr."),
+    REDSHIRT_FR("Redshirt Freshman", "R-Fr.", "RS Fr.", "R-Freshman"),
     SO("Sophomore", "So."),
-    REDSHIRT_SO("Redshirt Sophomore", "R-So.", "RS So."),
+    REDSHIRT_SO("Redshirt Sophomore", "R-So.", "RS So.", "R-Sophomore"),
     JR("Junior", "Jr."),
-    REDSHIRT_JR("Redshirt Junior", "R-Jr.", "RS Jr."),
+    REDSHIRT_JR("Redshirt Junior", "R-Jr.", "RS Jr.", "R-Junior"),
     SR("Senior", "Sr."),
-    REDSHIRT_SR("Redshirt Senior", "R-Sr.", "RS Sr."),
+    REDSHIRT_SR("Redshirt Senior", "R-Sr.", "RS Sr.", "R-Senior"),
     FIFTH_SR("Fifth Year", "5th-Year Senior"),
     GR("Graduate Student", "Graduate", "Gr."),
     XX("Undetected");
