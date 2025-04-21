@@ -15,35 +15,34 @@ public enum CollegeClass {
     SR("Senior", "Sr."),
     REDSHIRT_SR("Redshirt Senior", "R-Sr.", "RS Sr.", "R-Senior"),
     FIFTH_SR("Fifth Year", "5th-Year Senior"),
-    GR("Graduate Student", "Graduate", "Gr."),
-    XX("Undetected");
+    GR("Graduate Student", "Graduate", "Gr.");
 
-    private final String collegeClassName;
+    private final String longName;
     private final String[] otherNames;
 
-    CollegeClass(String collegeClassName, String... otherNames) {
-        this.collegeClassName = collegeClassName;
+    CollegeClass(String longName, String... otherNames) {
+        this.longName = longName;
         this.otherNames = otherNames;
     }
 
     /**
      * Returns the college class enum that matches the given text.
      *
-     * @param text The college class code or name.
-     * @return The CollegeClass enum that matches the given text or null if no
-     * matches are found.
+     * @param   text The college class code or name.
+     * @return  The CollegeClass enum that matches the given text or
+     *          null if no matches are found.
      */
     public static CollegeClass find(String text) {
         if (text != null && !text.isBlank()) {
             text = text.trim();
             for (CollegeClass collegeClass : values()) {
                 if (collegeClass.name().equalsIgnoreCase(text) ||
-                        collegeClass.collegeClassName.equalsIgnoreCase(text) ||
+                        collegeClass.longName.equalsIgnoreCase(text) ||
                         StringUtils.equalsAnyIgnoreCase(text, collegeClass.otherNames)) {
                     return collegeClass;
                 }
             }
         }
-        return XX;
+        return null;
     }
 }
