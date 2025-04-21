@@ -5,7 +5,7 @@ import com.gym.parser.model.College;
 import com.gym.parser.model.CollegeClass;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.PositionParser;
-import com.gym.parser.util.ScrapingUtil;
+import com.gym.parser.util.NameParser;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -59,7 +59,7 @@ public class IowaScraper extends AbstractScraper {
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
 
-            String[] names = ScrapingUtil.parseName(cells.get(index_name).text());
+            String[] names = NameParser.parse(cells.get(index_name).text());
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
