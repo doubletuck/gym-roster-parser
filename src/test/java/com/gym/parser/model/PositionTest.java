@@ -32,6 +32,11 @@ public class PositionTest {
     }
 
     @Test
+    public void findWhenNotMatching() {
+        assertNull(Position.find("BOGUS"));
+    }
+
+    @Test
     public void findAllAround() {
         assertEquals(Position.AA, Position.find("AA"), "Name");
         assertEquals(Position.AA, Position.find("All-Around"), "Long name");
