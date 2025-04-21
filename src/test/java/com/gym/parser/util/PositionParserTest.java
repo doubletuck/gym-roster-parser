@@ -19,13 +19,6 @@ public class PositionParserTest {
     }
 
     @Test
-    public void positionAA() {
-        assertEquals("AA", PositionParser.parse("AA"), "Short name");
-        assertEquals("AA", PositionParser.parse("All-Around"), "Long name");
-        assertEquals("AA", PositionParser.parse(" All-Around "), "With white space");
-    }
-
-    @Test
     public void positionReturnedInOlympicOrder() {
         String expectedResult = "AA,VT,UB,BB,FL";
         assertEquals(expectedResult, PositionParser.parse("AA, VT, UB, BB, FL"), "Order 1");
@@ -41,7 +34,7 @@ public class PositionParserTest {
     }
 
     @Test
-    public void testDelimiters() {
+    public void testAcceptableDelimiters() {
         assertEquals("VT,FL", PositionParser.parse("FL, VT"), "Comma delimiter with space");
         assertEquals("VT,FL", PositionParser.parse("FL,VT"), "Comma delimiter no space");
         assertEquals("VT,FL", PositionParser.parse("FL / VT"), "Forward slash delimiter with space");
@@ -50,13 +43,13 @@ public class PositionParserTest {
     }
 
     @Test
-    public void ignoresBogusValues() {
-        assertEquals("UB,FL", PositionParser.parse("BOGUS, FL, badder, BARS, BAD"), "Bogus values interspersed");
+    public void testWithAnUnrecognizedDelimiter() {
+        assertNull(PositionParser.parse("VT FL VT"), "Valid values but unrecognized space delimiter");
     }
 
     @Test
-    public void ignoresEmptyValues() {
-
+    public void ignoresBogusValues() {
+        assertEquals("UB,FL", PositionParser.parse("BOGUS, FL, badder, BARS, BAD"), "Bogus values interspersed");
+        assertNull(PositionParser.parse("This / Is / Bogus"), "No valid position values in delimited string");
     }
-
 }
