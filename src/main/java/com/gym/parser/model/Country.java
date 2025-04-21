@@ -36,6 +36,7 @@ public enum Country {
      */
     public static Country find(String text) {
         if (text != null && !text.isEmpty()) {
+            text = text.trim();
             for (Country country : values()) {
                 if (country.name().equalsIgnoreCase(text) ||
                         country.longName.equalsIgnoreCase(text) ||

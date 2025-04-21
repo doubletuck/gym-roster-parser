@@ -77,7 +77,7 @@ public enum State {
     public static State find(String text) {
 
         if (text != null && !text.isEmpty()) {
-            text = text.replace(".","");
+            text = text.trim().replace(".","");
             for (State state : State.values()) {
                 if (state.name().equalsIgnoreCase(text) ||
                         state.longName.equalsIgnoreCase(text) ||

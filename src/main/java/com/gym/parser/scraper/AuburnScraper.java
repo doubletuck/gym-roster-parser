@@ -4,6 +4,7 @@ import com.gym.parser.model.Athlete;
 import com.gym.parser.model.College;
 import com.gym.parser.model.CollegeClass;
 import com.gym.parser.util.LocationParser;
+import com.gym.parser.util.PositionParser;
 import com.gym.parser.util.ScrapingUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -72,7 +73,7 @@ public class AuburnScraper extends AbstractScraper {
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setPosition(cells.get(index_position).text());
+            athlete.setPosition(PositionParser.parse(cells.get(index_position).text()));
             athlete.setCollegeClass(CollegeClass.find(cells.get(index_class).text()));
 
             LocationParser locationParser = new LocationParser(cells.get(index_location).text());

@@ -35,7 +35,8 @@ public enum CollegeClass {
      */
     public static CollegeClass find(String text) {
         if (text != null && !text.isBlank()) {
-            for (CollegeClass collegeClass : CollegeClass.values()) {
+            text = text.trim();
+            for (CollegeClass collegeClass : values()) {
                 if (collegeClass.name().equalsIgnoreCase(text) ||
                         collegeClass.collegeClassName.equalsIgnoreCase(text) ||
                         StringUtils.equalsAnyIgnoreCase(text, collegeClass.otherNames)) {
