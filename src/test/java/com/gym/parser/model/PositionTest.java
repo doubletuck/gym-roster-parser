@@ -62,8 +62,8 @@ public class PositionTest {
     }
     @Test
     public void findFloorExercise() {
-        assertEquals(Position.FL, Position.find("FL"), "Name");
-        assertEquals(Position.FL, Position.find("Floor Exercise"), "Long name");
-        assertEquals(Position.FL, Position.find("Floor"), "Other names");
+        assertEquals(Position.FX, Position.find("FX"), "Name");
+        assertEquals(Position.FX, Position.find("Floor Exercise"), "Long name");
+        assertEquals(Position.FX, Position.find("Floor"), "Other names");
     }
 }
