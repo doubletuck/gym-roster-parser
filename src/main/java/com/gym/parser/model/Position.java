@@ -10,7 +10,7 @@ public enum Position {
     VT("Vault"),
     UB("Uneven Bars", "Bars"),
     BB("Balance Beam", "Beam"),
-    FL("Floor Exercise", "Floor");
+    FX("Floor Exercise", "Floor");
 
     private final String longName;
     private final String[] otherNames;

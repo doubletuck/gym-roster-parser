@@ -14,7 +14,7 @@ public class PositionParser {
         // the following delimiters: , and /
         String[] positionList = text.split("[,/]");
 
-        boolean hasAA = false, hasVT = false, hasUB = false, hasBB = false, hasFL = false;
+        boolean hasAA = false, hasVT = false, hasUB = false, hasBB = false, hasFX = false;
 
         for (String positionSegment : positionList) {
             Position position = Position.find(positionSegment);
@@ -24,7 +24,7 @@ public class PositionParser {
                     case VT -> hasVT = true;
                     case UB -> hasUB = true;
                     case BB -> hasBB = true;
-                    case FL -> hasFL = true;
+                    case FX -> hasFX = true;
                 }
             }
         }
@@ -43,9 +43,9 @@ public class PositionParser {
             if (!sb.isEmpty()) sb.append(',');
             sb.append(Position.BB.name());
         }
-        if (hasFL) {
+        if (hasFX) {
             if (!sb.isEmpty()) sb.append(',');
-            sb.append(Position.FL.name());
+            sb.append(Position.FX.name());
         }
 
         return sb.isEmpty() ? null : sb.toString();
