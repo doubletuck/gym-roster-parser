@@ -30,15 +30,7 @@ public abstract class AbstractScraper {
 
         getLogger().info("{} - Commence scraping for the athlete roster for season {} using the web page url {}.", getCollege(), getYear(), getRosterUrl());
 
-        Connection connection = Jsoup.connect(getRosterUrl());
-        Document document;
-        try {
-            document = connection.get();
-        } catch (IOException e) {
-            getLogger().error("{} - Could not connect to web page url {}.", getCollege(), getRosterUrl());
-            getLogger().error("{} - ", getCollege(), e);
-            throw new RuntimeException(e);
-        }
+        Document document = getPageDocument();
 
         Elements tableRowElements = selectAthleteTableRowsFromPage(document);
         if (tableRowElements == null) {
@@ -56,6 +48,19 @@ public abstract class AbstractScraper {
 
         getLogger().info("{} - Finished scraping the athlete roster for season {}. Found {} athletes.", getCollege(), getYear(), athleteList.size());
         return athleteList;
+    }
+
+    Document getPageDocument() {
+        Connection connection = Jsoup.connect(getRosterUrl());
+        Document document;
+        try {
+            document = connection.get();
+        } catch (IOException e) {
+            getLogger().error("{} - Could not connect to web page url {}.", getCollege(), getRosterUrl());
+            getLogger().error("{} - ", getCollege(), e);
+            throw new RuntimeException(e);
+        }
+        return document;
     }
 
     public abstract College getCollege();

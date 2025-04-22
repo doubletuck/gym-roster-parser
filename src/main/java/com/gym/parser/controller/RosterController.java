@@ -9,6 +9,7 @@ import com.gym.parser.scraper.ClemsonScraper;
 import com.gym.parser.scraper.IowaScraper;
 import com.gym.parser.scraper.KentuckyScraper;
 import com.gym.parser.scraper.LsuScraper;
+import com.gym.parser.scraper.OklahomaScraper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -49,25 +50,14 @@ public class RosterController {
     private List<Athlete> scrapeAthleteRosterFromWebsite(Integer year, College college) {
         List<Athlete> athletes = null;
         switch (college) {
-            case ARKANSAS:
-                athletes = new ArkansasScraper(year).parseAthletes();
-                break;
-            case AUBURN:
-                athletes = new AuburnScraper(year).parseAthletes();
-                break;
-            case CLEMSON:
-                athletes = new ClemsonScraper(year).parseAthletes();
-                break;
-            case IOWA:
-                athletes = new IowaScraper(year).parseAthletes();
-                break;
-            case KENTUCKY:
-                athletes = new KentuckyScraper(year).parseAthletes();
-                break;
-            case LSU:
-                athletes = new LsuScraper(year).parseAthletes();
-                break;
-            default:
+            case ARKANSAS -> athletes = new ArkansasScraper(year).parseAthletes();
+            case AUBURN -> athletes = new AuburnScraper(year).parseAthletes();
+            case CLEMSON -> athletes = new ClemsonScraper(year).parseAthletes();
+            case IOWA -> athletes = new IowaScraper(year).parseAthletes();
+            case KENTUCKY -> athletes = new KentuckyScraper(year).parseAthletes();
+            case LSU -> athletes = new LsuScraper(year).parseAthletes();
+            case OKLAHOMA -> athletes = new OklahomaScraper(year).parseAthletes();
+            default ->
                 logger.error("The college given '{}' is unknown or unsupported.", college);
         }
         return athletes;

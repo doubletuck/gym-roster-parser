@@ -50,7 +50,7 @@ public class LocationParser {
      *                 "Budapest, Hungary", or "Whitby, Ontario, CAN".
      */
     public LocationParser(String location) {
-        if (location != null && !location.trim().isEmpty()) {
+        if (location != null && !location.isEmpty()) {
             this.location = location.trim();
             this.locationSegments = Arrays.asList(location.split(","));
         }
