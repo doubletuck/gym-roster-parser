@@ -7,5 +7,6 @@ public enum College {
     CLEMSON,
     IOWA,
     KENTUCKY,
-    LSU;
+    LSU,
+    OKLAHOMA;
 }

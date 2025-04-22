@@ -14,7 +14,7 @@ public enum CollegeClass {
     REDSHIRT_JR("Redshirt Junior", "R-Jr.", "RS Jr.", "R-Junior"),
     SR("Senior", "Sr."),
     REDSHIRT_SR("Redshirt Senior", "R-Sr.", "RS Sr.", "R-Senior"),
-    FIFTH_SR("Fifth Year", "5th-Year Senior"),
+    FIFTH_SR("Fifth Year", "5th-Year Senior", "5th"),
     GR("Graduate Student", "Graduate", "Gr.");
 
     private final String longName;
