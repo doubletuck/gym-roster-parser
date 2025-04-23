@@ -40,6 +40,13 @@ public class CountryTest {
     }
 
     @Test
+    public void findGermany() {
+        assertEquals(Country.DEU, Country.find("DEU"), "Name");
+        assertEquals(Country.DEU, Country.find("Germany"), "Long Name");
+        assertEquals(Country.DEU, Country.find("DE"), "Other name - 2 Character Code");
+    }
+
+    @Test
     public void findEngland() {
         assertEquals(Country.ENG, Country.find("ENG"), "Name");
         assertEquals(Country.ENG, Country.find("England"), "Long Name");
