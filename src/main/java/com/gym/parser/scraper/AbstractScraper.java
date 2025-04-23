@@ -39,6 +39,7 @@ public abstract class AbstractScraper {
         }
 
         for (Element row : tableRowElements) {
+            getLogger().debug("{} - Start parsing row: {}", getCollege(), row.text());
             Athlete athlete = parseAthleteRow(row);
             if (athlete != null) {
                 athleteList.add(athlete);

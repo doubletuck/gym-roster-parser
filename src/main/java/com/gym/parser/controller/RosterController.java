@@ -6,6 +6,7 @@ import com.gym.parser.model.College;
 import com.gym.parser.scraper.ArkansasScraper;
 import com.gym.parser.scraper.AuburnScraper;
 import com.gym.parser.scraper.ClemsonScraper;
+import com.gym.parser.scraper.FloridaScraper;
 import com.gym.parser.scraper.IowaScraper;
 import com.gym.parser.scraper.KentuckyScraper;
 import com.gym.parser.scraper.LsuScraper;
@@ -54,6 +55,7 @@ public class RosterController {
             case ARKANSAS -> athletes = new ArkansasScraper(year).parseAthletes();
             case AUBURN -> athletes = new AuburnScraper(year).parseAthletes();
             case CLEMSON -> athletes = new ClemsonScraper(year).parseAthletes();
+            case FLORIDA -> athletes = new FloridaScraper(year).parseAthletes();
             case IOWA -> athletes = new IowaScraper(year).parseAthletes();
             case KENTUCKY -> athletes = new KentuckyScraper(year).parseAthletes();
             case LSU -> athletes = new LsuScraper(year).parseAthletes();

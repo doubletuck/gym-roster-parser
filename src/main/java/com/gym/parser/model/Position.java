@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 public enum Position {
 
     AA("All-Around", "All Around"),
-    VT("Vault"),
+    VT("Vault", "V"),
     UB("Uneven Bars", "Bars"),
     BB("Balance Beam", "Beam"),
     FX("Floor Exercise", "Floor");
