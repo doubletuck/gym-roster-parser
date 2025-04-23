@@ -36,8 +36,6 @@ public class IowaScraper extends AbstractScraper {
     }
 
     Elements selectAthleteTableRowsFromPage(Document document) {
-        // There should be two tables on the page. The first one will
-        // contain the athletes.
         Element table = document.selectFirst("div.roster-players table");
         if (table == null) {
             return null;

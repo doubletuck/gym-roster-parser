@@ -47,19 +47,23 @@ public class PositionTest {
     public void findVault() {
         assertEquals(Position.VT, Position.find("VT"), "Name");
         assertEquals(Position.VT, Position.find("Vault"), "Long name");
+        assertEquals(Position.VT, Position.find("V"), "Other names");
     }
+
     @Test
     public void findUnevenBars() {
         assertEquals(Position.UB, Position.find("UB"), "Name");
         assertEquals(Position.UB, Position.find("Uneven Bars"), "Long name");
         assertEquals(Position.UB, Position.find("Bars"), "Other names");
     }
+
     @Test
     public void findBalanceBeam() {
         assertEquals(Position.BB, Position.find("BB"), "Name");
         assertEquals(Position.BB, Position.find("Balance Beam"), "Long name");
         assertEquals(Position.BB, Position.find("Beam"), "Other names");
     }
+
     @Test
     public void findFloorExercise() {
         assertEquals(Position.FX, Position.find("FX"), "Name");
