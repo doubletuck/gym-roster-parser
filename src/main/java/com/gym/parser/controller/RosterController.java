@@ -10,6 +10,7 @@ import com.gym.parser.scraper.IowaScraper;
 import com.gym.parser.scraper.KentuckyScraper;
 import com.gym.parser.scraper.LsuScraper;
 import com.gym.parser.scraper.OklahomaScraper;
+import com.gym.parser.scraper.UclaScraper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -57,6 +58,7 @@ public class RosterController {
             case KENTUCKY -> athletes = new KentuckyScraper(year).parseAthletes();
             case LSU -> athletes = new LsuScraper(year).parseAthletes();
             case OKLAHOMA -> athletes = new OklahomaScraper(year).parseAthletes();
+            case UCLA -> athletes = new UclaScraper(year).parseAthletes();
             default ->
                 logger.error("The college given '{}' is unknown or unsupported.", college);
         }

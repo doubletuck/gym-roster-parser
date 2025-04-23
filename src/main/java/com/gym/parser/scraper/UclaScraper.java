@@ -19,21 +19,21 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class OklahomaScraper extends AbstractScraper {
+public class UclaScraper extends AbstractScraper {
 
-    private final static Logger logger = LoggerFactory.getLogger(OklahomaScraper.class);
+    private final static Logger logger = LoggerFactory.getLogger(UclaScraper.class);
 
-    public OklahomaScraper(Integer year) {
+    public UclaScraper(Integer year) {
         super(year);
     }
 
     public College getCollege() {
-        return College.OKLAHOMA;
+        return College.UCLA;
     }
 
     String buildRosterUrl() {
         return String.format("%s/%d",
-                "https://soonersports.com/sports/womens-gymnastics/roster",
+                "https://uclabruins.com/sports/womens-gymnastics/roster",
                 this.year);
     }
 
@@ -88,42 +88,25 @@ public class OklahomaScraper extends AbstractScraper {
 
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
-
-        int index_name = 0;
-        int index_position = 1;
-        int index_class = 3;
-        int index_location = 4;
-
-        if (this.year <= 2022) {
-            index_position = -1;
-            index_class = 2;
-            index_location = 3;
-        }
-
         Elements cells = tableRowElement.select("td");
         if (!cells.isEmpty()) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
 
-            String[] names = NameParser.parse(cells.get(index_name).text());
+            String[] names = NameParser.parse(cells.get(0).text());
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            if (index_position >= 0) {
-                athlete.setPosition(PositionParser.parse(cells.get(index_position).text()));
-            }
+            athlete.setCollegeClass(CollegeClass.find(cells.get(2).text()));
 
-            athlete.setCollegeClass(CollegeClass.find(cells.get(index_class).text()));
+            LocationParser locationParser = new LocationParser(cells.get(3).text());
+            locationParser.parse();
+            athlete.setHomeTown(locationParser.getTown());
+            athlete.setHomeState(locationParser.getState());
+            athlete.setHomeCountry(locationParser.getCountry());
 
-            String hometownCell = cells.get(index_location).text();
-            if (!hometownCell.isEmpty()) {
-                LocationParser locationParser = new LocationParser(hometownCell.trim().split("/")[0]);
-                locationParser.parse();
-                athlete.setHomeTown(locationParser.getTown());
-                athlete.setHomeState(locationParser.getState());
-                athlete.setHomeCountry(locationParser.getCountry());
-            }
+            athlete.setClub(cells.get(5).text());
         }
         return athlete;
     }
