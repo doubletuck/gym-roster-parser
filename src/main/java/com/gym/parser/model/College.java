@@ -9,6 +9,7 @@ public enum College {
     IOWA,
     KENTUCKY,
     LSU,
+    MISSOURI,
     OKLAHOMA,
     UCLA;
 }

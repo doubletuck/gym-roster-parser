@@ -12,21 +12,21 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FloridaScraper extends AbstractScraper {
+public class MissouriScraper extends AbstractScraper {
 
-    private final static Logger logger = LoggerFactory.getLogger(FloridaScraper.class);
+    private final static Logger logger = LoggerFactory.getLogger(MissouriScraper.class);
 
-    public FloridaScraper(Integer year) {
+    public MissouriScraper(Integer year) {
         super(year);
     }
 
     public College getCollege() {
-        return College.FLORIDA;
+        return College.MISSOURI;
     }
 
     String buildRosterUrl() {
         return String.format("%s/%d?view=2",
-                "https://floridagators.com/sports/womens-gymnastics/roster",
+                "https://mutigers.com/sports/womens-gymnastics/roster",
                 this.year);
     }
 
@@ -63,19 +63,17 @@ public class FloridaScraper extends AbstractScraper {
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setPosition(PositionParser.parse(cells.get(1).text()));
+            athlete.setCollegeClass(CollegeClass.find(cells.get(1).text()));
 
-            athlete.setCollegeClass(CollegeClass.find(cells.get(3).text()));
+            athlete.setPosition(PositionParser.parse(cells.get(3).text()));
 
-            String[] hometownClubCell = cells.get(4).text().split("/");
+            String[] hometownHsCell = cells.get(4).text().split("/");
 
-            LocationParser locationParser = new LocationParser(hometownClubCell[0]);
+            LocationParser locationParser = new LocationParser(hometownHsCell[0]);
             locationParser.parse();
             athlete.setHomeTown(locationParser.getTown());
             athlete.setHomeState(locationParser.getState());
             athlete.setHomeCountry(locationParser.getCountry());
-
-            if (hometownClubCell.length >= 2) athlete.setClub(hometownClubCell[1].trim());
         }
         return athlete;
     }
