@@ -100,11 +100,18 @@ public class CollegeClassTest {
     }
 
     @Test
-    public void findFifthYearSenior() {
-        assertEquals(CollegeClass.FIFTH_SR, CollegeClass.find("FIFTH_SR"), "By Name");
-        assertEquals(CollegeClass.FIFTH_SR, CollegeClass.find("Fifth Year"), "By Long Name");
-        assertEquals(CollegeClass.FIFTH_SR, CollegeClass.find("5th-Year Senior"), "By Other Name - 5th-Year Senior");
-        assertEquals(CollegeClass.FIFTH_SR, CollegeClass.find("5th"), "By Other Name - 5th");
+    public void findFifthYear() {
+        assertEquals(CollegeClass.FIFTH_YR, CollegeClass.find("FIFTH_YR"), "By Name");
+        assertEquals(CollegeClass.FIFTH_YR, CollegeClass.find("Fifth Year"), "By Long Name");
+        assertEquals(CollegeClass.FIFTH_YR, CollegeClass.find("5th-Year Senior"), "By Other Name - 5th-Year Senior");
+        assertEquals(CollegeClass.FIFTH_YR, CollegeClass.find("5th"), "By Other Name - 5th");
+    }
+
+    @Test
+    public void findSixthYear() {
+        assertEquals(CollegeClass.SIXTH_YR, CollegeClass.find("SIXTH_YR"), "By Name");
+        assertEquals(CollegeClass.SIXTH_YR, CollegeClass.find("Sixth Year"), "By Long Name");
+        assertEquals(CollegeClass.SIXTH_YR, CollegeClass.find("6th"), "By Other Name - 6th");
     }
 
     @Test
