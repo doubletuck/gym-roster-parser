@@ -11,5 +11,6 @@ public enum College {
     LSU,
     MISSOURI,
     OKLAHOMA,
-    UCLA;
+    UCLA,
+    UTAH;
 }

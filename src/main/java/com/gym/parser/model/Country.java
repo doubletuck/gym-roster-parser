@@ -14,7 +14,7 @@ public enum Country {
     DEU("Germany", "DE"),
     ENG("England"),
     HUN("Hungary", "HU"),
-    GBR("Great Britain", "GB"),
+    GBR("Great Britain", "GB", "UK", "United Kingdom"),
     NLD("Netherlands", "NL"),
     NZL("New Zealand", "NZ"),
     ROM("Romania", "RO"),

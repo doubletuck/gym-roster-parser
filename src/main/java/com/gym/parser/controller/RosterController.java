@@ -54,6 +54,7 @@ public class RosterController {
             case MISSOURI -> athletes = new MissouriScraper(year).parseAthletes();
             case OKLAHOMA -> athletes = new OklahomaScraper(year).parseAthletes();
             case UCLA -> athletes = new UclaScraper(year).parseAthletes();
+            case UTAH -> athletes = new UtahScraper(year).parseAthletes();
             default ->
                 logger.error("The college given '{}' is unknown or unsupported.", college);
         }
