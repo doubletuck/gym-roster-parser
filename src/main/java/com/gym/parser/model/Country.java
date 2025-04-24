@@ -15,6 +15,7 @@ public enum Country {
     ENG("England"),
     HUN("Hungary", "HU"),
     GBR("Great Britain", "GB"),
+    NLD("Netherlands", "NL"),
     NZL("New Zealand", "NZ"),
     ROM("Romania", "RO"),
     USA("United States of America", "US");

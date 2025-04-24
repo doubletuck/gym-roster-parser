@@ -3,15 +3,7 @@ package com.gym.parser.controller;
 import com.gym.parser.exporter.CsvRosterExporter;
 import com.gym.parser.model.Athlete;
 import com.gym.parser.model.College;
-import com.gym.parser.scraper.ArkansasScraper;
-import com.gym.parser.scraper.AuburnScraper;
-import com.gym.parser.scraper.ClemsonScraper;
-import com.gym.parser.scraper.FloridaScraper;
-import com.gym.parser.scraper.IowaScraper;
-import com.gym.parser.scraper.KentuckyScraper;
-import com.gym.parser.scraper.LsuScraper;
-import com.gym.parser.scraper.OklahomaScraper;
-import com.gym.parser.scraper.UclaScraper;
+import com.gym.parser.scraper.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -59,6 +51,7 @@ public class RosterController {
             case IOWA -> athletes = new IowaScraper(year).parseAthletes();
             case KENTUCKY -> athletes = new KentuckyScraper(year).parseAthletes();
             case LSU -> athletes = new LsuScraper(year).parseAthletes();
+            case MISSOURI -> athletes = new MissouriScraper(year).parseAthletes();
             case OKLAHOMA -> athletes = new OklahomaScraper(year).parseAthletes();
             case UCLA -> athletes = new UclaScraper(year).parseAthletes();
             default ->
