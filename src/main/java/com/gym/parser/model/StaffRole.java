@@ -13,6 +13,7 @@ public enum StaffRole {
     STUDENT_ASST_COACH("Student Assistant Coach"),
     STUDENT_COACH("Student Coach"),
     UNDERGRAD_ASST_COACH("Undergraduate Assistant Coach"),
+    UNDERGRAD_STUDENT_COACH("Undergraduate Student Coach"),
     VOLUNTEER_ASST_COACH("Volunteer Assistant Coach"),
     VOLUNTEER_COACH("Volunteer Coach");
 

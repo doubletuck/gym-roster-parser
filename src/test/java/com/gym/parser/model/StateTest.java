@@ -133,6 +133,7 @@ public class StateTest {
     public void findHawaii() {
         assertEquals(State.HI, State.find("HI"), "Short Name");
         assertEquals(State.HI, State.find("Hawaii"), "Long Name");
+        assertEquals(State.HI, State.find("Hawai'i"), "Other Name");
     }
 
     @Test
@@ -415,8 +416,10 @@ public class StateTest {
     public void findWisconsin() {
         assertEquals(State.WI, State.find("WI"), "Short Name");
         assertEquals(State.WI, State.find("Wisconsin"), "Long Name");
-        assertEquals(State.WI, State.find("Wis"), "Other Name");
-        assertEquals(State.WI, State.find("Wis."), "AP Name");
+        assertEquals(State.WI, State.find("Wis"), "Other Name - Wis");
+        assertEquals(State.WI, State.find("Wis."), "AP Name - Wis.");
+        assertEquals(State.WI, State.find("Wisc"), "Other Name - Wisc");
+        assertEquals(State.WI, State.find("Wisc."), "AP Name - Wisc.");
     }
 
     @Test
