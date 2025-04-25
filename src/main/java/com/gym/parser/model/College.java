@@ -2,6 +2,7 @@ package com.gym.parser.model;
 
 public enum College {
 
+    ALABAMA,
     ARKANSAS,
     AUBURN,
     CLEMSON,
