@@ -12,22 +12,23 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class OklahomaScraper extends AbstractScraper {
+public class MichiganStateScraper extends AbstractScraper {
 
-    private final static Logger logger = LoggerFactory.getLogger(OklahomaScraper.class);
+    private final static Logger logger = LoggerFactory.getLogger(MichiganStateScraper.class);
 
-    public OklahomaScraper(Integer year) {
+    public MichiganStateScraper(Integer year) {
         super(year);
     }
 
     public College getCollege() {
-        return College.OKLAHOMA;
+        return College.MICHIGANSTATE;
     }
 
     String buildRosterUrl() {
-        return String.format("%s/%d",
-                "https://soonersports.com/sports/womens-gymnastics/roster",
-                this.year);
+        return String.format("%s/%d-%02d",
+                "https://msuspartans.com/sports/womens-gymnastics/roster",
+                this.year-1,
+                this.year%100);
     }
 
     Logger getLogger() {
@@ -51,14 +52,16 @@ public class OklahomaScraper extends AbstractScraper {
         Athlete athlete = null;
 
         int index_name = 0;
-        int index_position = 1;
-        int index_class = 3;
-        int index_location = 4;
+        int index_class = 2;
+        int index_hometown = 3;
+        int index_position = 4;
 
-        if (this.year <= 2022) {
+        if (this.year <= 2019 && this.year > 2017) {
             index_position = -1;
-            index_class = 2;
-            index_location = 3;
+        } else if (this.year <= 2017) {
+            index_name = 1;
+            index_position = 3;
+            index_hometown = 4;
         }
 
         Elements cells = tableRowElement.select("td");
@@ -71,19 +74,20 @@ public class OklahomaScraper extends AbstractScraper {
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            if (index_position >= 0) {
-                athlete.setPosition(PositionParser.parse(cells.get(index_position).text()));
-            }
-
             athlete.setCollegeClass(CollegeClass.find(cells.get(index_class).text()));
 
-            String hometownCell = cells.get(index_location).text();
-            if (!hometownCell.isEmpty()) {
-                LocationParser locationParser = new LocationParser(hometownCell.trim().split("/")[0]);
-                locationParser.parse();
-                athlete.setHomeTown(locationParser.getTown());
-                athlete.setHomeState(locationParser.getState());
-                athlete.setHomeCountry(locationParser.getCountry());
+            // In 2017 and earlier, the Hometown and Previous School are not
+            // combined in a cell. Still using the split on "/" since it will
+            // return the full string if no "/" is found.
+            String[] hometownCells = cells.get(index_hometown).text().split("/");
+            LocationParser locationParser = new LocationParser(hometownCells[0]);
+            locationParser.parse();
+            athlete.setHomeTown(locationParser.getTown());
+            athlete.setHomeState(locationParser.getState());
+            athlete.setHomeCountry(locationParser.getCountry());
+
+            if (index_position >= 0) {
+                athlete.setPosition(PositionParser.parse(cells.get(index_position).text()));
             }
         }
         return athlete;

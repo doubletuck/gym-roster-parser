@@ -17,7 +17,7 @@ public enum State {
     DC("District of Columbia"),
     FL("Florida", "Fla"),
     GA("Georgia"),
-    HI("Hawaii"),
+    HI("Hawaii", "Hawai'i"),
     ID("Idaho"),
     IL("Illinois", "Ill"),
     IN("Indiana", "Ind"),
@@ -56,7 +56,7 @@ public enum State {
     VA("Virginia"),
     WA("Washington", "Wash"),
     WV("West Virginia", "WVa"),
-    WI("Wisconsin", "Wis"),
+    WI("Wisconsin", "Wis", "Wisc"),
     WY("Wyoming", "Wyo");
 
     private final String longName;
