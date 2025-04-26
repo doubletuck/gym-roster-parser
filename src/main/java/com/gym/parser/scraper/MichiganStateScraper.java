@@ -50,18 +50,17 @@ public class MichiganStateScraper extends AbstractScraper {
 
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
-
-        int index_name = 0;
-        int index_class = 2;
-        int index_hometown = 3;
-        int index_position = 4;
+        int nameIndex = 0;
+        int classIndex = 2;
+        int hometownIndex = 3;
+        int positionIndex = 4;
 
         if (this.year <= 2019 && this.year > 2017) {
-            index_position = -1;
+            positionIndex = -1;
         } else if (this.year <= 2017) {
-            index_name = 1;
-            index_position = 3;
-            index_hometown = 4;
+            nameIndex = 1;
+            positionIndex = 3;
+            hometownIndex = 4;
         }
 
         Elements cells = tableRowElement.select("td");
@@ -70,24 +69,24 @@ public class MichiganStateScraper extends AbstractScraper {
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
 
-            String[] names = NameParser.parse(cells.get(index_name).text());
+            String[] names = NameParser.parse(cells.get(nameIndex).text());
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setCollegeClass(CollegeClass.find(cells.get(index_class).text()));
+            athlete.setCollegeClass(CollegeClass.find(cells.get(classIndex).text()));
 
             // In 2017 and earlier, the Hometown and Previous School are not
             // combined in a cell. Still using the split on "/" since it will
             // return the full string if no "/" is found.
-            String[] hometownCells = cells.get(index_hometown).text().split("/");
+            String[] hometownCells = cells.get(hometownIndex).text().split("/");
             LocationParser locationParser = new LocationParser(hometownCells[0]);
             locationParser.parse();
             athlete.setHomeTown(locationParser.getTown());
             athlete.setHomeState(locationParser.getState());
             athlete.setHomeCountry(locationParser.getCountry());
 
-            if (index_position >= 0) {
-                athlete.setPosition(PositionParser.parse(cells.get(index_position).text()));
+            if (positionIndex >= 0) {
+                athlete.setPosition(PositionParser.parse(cells.get(positionIndex).text()));
             }
         }
         return athlete;

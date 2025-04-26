@@ -49,16 +49,15 @@ public class OklahomaScraper extends AbstractScraper {
 
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
-
-        int index_name = 0;
-        int index_position = 1;
-        int index_class = 3;
-        int index_location = 4;
+        int nameIndex = 0;
+        int positionIndex = 1;
+        int classIndex = 3;
+        int locationIndex = 4;
 
         if (this.year <= 2022) {
-            index_position = -1;
-            index_class = 2;
-            index_location = 3;
+            positionIndex = -1;
+            classIndex = 2;
+            locationIndex = 3;
         }
 
         Elements cells = tableRowElement.select("td");
@@ -67,17 +66,17 @@ public class OklahomaScraper extends AbstractScraper {
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
 
-            String[] names = NameParser.parse(cells.get(index_name).text());
+            String[] names = NameParser.parse(cells.get(nameIndex).text());
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            if (index_position >= 0) {
-                athlete.setPosition(PositionParser.parse(cells.get(index_position).text()));
+            if (positionIndex >= 0) {
+                athlete.setPosition(PositionParser.parse(cells.get(positionIndex).text()));
             }
 
-            athlete.setCollegeClass(CollegeClass.find(cells.get(index_class).text()));
+            athlete.setCollegeClass(CollegeClass.find(cells.get(classIndex).text()));
 
-            String hometownCell = cells.get(index_location).text();
+            String hometownCell = cells.get(locationIndex).text();
             if (!hometownCell.isEmpty()) {
                 LocationParser locationParser = new LocationParser(hometownCell.trim().split("/")[0]);
                 locationParser.parse();

@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 @Getter
 public enum Country {
 
+    AUS("Australia"),
     CAN("Canada", "CA"),
     DEU("Germany", "DE"),
     ENG("England"),

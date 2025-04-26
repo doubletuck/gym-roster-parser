@@ -374,6 +374,8 @@ public class StateTest {
     public void findTexas() {
         assertEquals(State.TX, State.find("TX"), "Short Name");
         assertEquals(State.TX, State.find("Texas"), "Long Name");
+        assertEquals(State.TX, State.find("Tex"), "Other Name - Tex");
+        assertEquals(State.TX, State.find("Tex."), "Other Name - Tex.");
     }
 
     @Test

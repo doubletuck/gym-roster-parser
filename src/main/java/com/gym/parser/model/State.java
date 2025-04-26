@@ -50,7 +50,7 @@ public enum State {
     SC("South Carolina"),
     SD("South Dakota"),
     TN("Tennessee", "Tenn"),
-    TX("Texas"),
+    TX("Texas", "Tex"),
     UT("Utah"),
     VT("Vermont"),
     VA("Virginia"),
