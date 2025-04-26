@@ -49,17 +49,10 @@ public class AlabamaScraper extends AbstractScraper {
 
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
-
-        int index_name = 0;
-        int index_position = 1;
-        int index_class = 3;
-        int index_hometown = 4;
-
-        if (this.year <= 2016) {
-            index_name = 1;
-            index_class = 2;
-            index_position = 3;
-        }
+        int nameIndex = this.year > 2016 ? 0 : 1;
+        int positionIndex = this.year > 2016 ? 1 : 3;
+        int classIndex = this.year > 2016 ? 3 : 2;
+        int hometownIndex = 4;
 
         Elements cells = tableRowElement.select("td");
         if (!cells.isEmpty()) {
@@ -67,20 +60,20 @@ public class AlabamaScraper extends AbstractScraper {
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
 
-            String[] names = NameParser.parse(cells.get(index_name).text());
+            String[] names = NameParser.parse(cells.get(nameIndex).text());
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setCollegeClass(CollegeClass.find(cells.get(index_class).text()));
+            athlete.setCollegeClass(CollegeClass.find(cells.get(classIndex).text()));
 
-            String[] hometownCells = cells.get(index_hometown).text().split("/");
+            String[] hometownCells = cells.get(hometownIndex).text().split("/");
             LocationParser locationParser = new LocationParser(hometownCells[0]);
             locationParser.parse();
             athlete.setHomeTown(locationParser.getTown());
             athlete.setHomeState(locationParser.getState());
             athlete.setHomeCountry(locationParser.getCountry());
 
-            athlete.setPosition(PositionParser.parse(cells.get(index_position).text()));
+            athlete.setPosition(PositionParser.parse(cells.get(positionIndex).text()));
         }
         return athlete;
     }

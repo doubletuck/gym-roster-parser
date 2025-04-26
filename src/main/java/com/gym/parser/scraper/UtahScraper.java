@@ -54,14 +54,14 @@ public class UtahScraper extends AbstractScraper {
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
 
-        int indexName = 0;
-        int indexClass = 2;
-        int indexLocation = 3;
+        int nameIndex = 0;
+        int classIndex = 2;
+        int locationIndex = 3;
 
         if (this.year < 2022) {
-            indexName = 1;
-            indexClass = 3;
-            indexLocation = 4;
+            nameIndex = 1;
+            classIndex = 3;
+            locationIndex = 4;
         }
 
         Elements cells = tableRowElement.select("td");
@@ -70,13 +70,13 @@ public class UtahScraper extends AbstractScraper {
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
 
-            String[] names = NameParser.parse(cells.get(indexName).text());
+            String[] names = NameParser.parse(cells.get(nameIndex).text());
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setCollegeClass(CollegeClass.find(cells.get(indexClass).text()));
+            athlete.setCollegeClass(CollegeClass.find(cells.get(classIndex).text()));
 
-            String[] hometownHsCell = cells.get(indexLocation).text().split("/");
+            String[] hometownHsCell = cells.get(locationIndex).text().split("/");
 
             LocationParser locationParser = new LocationParser(hometownHsCell[0]);
             locationParser.parse();

@@ -55,6 +55,7 @@ public class RosterController {
             case MICHIGANSTATE -> athletes = new MichiganStateScraper(year).parseAthletes();
             case MISSOURI -> athletes = new MissouriScraper(year).parseAthletes();
             case OKLAHOMA -> athletes = new OklahomaScraper(year).parseAthletes();
+            case UCBERKELEY -> athletes = new UCBerkeleyScraper(year).parseAthletes();
             case UCLA -> athletes = new UclaScraper(year).parseAthletes();
             case UTAH -> athletes = new UtahScraper(year).parseAthletes();
             default ->

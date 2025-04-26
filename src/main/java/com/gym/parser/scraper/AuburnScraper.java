@@ -48,19 +48,19 @@ public class AuburnScraper extends AbstractScraper {
     Athlete parseAthleteRow(Element row) {
         Athlete athlete = null;
 
-        int index_name = 0;
-        int index_position = 1;
-        int index_class = 2;
-        int index_location = 3;
+        int nameIndex = 0;
+        int positionIndex = 1;
+        int classIndex = 2;
+        int locationIndex = 3;
 
         if (this.year == 2024) {
-            index_class = 4;
-            index_location = 5;
+            classIndex = 4;
+            locationIndex = 5;
         } else if (this.year <= 2023) {
-            index_name = 1;
-            index_position = 2;
-            index_class = 5;
-            index_location = 6;
+            nameIndex = 1;
+            positionIndex = 2;
+            classIndex = 5;
+            locationIndex = 6;
         }
 
         Elements cells = row.select("th, td");
@@ -69,14 +69,14 @@ public class AuburnScraper extends AbstractScraper {
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
 
-            String[] names = NameParser.parse(cells.get(index_name).text());
+            String[] names = NameParser.parse(cells.get(nameIndex).text());
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setPosition(PositionParser.parse(cells.get(index_position).text()));
-            athlete.setCollegeClass(CollegeClass.find(cells.get(index_class).text()));
+            athlete.setPosition(PositionParser.parse(cells.get(positionIndex).text()));
+            athlete.setCollegeClass(CollegeClass.find(cells.get(classIndex).text()));
 
-            LocationParser locationParser = new LocationParser(cells.get(index_location).text());
+            LocationParser locationParser = new LocationParser(cells.get(locationIndex).text());
             locationParser.parse();
             athlete.setHomeTown(locationParser.getTown());
             athlete.setHomeState(locationParser.getState());
