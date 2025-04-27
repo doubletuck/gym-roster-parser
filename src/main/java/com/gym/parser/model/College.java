@@ -14,6 +14,7 @@ public enum College {
     MICHIGANSTATE,
     MISSOURI,
     OKLAHOMA,
+    OREGONSTATE,
     UCBERKELEY,
     UCLA,
     UTAH;
