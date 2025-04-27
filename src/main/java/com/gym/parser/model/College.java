@@ -6,6 +6,7 @@ public enum College {
     ARKANSAS,
     AUBURN,
     CLEMSON,
+    DENVER,
     FLORIDA,
     IOWA,
     KENTUCKY,
