@@ -56,11 +56,14 @@ public class RosterController {
             case MICHIGANSTATE -> athletes = new MichiganStateScraper(year).parseAthletes();
             case MISSOURI -> athletes = new MissouriScraper(year).parseAthletes();
             case OKLAHOMA -> athletes = new OklahomaScraper(year).parseAthletes();
+            case OREGONSTATE -> athletes = new OregonStateScraper(year).parseAthletes();
             case UCBERKELEY -> athletes = new UCBerkeleyScraper(year).parseAthletes();
             case UCLA -> athletes = new UclaScraper(year).parseAthletes();
             case UTAH -> athletes = new UtahScraper(year).parseAthletes();
-            default ->
-                logger.error("The college given '{}' is unknown or unsupported.", college);
+            default -> {
+                logger.error("The given college '{}' is not supported.", college);
+                throw new RuntimeException(String.format("The given college '%s' is not supported.", college));
+            }
         }
         return athletes;
     }
