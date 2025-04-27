@@ -11,15 +11,22 @@ import org.apache.commons.lang3.StringUtils;
 public enum Country {
 
     AUS("Australia"),
-    CAN("Canada", "CA"),
+    CAN("Canada"),
+    CHL("Chile"),
     DEU("Germany", "DE"),
     ENG("England"),
+    ESP("Spain"),
+    FIN("Finland"),
+    FRA("France", "FR"),
+    ITA("Italy", "IT"),
     HUN("Hungary", "HU"),
     GBR("Great Britain", "GB", "UK", "United Kingdom"),
+    MEX("Mexico"),
     NLD("Netherlands", "NL"),
     NZL("New Zealand", "NZ"),
     ROM("Romania", "RO"),
-    USA("United States of America", "US");
+    USA("United States of America", "US"),
+    VEN("Venezuela");
 
     private final String longName;
     private final String[] otherNames;
