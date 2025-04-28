@@ -8,6 +8,7 @@ public enum StaffRole {
     ACTING_HEAD_COACH("Acting Head Coach"),
     ASST_COACH("Assistant Coach"),
     ASSOC_HEAD_COACH("Associate Head Coach"),
+    GRADUATE_ASST_COACH("Graduate Assistant Coach"),
     HEAD_COACH("Head Coach"),
     HEAD_COACH_ASST("Assistant to the Head Coach"),
     HEAD_TEAM_MGR("Head Team Manager"),
