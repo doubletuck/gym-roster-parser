@@ -15,7 +15,7 @@ public enum StaffRole {
     OPERATIONS_DIR("Director of Operations"),
     STUDENT_ASST_COACH("Student Assistant Coach"),
     STUDENT_COACH("Student Coach"),
-    UNDERGRAD_ASST_COACH("Undergraduate Assistant Coach"),
+    UNDERGRAD_ASST_COACH("Undergraduate Student Assistant Coach"),
     UNDERGRAD_COACH("Undergraduate Student Coach"),
     VOLUNTEER_ASST_COACH("Volunteer Assistant Coach"),
     VOLUNTEER_COACH("Volunteer Coach");

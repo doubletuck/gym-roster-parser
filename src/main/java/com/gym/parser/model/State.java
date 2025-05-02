@@ -29,7 +29,7 @@ public enum State {
     MD("Maryland"),
     MA("Massachusetts", "Mass"),
     MI("Michigan", "Mich"),
-    MN("Minnesota", "Minn"),
+    MN("Minnesota", "Minn", "Min"),
     MS("Mississippi", "Miss"),
     MO("Missouri"),
     MT("Montana", "Mont"),
