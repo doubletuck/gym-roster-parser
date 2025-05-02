@@ -12,6 +12,7 @@ public enum College {
     IOWA,
     KENTUCKY,
     LSU,
+    MICHIGAN,
     MICHIGANSTATE,
     MINNESOTA,
     MISSOURI,

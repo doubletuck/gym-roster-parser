@@ -219,7 +219,8 @@ public class StateTest {
     public void findMinnesota() {
         assertEquals(State.MN, State.find("MN"), "Short Name");
         assertEquals(State.MN, State.find("Minnesota"), "Long Name");
-        assertEquals(State.MN, State.find("Minn"), "Other Name");
+        assertEquals(State.MN, State.find("Minn"), "Other Name - Minn");
+        assertEquals(State.MN, State.find("Min"), "Other Name - Min");
         assertEquals(State.MN, State.find("Minn."), "AP Name");
     }
 
