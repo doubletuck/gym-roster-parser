@@ -3,6 +3,7 @@ package com.gym.parser.model;
 public enum College {
 
     ALABAMA,
+    ARIZONA,
     ARKANSAS,
     AUBURN,
     CLEMSON,
@@ -18,5 +19,5 @@ public enum College {
     OREGONSTATE,
     UCBERKELEY,
     UCLA,
-    UTAH;
+    UTAH
 }
