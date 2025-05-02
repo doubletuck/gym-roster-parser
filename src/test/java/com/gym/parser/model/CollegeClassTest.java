@@ -123,6 +123,13 @@ public class CollegeClassTest {
     }
 
     @Test
+    public void findRedshirt() {
+        assertEquals(CollegeClass.REDSHIRT, CollegeClass.find("REDSHIRT"), "By Name");
+        assertEquals(CollegeClass.REDSHIRT, CollegeClass.find("Redshirt"), "By Long Name");
+        assertEquals(CollegeClass.REDSHIRT, CollegeClass.find("Rs."), "By Other Name");
+    }
+
+    @Test
     public void findWhenNotMatching() {
         assertNull(CollegeClass.find("BOGUS"));
     }

@@ -45,6 +45,7 @@ public class RosterController {
         List<Athlete> athletes = null;
         switch (college) {
             case ALABAMA -> athletes = new AlabamaScraper(year).parseAthletes();
+            case ARIZONA -> athletes = new ArizonaScraper(year).parseAthletes();
             case ARKANSAS -> athletes = new ArkansasScraper(year).parseAthletes();
             case AUBURN -> athletes = new AuburnScraper(year).parseAthletes();
             case CLEMSON -> athletes = new ClemsonScraper(year).parseAthletes();
