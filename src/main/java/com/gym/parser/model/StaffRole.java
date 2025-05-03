@@ -4,15 +4,15 @@ import lombok.Getter;
 
 public enum StaffRole {
 
-    ACTING_ASST_COACH("Acting Assistant Coach"),
-    ACTING_HEAD_COACH("Acting Head Coach"),
-    ASST_COACH("Assistant Coach"),
-    ASSOC_HEAD_COACH("Associate Head Coach"),
-    GRADUATE_ASST_COACH("Graduate Assistant Coach"),
     HEAD_COACH("Head Coach"),
-    HEAD_COACH_ASST("Assistant to the Head Coach"),
-    HEAD_TEAM_MGR("Head Team Manager"),
-    OPERATIONS_DIR("Director of Operations"),
+    ACTING_HEAD_COACH("Acting Head Coach"),
+    ASSOC_HEAD_COACH("Associate Head Coach"),
+    ASST_HEAD_COACH("Assistant Head Coach"),
+    ASST_COACH("Assistant Coach"),
+    ACTING_ASST_COACH("Acting Assistant Coach"),
+    INTERIM_ASST_COACH("Interim Assistant Coach"),
+    GRADUATE_ASST_COACH("Graduate Student Assistant Coach"),
+    GRADUATE_COACH("Graduate Student Coach"),
     STUDENT_ASST_COACH("Student Assistant Coach"),
     STUDENT_COACH("Student Coach"),
     UNDERGRAD_ASST_COACH("Undergraduate Student Assistant Coach"),
