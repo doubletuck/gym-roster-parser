@@ -9,6 +9,7 @@ public enum College {
     CLEMSON,
     DENVER,
     FLORIDA,
+    GEORGIA,
     IOWA,
     KENTUCKY,
     LSU,
