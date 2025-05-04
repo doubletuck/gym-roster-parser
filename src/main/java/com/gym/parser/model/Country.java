@@ -25,6 +25,8 @@ public enum Country {
     NLD("Netherlands", "NL"),
     NZL("New Zealand", "NZ"),
     ROM("Romania", "RO"),
+    SGP("Singapore"),
+    THA("Thailand"  ),
     USA("United States of America", "US"),
     VEN("Venezuela");
 

@@ -113,9 +113,21 @@ public class CountryTest {
     }
 
     @Test
+    public void findSingapore() {
+        assertEquals(Country.SGP, Country.find("SGP"), "Name");
+        assertEquals(Country.SGP, Country.find("Singapore"), "Long Name");
+    }
+
+    @Test
     public void findSpain() {
         assertEquals(Country.ESP, Country.find("ESP"), "Name");
         assertEquals(Country.ESP, Country.find("Spain"), "Long Name");
+    }
+
+    @Test
+    public void findThailand() {
+        assertEquals(Country.THA, Country.find("THA"), "Name");
+        assertEquals(Country.THA, Country.find("Thailand"), "Long Name");
     }
 
     @Test
