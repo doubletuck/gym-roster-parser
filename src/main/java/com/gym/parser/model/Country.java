@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 public enum Country {
 
     AUS("Australia"),
+    BEL("Belgium"),
     CAN("Canada"),
     CHL("Chile"),
     DEU("Germany", "DE"),
