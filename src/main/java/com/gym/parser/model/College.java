@@ -17,6 +17,7 @@ public enum College {
     MICHIGANSTATE,
     MINNESOTA,
     MISSOURI,
+    NCSTATE,
     OKLAHOMA,
     OREGONSTATE,
     STANFORD,

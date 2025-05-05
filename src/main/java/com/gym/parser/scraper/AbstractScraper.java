@@ -45,11 +45,11 @@ public abstract class AbstractScraper {
         }
 
         for (Element row : tableRowElements) {
-            getLogger().debug("{} - Start parsing row: {}", getCollege(), row.text());
+            getLogger().info("{} - Start parsing row: {}", getCollege(), row.text());
             Athlete athlete = parseAthleteRow(row);
             if (athlete != null) {
                 athleteList.add(athlete);
-                getLogger().debug("{} - Added athlete to list: {}", getCollege(), athlete);
+                getLogger().info("{} - Added athlete to list: {}", getCollege(), athlete);
             }
         }
 
@@ -71,7 +71,7 @@ public abstract class AbstractScraper {
     }
 
     Document getPageDocumentWithButtonClick() {
-        getLogger().debug("{} - Using selenium chrome driver to access roster data because a button needs to be clicked to dynamically display the roster in a table format.", getCollege());
+        getLogger().info("{} - Using selenium chrome driver to access roster data because a button needs to be clicked to dynamically display the roster in a table format.", getCollege());
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
@@ -80,14 +80,14 @@ public abstract class AbstractScraper {
 
         try {
             driver.get(buildRosterUrl());
-            getLogger().debug("{} - Pause 2000ms to make sure web page is fully loaded.", getCollege());
+            getLogger().info("{} - Pause 2000ms to make sure web page is fully loaded.", getCollege());
             Thread.sleep(2000);
 
-            getLogger().debug("{} - Clicking button id = `_viewType_table` to view table of athletes on the roster.", getCollege());
+            getLogger().info("{} - Clicking button id = `_viewType_table` to view table of athletes on the roster.", getCollege());
             WebElement tableViewButton = driver.findElement(By.id("_viewType_table"));
             tableViewButton.click();
 
-            getLogger().debug("{} - Pause 1000ms to make sure dynamic roster table loads prior to parsing it.", getCollege());
+            getLogger().info("{} - Pause 1000ms to make sure dynamic roster table loads prior to parsing it.", getCollege());
             Thread.sleep(1000);
 
             pageSource = driver.getPageSource();
