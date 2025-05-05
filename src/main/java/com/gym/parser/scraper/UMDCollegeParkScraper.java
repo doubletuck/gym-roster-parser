@@ -12,11 +12,11 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UMDCollegePark extends AbstractScraper {
+public class UMDCollegeParkScraper extends AbstractScraper {
 
-    public final static Logger logger = LoggerFactory.getLogger(UMDCollegePark.class);
+    public final static Logger logger = LoggerFactory.getLogger(UMDCollegeParkScraper.class);
 
-    public UMDCollegePark(Integer year) {
+    public UMDCollegeParkScraper(Integer year) {
         super(year);
     }
 

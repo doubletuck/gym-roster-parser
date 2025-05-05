@@ -26,5 +26,6 @@ public enum College {
     UCBERKELEY,
     UCLA,
     UMDCOLLEGEPARK,
+    UNCCHAPELHILL,
     UTAH
 }
