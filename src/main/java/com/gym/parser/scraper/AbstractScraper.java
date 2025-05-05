@@ -96,7 +96,7 @@ public abstract class AbstractScraper {
                 return null;
             }
         } catch (Exception e) {
-            getLogger().error("{} - An error occurred when connecting to web page url {}.", getCollege(), getRosterUrl());
+            getLogger().error("{} - An error occurred when connecting to web page url {}. Check that the url is correct.", getCollege(), getRosterUrl());
             getLogger().error("{} - ", getCollege(), e);
             throw new RuntimeException(e);
         } finally {
