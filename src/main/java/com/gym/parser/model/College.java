@@ -21,6 +21,7 @@ public enum College {
     OKLAHOMA,
     OREGONSTATE,
     STANFORD,
+    SOUTHERNUTAH,
     UCBERKELEY,
     UCLA,
     UMDCOLLEGEPARK,
