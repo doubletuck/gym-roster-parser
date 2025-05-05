@@ -23,5 +23,6 @@ public enum College {
     STANFORD,
     UCBERKELEY,
     UCLA,
+    UMDCOLLEGEPARK,
     UTAH
 }

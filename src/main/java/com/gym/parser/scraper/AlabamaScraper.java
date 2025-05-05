@@ -67,7 +67,7 @@ public class AlabamaScraper extends AbstractScraper {
             athlete.setCollegeClass(CollegeClass.find(cells.get(classIndex).text()));
 
             String[] hometownCells = cells.get(hometownIndex).text().split("/");
-            LocationParser locationParser = new LocationParser(hometownCells[0]);
+            LocationParser locationParser = new LocationParser(hometownCells.length > 0 ? hometownCells[0] : null);
             locationParser.parse();
             athlete.setHomeTown(locationParser.getTown());
             athlete.setHomeState(locationParser.getState());
