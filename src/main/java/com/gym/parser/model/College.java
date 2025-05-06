@@ -4,6 +4,7 @@ public enum College {
 
     ALABAMA,
     ARIZONA,
+    ARIZONASTATE,
     ARKANSAS,
     AUBURN,
     CLEMSON,
