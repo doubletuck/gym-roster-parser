@@ -14,7 +14,7 @@ public enum CollegeClass {
     REDSHIRT_JR("Redshirt Junior", "R-Jr.", "RS Jr.", "R-Junior"),
     SR("Senior", "Sr."),
     REDSHIRT_SR("Redshirt Senior", "R-Sr.", "RS Sr.", "R-Senior"),
-    FIFTH_YR("Fifth Year", "5th-Year Senior", "5th"),
+    FIFTH_YR("Fifth Year", "5th-Year Senior", "5th", "Fifth"),
     SIXTH_YR("Sixth Year", "6th"),
     GR("Graduate Student", "Graduate", "Gr."),
     REDSHIRT("Redshirt", "Rs.");

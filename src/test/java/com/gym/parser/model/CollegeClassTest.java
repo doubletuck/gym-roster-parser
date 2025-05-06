@@ -105,6 +105,7 @@ public class CollegeClassTest {
         assertEquals(CollegeClass.FIFTH_YR, CollegeClass.find("Fifth Year"), "By Long Name");
         assertEquals(CollegeClass.FIFTH_YR, CollegeClass.find("5th-Year Senior"), "By Other Name - 5th-Year Senior");
         assertEquals(CollegeClass.FIFTH_YR, CollegeClass.find("5th"), "By Other Name - 5th");
+        assertEquals(CollegeClass.FIFTH_YR, CollegeClass.find("Fifth"), "By Other Name - Fifth");
     }
 
     @Test

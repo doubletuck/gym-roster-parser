@@ -21,6 +21,7 @@ public enum College {
     OHIOSTATE,
     OKLAHOMA,
     OREGONSTATE,
+    PENNSTATE,
     STANFORD,
     SOUTHERNUTAH,
     UCBERKELEY,
