@@ -1,6 +1,6 @@
 package com.gym.parser.controller;
 
-import com.gym.parser.model.College;
+import com.doubletuck.gym.common.model.College;
 import lombok.Data;
 
 @Data

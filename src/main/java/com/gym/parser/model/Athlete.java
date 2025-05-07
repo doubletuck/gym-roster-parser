@@ -1,5 +1,6 @@
 package com.gym.parser.model;
 
+import com.doubletuck.gym.common.model.College;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

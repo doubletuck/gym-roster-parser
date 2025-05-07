@@ -1,7 +1,7 @@
 package com.gym.parser.scraper;
 
+import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
-import com.gym.parser.model.College;
 import com.gym.parser.model.CollegeClass;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.PositionParser;

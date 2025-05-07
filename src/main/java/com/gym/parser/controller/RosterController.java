@@ -1,8 +1,8 @@
 package com.gym.parser.controller;
 
+import com.doubletuck.gym.common.model.College;
 import com.gym.parser.exporter.CsvRosterExporter;
 import com.gym.parser.model.Athlete;
-import com.gym.parser.model.College;
 import com.gym.parser.scraper.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,7 +1,7 @@
 package com.gym.parser.scraper;
 
+import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
-import com.gym.parser.model.College;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.Getter;
 import org.jsoup.Connection;
