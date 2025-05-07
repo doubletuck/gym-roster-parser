@@ -2,6 +2,7 @@ package com.gym.parser.model;
 
 import com.doubletuck.gym.common.model.College;
 import com.doubletuck.gym.common.model.Country;
+import com.doubletuck.gym.common.model.State;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
