@@ -3,9 +3,9 @@ package com.gym.parser.scraper;
 import com.doubletuck.gym.common.model.AcademicYear;
 import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
+import com.gym.parser.util.EventParser;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.NameParser;
-import com.gym.parser.util.PositionParser;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -50,7 +50,7 @@ public class AlabamaScraper extends AbstractScraper {
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
         int nameIndex = this.year > 2016 ? 0 : 1;
-        int positionIndex = this.year > 2016 ? 1 : 3;
+        int eventIndex = this.year > 2016 ? 1 : 3;
         int classIndex = this.year > 2016 ? 3 : 2;
         int hometownIndex = 4;
 
@@ -73,7 +73,7 @@ public class AlabamaScraper extends AbstractScraper {
             athlete.setHomeState(locationParser.getState());
             athlete.setHomeCountry(locationParser.getCountry());
 
-            athlete.setPosition(PositionParser.parse(cells.get(positionIndex).text()));
+            athlete.setEvent(EventParser.parse(cells.get(eventIndex).text()));
         }
         return athlete;
     }

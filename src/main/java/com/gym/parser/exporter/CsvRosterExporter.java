@@ -59,7 +59,7 @@ public class CsvRosterExporter {
                         athlete.getHomeState(),
                         athlete.getHomeCountry(),
                         athlete.getClub(),
-                        athlete.getPosition()
+                        athlete.getEvent()
                 );
                 logger.debug("Writing the following row to file '{}': {}", file.getAbsolutePath(), athlete);
             }

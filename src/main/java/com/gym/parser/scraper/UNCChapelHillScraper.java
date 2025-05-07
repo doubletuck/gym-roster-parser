@@ -3,9 +3,9 @@ package com.gym.parser.scraper;
 import com.doubletuck.gym.common.model.AcademicYear;
 import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
+import com.gym.parser.util.EventParser;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.NameParser;
-import com.gym.parser.util.PositionParser;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -52,13 +52,13 @@ public class UNCChapelHillScraper extends AbstractScraper {
         Athlete athlete = null;
 
         int nameIndex = 0;
-        int positionIndex = 1;
+        int eventIndex = 1;
         int academicYearIndex = 2;
         int hometownIndex = 3;
 
         if (this.year < 2017) {
             nameIndex = 1;
-            positionIndex = 3;
+            eventIndex = 3;
             hometownIndex = 4;
         }
 
@@ -72,7 +72,7 @@ public class UNCChapelHillScraper extends AbstractScraper {
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setPosition(PositionParser.parse(cells.get(positionIndex).text()));
+            athlete.setEvent(EventParser.parse(cells.get(eventIndex).text()));
             athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
 
             String[] hometownCells = cells.get(hometownIndex).text().split("/");

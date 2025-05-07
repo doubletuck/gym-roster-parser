@@ -1,8 +1,8 @@
 package com.gym.parser.util;
 
-import com.gym.parser.model.Position;
+import com.doubletuck.gym.common.model.Event;
 
-public class PositionParser {
+public class EventParser {
 
     public static String parse(String text) {
 
@@ -10,16 +10,15 @@ public class PositionParser {
             return null;
         }
 
-        // The following with split the position string using
-        // the following delimiters: , and /
-        String[] positionList = text.split("[,/]");
+        // Split the event text using delimiters "," and "/".
+        String[] eventList = text.split("[,/]");
 
         boolean hasAA = false, hasVT = false, hasUB = false, hasBB = false, hasFX = false;
 
-        for (String positionSegment : positionList) {
-            Position position = Position.find(positionSegment);
-            if (position != null) {
-                switch (position) {
+        for (String eventSegment : eventList) {
+            Event event = Event.find(eventSegment);
+            if (event != null) {
+                switch (event) {
                     case AA -> hasAA = true;
                     case VT -> hasVT = true;
                     case UB -> hasUB = true;
@@ -30,22 +29,22 @@ public class PositionParser {
         }
 
         StringBuilder sb = new StringBuilder();
-        if (hasAA) sb.append(Position.AA.name());
+        if (hasAA) sb.append(Event.AA.name());
         if (hasVT) {
             if (!sb.isEmpty()) sb.append(',');
-            sb.append(Position.VT.name());
+            sb.append(Event.VT.name());
         }
         if (hasUB) {
             if (!sb.isEmpty()) sb.append(',');
-            sb.append(Position.UB.name());
+            sb.append(Event.UB.name());
         }
         if (hasBB) {
             if (!sb.isEmpty()) sb.append(',');
-            sb.append(Position.BB.name());
+            sb.append(Event.BB.name());
         }
         if (hasFX) {
             if (!sb.isEmpty()) sb.append(',');
-            sb.append(Position.FX.name());
+            sb.append(Event.FX.name());
         }
 
         return sb.isEmpty() ? null : sb.toString();

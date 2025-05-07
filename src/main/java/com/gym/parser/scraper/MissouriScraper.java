@@ -3,9 +3,9 @@ package com.gym.parser.scraper;
 import com.doubletuck.gym.common.model.AcademicYear;
 import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
+import com.gym.parser.util.EventParser;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.NameParser;
-import com.gym.parser.util.PositionParser;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -65,7 +65,7 @@ public class MissouriScraper extends AbstractScraper {
 
             athlete.setAcademicYear(AcademicYear.find(cells.get(1).text()));
 
-            athlete.setPosition(PositionParser.parse(cells.get(3).text()));
+            athlete.setEvent(EventParser.parse(cells.get(3).text()));
 
             String[] hometownHsCell = cells.get(4).text().split("/");
 

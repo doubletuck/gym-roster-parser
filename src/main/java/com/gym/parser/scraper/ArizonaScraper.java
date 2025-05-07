@@ -3,10 +3,9 @@ package com.gym.parser.scraper;
 import com.doubletuck.gym.common.model.AcademicYear;
 import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
-import com.doubletuck.gym.common.model.AcademicYear;
+import com.gym.parser.util.EventParser;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.NameParser;
-import com.gym.parser.util.PositionParser;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -59,24 +58,24 @@ public class ArizonaScraper extends AbstractScraper {
         Athlete athlete = null;
 
         // 2025, 24, 23, 22, 21, 20, 19, 18
-        // name = 2, position = 3, class = 4, hometown = 5, lastNameFirst = true
+        // name = 2, event = 3, class = 4, hometown = 5, lastNameFirst = true
         int nameIndex = 2;
-        int positionIndex = 3;
+        int eventIndex = 3;
         int academicYearIndex = 4;
         int hometownIndex = 5;
         boolean lastNameFirst = true;
         // 2017
-        // name = 0, position = -1, class = 1, hometown = 2, lastNameFirst = true
+        // name = 0, event = -1, class = 1, hometown = 2, lastNameFirst = true
         if (this.year == 2017) {
             nameIndex = 0;
-            positionIndex = -1;
+            eventIndex = -1;
             academicYearIndex = 1;
             hometownIndex = 2;
         // 2016, 15, 14, 13, 12, 11, 10, 09
-        // name = 1, position = 2, class = 4, hometown = 5, lastNameFirst = false
+        // name = 1, event = 2, class = 4, hometown = 5, lastNameFirst = false
         } else if (this.year < 2017) {
             nameIndex = 1;
-            positionIndex = 2;
+            eventIndex = 2;
             lastNameFirst = false;
         }
 
@@ -91,8 +90,8 @@ public class ArizonaScraper extends AbstractScraper {
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            if (positionIndex >= 0) {
-                athlete.setPosition(PositionParser.parse(cells.get(positionIndex).text()));
+            if (eventIndex >= 0) {
+                athlete.setEvent(EventParser.parse(cells.get(eventIndex).text()));
             }
 
             athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
