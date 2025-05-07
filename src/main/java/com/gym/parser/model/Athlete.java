@@ -1,5 +1,9 @@
 package com.gym.parser.model;
 
+import com.doubletuck.gym.common.model.AcademicYear;
+import com.doubletuck.gym.common.model.College;
+import com.doubletuck.gym.common.model.Country;
+import com.doubletuck.gym.common.model.State;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,10 +18,10 @@ public class Athlete {
     private String lastName;
     private Integer year;
     private College college;
-    private CollegeClass collegeClass;
+    private AcademicYear academicYear;
     private String homeTown;
     private State homeState;
     private Country homeCountry;
     private String club;
-    private String position;
+    private String event;
 }

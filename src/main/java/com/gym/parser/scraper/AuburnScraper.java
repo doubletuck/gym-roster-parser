@@ -1,10 +1,10 @@
 package com.gym.parser.scraper;
 
+import com.doubletuck.gym.common.model.AcademicYear;
+import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
-import com.gym.parser.model.College;
-import com.gym.parser.model.CollegeClass;
+import com.gym.parser.util.EventParser;
 import com.gym.parser.util.LocationParser;
-import com.gym.parser.util.PositionParser;
 import com.gym.parser.util.NameParser;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -49,17 +49,17 @@ public class AuburnScraper extends AbstractScraper {
         Athlete athlete = null;
 
         int nameIndex = 0;
-        int positionIndex = 1;
-        int classIndex = 2;
+        int eventIndex = 1;
+        int academicYearIndex = 2;
         int locationIndex = 3;
 
         if (this.year == 2024) {
-            classIndex = 4;
+            academicYearIndex = 4;
             locationIndex = 5;
         } else if (this.year <= 2023) {
             nameIndex = 1;
-            positionIndex = 2;
-            classIndex = 5;
+            eventIndex = 2;
+            academicYearIndex = 5;
             locationIndex = 6;
         }
 
@@ -73,8 +73,8 @@ public class AuburnScraper extends AbstractScraper {
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setPosition(PositionParser.parse(cells.get(positionIndex).text()));
-            athlete.setCollegeClass(CollegeClass.find(cells.get(classIndex).text()));
+            athlete.setEvent(EventParser.parse(cells.get(eventIndex).text()));
+            athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
 
             LocationParser locationParser = new LocationParser(cells.get(locationIndex).text());
             locationParser.parse();

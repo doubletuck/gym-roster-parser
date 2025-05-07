@@ -1,11 +1,11 @@
 package com.gym.parser.scraper;
 
+import com.doubletuck.gym.common.model.AcademicYear;
+import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
-import com.gym.parser.model.College;
-import com.gym.parser.model.CollegeClass;
+import com.gym.parser.util.EventParser;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.NameParser;
-import com.gym.parser.util.PositionParser;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -50,52 +50,52 @@ public class DenverScraper extends AbstractScraper {
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
 
-        // name = 0, class = 2, home = 3, position = 4, club = 5
-        int indexName = 0;
-        int indexClass = 2;
-        int indexHometown = 3;
-        int indexPosition = 4;
-        int indexClub = 5;
+        // name = 0, class = 2, home = 3, event = 4, club = 5
+        int nameIndex = 0;
+        int academicYearIndex = 2;
+        int hometownIndex = 3;
+        int eventIndex = 4;
+        int clubIndex = 5;
         boolean locationHasSlash = false;
         if (this.year <= 2017 && this.year > 2014) {
-            // name = 1, class = 4, home = 5, position = 2, club = -1
-            indexName = 1;
-            indexPosition = 2;
-            indexClass = 4;
-            indexHometown = 5;
-            indexClub = -1;
+            // name = 1, class = 4, home = 5, event = 2, club = -1
+            nameIndex = 1;
+            eventIndex = 2;
+            academicYearIndex = 4;
+            hometownIndex = 5;
+            clubIndex = -1;
             locationHasSlash = true;
         } else if ((this.year <= 1987 && this.year > 1985) || this.year == 1983 || this.year == 1982) {
-            // name = 0, class = 2, home = 3, position = -1, club = -1
-            indexHometown = 1;
-            indexPosition = -1;
-            indexClub = -1;
+            // name = 0, class = 2, home = 3, event = -1, club = -1
+            hometownIndex = 1;
+            eventIndex = -1;
+            clubIndex = -1;
         } else if (this.year == 1985 || this.year == 1984) {
-            // name = 0, class = 1, home = 2, position = -1, club = -1
-            indexClass = 1;
-            indexHometown = 2;
-            indexPosition = -1;
-            indexClub = -1;
+            // name = 0, class = 1, home = 2, event = -1, club = -1
+            academicYearIndex = 1;
+            hometownIndex = 2;
+            eventIndex = -1;
+            clubIndex = -1;
         } else if ((this.year <= 1981 && this.year > 1978) || this.year == 1976) {
-            // name = 0, class = 2, home = 3, position = 4, club = -1
-            indexClub = -1;
+            // name = 0, class = 2, home = 3, event = 4, club = -1
+            clubIndex = -1;
         } else if (this.year == 1978) {
-            // name = 0, class = 2, home = 1, position = -1, club = -1
-            indexHometown = 1;
-            indexPosition = -1;
-            indexClub = -1;
+            // name = 0, class = 2, home = 1, event = -1, club = -1
+            hometownIndex = 1;
+            eventIndex = -1;
+            clubIndex = -1;
         } else if (this.year == 1977) {
-            // name = 0, class = 3, home = 2, position = -1, club = -1
-            indexClass = 3;
-            indexHometown = 2;
-            indexPosition = -1;
-            indexClub = -1;
+            // name = 0, class = 3, home = 2, event = -1, club = -1
+            academicYearIndex = 3;
+            hometownIndex = 2;
+            eventIndex = -1;
+            clubIndex = -1;
         } else if (this.year == 1975) {
-            // name = 0, class = 1, home = 2, position = -1, club = -1
-            indexClass = 1;
-            indexHometown = 2;
-            indexPosition = -1;
-            indexClub = -1;
+            // name = 0, class = 1, home = 2, event = -1, club = -1
+            academicYearIndex = 1;
+            hometownIndex = 2;
+            eventIndex = -1;
+            clubIndex = -1;
         }
 
         Elements cells = tableRowElement.select("td");
@@ -104,13 +104,13 @@ public class DenverScraper extends AbstractScraper {
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
 
-            String[] names = NameParser.parse(cells.get(indexName).text());
+            String[] names = NameParser.parse(cells.get(nameIndex).text());
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setCollegeClass(CollegeClass.find(cells.get(indexClass).text()));
+            athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
 
-            String location = cells.get(indexHometown).text();
+            String location = cells.get(hometownIndex).text();
             if (locationHasSlash) location = location.replace("/","");
             LocationParser locationParser = new LocationParser(location.trim());
             locationParser.parse();
@@ -118,12 +118,12 @@ public class DenverScraper extends AbstractScraper {
             athlete.setHomeState(locationParser.getState());
             athlete.setHomeCountry(locationParser.getCountry());
 
-            if (indexPosition >= 0) {
-                athlete.setPosition(PositionParser.parse(cells.get(indexPosition).text()));
+            if (eventIndex >= 0) {
+                athlete.setEvent(EventParser.parse(cells.get(eventIndex).text()));
             }
 
-            if (indexClub >= 0) {
-                athlete.setClub(cells.get(indexClub).text());
+            if (clubIndex >= 0) {
+                athlete.setClub(cells.get(clubIndex).text());
             }
         }
         return athlete;

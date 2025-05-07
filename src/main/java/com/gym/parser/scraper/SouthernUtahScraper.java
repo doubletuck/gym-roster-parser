@@ -1,11 +1,11 @@
 package com.gym.parser.scraper;
 
+import com.doubletuck.gym.common.model.AcademicYear;
+import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
-import com.gym.parser.model.College;
-import com.gym.parser.model.CollegeClass;
+import com.gym.parser.util.EventParser;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.NameParser;
-import com.gym.parser.util.PositionParser;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -50,18 +50,15 @@ public class SouthernUtahScraper extends AbstractScraper {
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
 
-        // 2025 - 2018
-        // name = 1, class = 2, position = 3, hometown = 5, club = 6
-        // 2017 - 1985
-        // name = 1, class = 4, position = 2, hometown = 5, club = -1
         int nameIndex = 1;
-        int positionIndex = 3;
-        int classIndex = 2;
+        int eventIndex = 3;
+        int academicYearIndex = 2;
         int hometownIndex = 5;
         int clubIndex = 6;
+
         if (this.year <= 2017) {
-            positionIndex = 2;
-            classIndex = 4;
+            eventIndex = 2;
+            academicYearIndex = 4;
             clubIndex = -1;
         }
 
@@ -75,8 +72,8 @@ public class SouthernUtahScraper extends AbstractScraper {
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setPosition(PositionParser.parse(cells.get(positionIndex).text()));
-            athlete.setCollegeClass(CollegeClass.find(cells.get(classIndex).text()));
+            athlete.setEvent(EventParser.parse(cells.get(eventIndex).text()));
+            athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
 
             if (clubIndex >= 0) {
                 athlete.setClub(cells.get(clubIndex).text().trim());

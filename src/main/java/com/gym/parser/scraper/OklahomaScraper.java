@@ -1,11 +1,11 @@
 package com.gym.parser.scraper;
 
+import com.doubletuck.gym.common.model.AcademicYear;
+import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
-import com.gym.parser.model.College;
-import com.gym.parser.model.CollegeClass;
+import com.gym.parser.util.EventParser;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.NameParser;
-import com.gym.parser.util.PositionParser;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -50,14 +50,14 @@ public class OklahomaScraper extends AbstractScraper {
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
         int nameIndex = 0;
-        int positionIndex = 1;
-        int classIndex = 3;
-        int locationIndex = 4;
+        int eventIndex = 1;
+        int academicYearIndex = 3;
+        int hometownIndex = 4;
 
         if (this.year <= 2022) {
-            positionIndex = -1;
-            classIndex = 2;
-            locationIndex = 3;
+            eventIndex = -1;
+            academicYearIndex = 2;
+            hometownIndex = 3;
         }
 
         Elements cells = tableRowElement.select("td");
@@ -70,20 +70,18 @@ public class OklahomaScraper extends AbstractScraper {
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            if (positionIndex >= 0) {
-                athlete.setPosition(PositionParser.parse(cells.get(positionIndex).text()));
+            if (eventIndex >= 0) {
+                athlete.setEvent(EventParser.parse(cells.get(eventIndex).text()));
             }
 
-            athlete.setCollegeClass(CollegeClass.find(cells.get(classIndex).text()));
+            athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
 
-            String hometownCell = cells.get(locationIndex).text();
-            if (!hometownCell.isBlank()) {
-                LocationParser locationParser = new LocationParser(hometownCell.trim().split("/")[0]);
-                locationParser.parse();
-                athlete.setHomeTown(locationParser.getTown());
-                athlete.setHomeState(locationParser.getState());
-                athlete.setHomeCountry(locationParser.getCountry());
-            }
+            String[] hometownCells = cells.get(hometownIndex).text().split("/");
+            LocationParser locationParser = new LocationParser(hometownCells.length > 0 ? hometownCells[0] : null);
+            locationParser.parse();
+            athlete.setHomeTown(locationParser.getTown());
+            athlete.setHomeState(locationParser.getState());
+            athlete.setHomeCountry(locationParser.getCountry());
         }
         return athlete;
     }

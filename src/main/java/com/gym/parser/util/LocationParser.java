@@ -1,7 +1,7 @@
 package com.gym.parser.util;
 
-import com.gym.parser.model.Country;
-import com.gym.parser.model.State;
+import com.doubletuck.gym.common.model.Country;
+import com.doubletuck.gym.common.model.State;
 import lombok.Getter;
 
 import java.util.Arrays;
