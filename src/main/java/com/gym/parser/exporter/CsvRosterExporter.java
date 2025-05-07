@@ -54,7 +54,7 @@ public class CsvRosterExporter {
                         athlete.getYear(),
                         athlete.getFirstName(),
                         athlete.getLastName(),
-                        athlete.getCollegeClass() == null ? null : athlete.getCollegeClass().name(),
+                        athlete.getAcademicYear() == null ? null : athlete.getAcademicYear().name(),
                         athlete.getHomeTown(),
                         athlete.getHomeState(),
                         athlete.getHomeCountry(),

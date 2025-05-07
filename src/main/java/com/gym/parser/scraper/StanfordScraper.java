@@ -1,8 +1,8 @@
 package com.gym.parser.scraper;
 
+import com.doubletuck.gym.common.model.AcademicYear;
 import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
-import com.gym.parser.model.CollegeClass;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.NameParser;
 import com.gym.parser.util.PositionParser;
@@ -47,7 +47,7 @@ public class StanfordScraper extends AbstractScraper {
         Athlete athlete = null;
         int nameIndex = 0;
         int positionIndex = 1;
-        int classIndex = 3;
+        int academicYearIndex = 3;
         int hometownIndex = 4;
 
         Elements cells = tableRowElement.select("th, td");
@@ -61,7 +61,7 @@ public class StanfordScraper extends AbstractScraper {
             athlete.setLastName(names[1]);
 
             athlete.setPosition(PositionParser.parse(cells.get(positionIndex).text()));
-            athlete.setCollegeClass(CollegeClass.find(cells.get(classIndex).text()));
+            athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
 
             LocationParser locationParser = new LocationParser(cells.get(hometownIndex).text());
             locationParser.parse();

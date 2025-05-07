@@ -1,8 +1,9 @@
 package com.gym.parser.scraper;
 
+import com.doubletuck.gym.common.model.AcademicYear;
 import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
-import com.gym.parser.model.CollegeClass;
+import com.doubletuck.gym.common.model.AcademicYear;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.NameParser;
 import com.gym.parser.util.PositionParser;
@@ -59,27 +60,24 @@ public class ArizonaScraper extends AbstractScraper {
 
         // 2025, 24, 23, 22, 21, 20, 19, 18
         // name = 2, position = 3, class = 4, hometown = 5, lastNameFirst = true
-        int indexName = 2;
-        int indexPosition = 3;
-        int indexClass = 4;
-        int indexHometown = 5;
-        boolean hometownWithHs = false;
+        int nameIndex = 2;
+        int positionIndex = 3;
+        int academicYearIndex = 4;
+        int hometownIndex = 5;
         boolean lastNameFirst = true;
         // 2017
         // name = 0, position = -1, class = 1, hometown = 2, lastNameFirst = true
         if (this.year == 2017) {
-            indexName = 0;
-            indexPosition = -1;
-            indexClass = 1;
-            indexHometown = 2;
-            hometownWithHs = true;
+            nameIndex = 0;
+            positionIndex = -1;
+            academicYearIndex = 1;
+            hometownIndex = 2;
         // 2016, 15, 14, 13, 12, 11, 10, 09
-        // name = 1, position = 2, class = 4, hometown = 5, lastNameFirst = false, hometownWithHs = true
+        // name = 1, position = 2, class = 4, hometown = 5, lastNameFirst = false
         } else if (this.year < 2017) {
-            indexName = 1;
-            indexPosition = 2;
+            nameIndex = 1;
+            positionIndex = 2;
             lastNameFirst = false;
-            hometownWithHs = true;
         }
 
         Elements cells = tableRowElement.select("td");
@@ -88,18 +86,18 @@ public class ArizonaScraper extends AbstractScraper {
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
 
-            String name = cells.get(indexName).text();
+            String name = cells.get(nameIndex).text();
             String[] names = lastNameFirst ? NameParser.parseLastNameFirst(name) : NameParser.parse(name);
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            if (indexPosition >= 0) {
-                athlete.setPosition(PositionParser.parse(cells.get(indexPosition).text()));
+            if (positionIndex >= 0) {
+                athlete.setPosition(PositionParser.parse(cells.get(positionIndex).text()));
             }
 
-            athlete.setCollegeClass(CollegeClass.find(cells.get(indexClass).text()));
+            athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
 
-            String[] hometown = cells.get(indexHometown).text().split("/");
+            String[] hometown = cells.get(hometownIndex).text().split("/");
             LocationParser locationParser = new LocationParser(hometown[0]);
             locationParser.parse();
             athlete.setHomeTown(locationParser.getTown());

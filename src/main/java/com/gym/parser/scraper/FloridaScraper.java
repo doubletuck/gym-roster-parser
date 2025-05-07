@@ -1,8 +1,8 @@
 package com.gym.parser.scraper;
 
+import com.doubletuck.gym.common.model.AcademicYear;
 import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
-import com.gym.parser.model.CollegeClass;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.NameParser;
 import com.gym.parser.util.PositionParser;
@@ -65,7 +65,7 @@ public class FloridaScraper extends AbstractScraper {
 
             athlete.setPosition(PositionParser.parse(cells.get(1).text()));
 
-            athlete.setCollegeClass(CollegeClass.find(cells.get(3).text()));
+            athlete.setAcademicYear(AcademicYear.find(cells.get(3).text()));
 
             String[] hometownClubCell = cells.get(4).text().split("/");
 

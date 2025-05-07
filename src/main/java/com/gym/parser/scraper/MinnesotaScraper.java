@@ -1,8 +1,8 @@
 package com.gym.parser.scraper;
 
+import com.doubletuck.gym.common.model.AcademicYear;
 import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
-import com.gym.parser.model.CollegeClass;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.NameParser;
 import org.jsoup.nodes.Document;
@@ -57,19 +57,19 @@ public class MinnesotaScraper extends AbstractScraper {
         // name = 1, class = 2, hometown = 4
 
         int nameIndex = 0;
-        int classIndex = 1;
+        int academicYearIndex = 1;
         int hometownIndex = 3;
 
         if (this.year <= 2017) {
             nameIndex = 1;
-            classIndex = 2;
+            academicYearIndex = 2;
             hometownIndex = 4;
         }
 
         Elements cells = tableRowElement.select("td");
 
         // Some rows have a single cell with an advertisement. Ignore these.
-        if (!cells.isEmpty() && cells.size() > 1) {
+        if (cells.size() > 1) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
@@ -78,7 +78,7 @@ public class MinnesotaScraper extends AbstractScraper {
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setCollegeClass(CollegeClass.find(cells.get(classIndex).text()));
+            athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
 
             LocationParser locationParser = new LocationParser(cells.get(hometownIndex).text());
             locationParser.parse();

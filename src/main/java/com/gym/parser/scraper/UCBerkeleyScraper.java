@@ -1,8 +1,8 @@
 package com.gym.parser.scraper;
 
+import com.doubletuck.gym.common.model.AcademicYear;
 import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
-import com.gym.parser.model.CollegeClass;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.NameParser;
 import com.gym.parser.util.PositionParser;
@@ -55,10 +55,10 @@ public class UCBerkeleyScraper extends AbstractScraper {
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
 
-        int indexName = this.year > 2019 ? 0 : 1;
-        int indexPosition = this.year > 2019 ? -1 : 2;
-        int indexClass = this. year > 2019 ? 1 : 4;
-        int indexHometownClub = this.year > 2019 ? 3 : 5;
+        int nameIndex = this.year > 2019 ? 0 : 1;
+        int positionIndex = this.year > 2019 ? -1 : 2;
+        int academicYearIndex = this. year > 2019 ? 1 : 4;
+        int hometownIndex = this.year > 2019 ? 3 : 5;
         boolean hometownHasClub = this.year > 2019;
 
         Elements cells = tableRowElement.select("td");
@@ -67,19 +67,18 @@ public class UCBerkeleyScraper extends AbstractScraper {
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
 
-            String[] names = NameParser.parse(cells.get(indexName).text());
+            String[] names = NameParser.parse(cells.get(nameIndex).text());
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            if (indexPosition >= 0) {
-                athlete.setPosition(PositionParser.parse(cells.get(indexPosition).text()));
+            if (positionIndex >= 0) {
+                athlete.setPosition(PositionParser.parse(cells.get(positionIndex).text()));
             }
 
-            athlete.setCollegeClass(CollegeClass.find(cells.get(indexClass).text()));
+            athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
 
-            String[] hometownClubCell = cells.get(indexHometownClub).text().split("/");
-
-            LocationParser locationParser = new LocationParser(hometownClubCell[0]);
+            String[] hometownClubCell = cells.get(hometownIndex).text().split("/");
+            LocationParser locationParser = new LocationParser(hometownClubCell.length > 0 ? hometownClubCell[0] : null);
             locationParser.parse();
             athlete.setHomeTown(locationParser.getTown());
             athlete.setHomeState(locationParser.getState());

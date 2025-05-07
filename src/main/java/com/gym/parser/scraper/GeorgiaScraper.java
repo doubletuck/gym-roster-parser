@@ -1,8 +1,8 @@
 package com.gym.parser.scraper;
 
+import com.doubletuck.gym.common.model.AcademicYear;
 import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
-import com.gym.parser.model.CollegeClass;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.NameParser;
 import com.gym.parser.util.PositionParser;
@@ -51,7 +51,7 @@ public class GeorgiaScraper extends AbstractScraper {
 
         int nameIndex = 0;
         int positionIndex = 1;
-        int classIndex = 2;
+        int academicYearIndex = 2;
         int hometownIndex = 4;
 
         if (this.year < 2023) {
@@ -69,7 +69,7 @@ public class GeorgiaScraper extends AbstractScraper {
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setCollegeClass(CollegeClass.find(cells.get(classIndex).text()));
+            athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
             athlete.setPosition(PositionParser.parse(cells.get(positionIndex).text()));
 
             String[] hometownHsCell = cells.get(hometownIndex).text().split("/");

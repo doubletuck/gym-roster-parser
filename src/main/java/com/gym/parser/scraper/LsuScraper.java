@@ -1,8 +1,8 @@
 package com.gym.parser.scraper;
 
+import com.doubletuck.gym.common.model.AcademicYear;
 import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
-import com.gym.parser.model.CollegeClass;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.PositionParser;
 import com.gym.parser.util.NameParser;
@@ -55,7 +55,7 @@ public class LsuScraper extends AbstractScraper{
             athlete.setLastName(names[1]);
 
             athlete.setPosition(PositionParser.parse(cells.get(1).text()));
-            athlete.setCollegeClass(CollegeClass.find(cells.get(3).text()));
+            athlete.setAcademicYear(AcademicYear.find(cells.get(3).text()));
             athlete.setClub(cells.get(5).text());
 
             LocationParser locationParser = new LocationParser(cells.get(6).text());

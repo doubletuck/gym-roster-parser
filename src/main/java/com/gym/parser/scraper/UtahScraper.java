@@ -1,8 +1,8 @@
 package com.gym.parser.scraper;
 
+import com.doubletuck.gym.common.model.AcademicYear;
 import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
-import com.gym.parser.model.CollegeClass;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.NameParser;
 import org.jsoup.nodes.Document;
@@ -55,12 +55,12 @@ public class UtahScraper extends AbstractScraper {
         Athlete athlete = null;
 
         int nameIndex = 0;
-        int classIndex = 2;
+        int academicYearIndex = 2;
         int locationIndex = 3;
 
         if (this.year < 2022) {
             nameIndex = 1;
-            classIndex = 3;
+            academicYearIndex = 3;
             locationIndex = 4;
         }
 
@@ -74,7 +74,7 @@ public class UtahScraper extends AbstractScraper {
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setCollegeClass(CollegeClass.find(cells.get(classIndex).text()));
+            athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
 
             String[] hometownHsCell = cells.get(locationIndex).text().split("/");
 

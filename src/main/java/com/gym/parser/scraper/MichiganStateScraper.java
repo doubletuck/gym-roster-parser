@@ -1,8 +1,8 @@
 package com.gym.parser.scraper;
 
+import com.doubletuck.gym.common.model.AcademicYear;
 import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
-import com.gym.parser.model.CollegeClass;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.NameParser;
 import com.gym.parser.util.PositionParser;
@@ -51,7 +51,7 @@ public class MichiganStateScraper extends AbstractScraper {
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
         int nameIndex = 0;
-        int classIndex = 2;
+        int academicYearIndex = 2;
         int hometownIndex = 3;
         int positionIndex = 4;
 
@@ -73,11 +73,8 @@ public class MichiganStateScraper extends AbstractScraper {
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setCollegeClass(CollegeClass.find(cells.get(classIndex).text()));
+            athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
 
-            // In 2017 and earlier, the Hometown and Previous School are not
-            // combined in a cell. Still using the split on "/" since it will
-            // return the full string if no "/" is found.
             String[] hometownCells = cells.get(hometownIndex).text().split("/");
             LocationParser locationParser = new LocationParser(hometownCells.length > 0 ? hometownCells[0] : null);
             locationParser.parse();

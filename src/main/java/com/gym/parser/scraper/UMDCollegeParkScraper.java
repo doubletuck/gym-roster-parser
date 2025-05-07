@@ -1,8 +1,8 @@
 package com.gym.parser.scraper;
 
+import com.doubletuck.gym.common.model.AcademicYear;
 import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
-import com.gym.parser.model.CollegeClass;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.NameParser;
 import com.gym.parser.util.PositionParser;
@@ -60,20 +60,20 @@ public class UMDCollegeParkScraper extends AbstractScraper {
         // name = 1, position = 2, class = 4, hometown = 5
         int nameIndex = 0;
         int positionIndex = -1;
-        int classIndex = 1;
+        int academicYearIndex = 1;
         int hometownIndex = 3;
         if (this.year == 2022) {
             positionIndex = 1;
-            classIndex = 3;
+            academicYearIndex = 3;
             hometownIndex = 5;
         } else if (this.year <= 2021 && this.year > 2017) {
             positionIndex = 1;
-            classIndex = 3;
+            academicYearIndex = 3;
             hometownIndex = 4;
         } else if (this.year <= 2017) {
             nameIndex = 1;
             positionIndex = 2;
-            classIndex = 4;
+            academicYearIndex = 4;
             hometownIndex = 5;
         }
 
@@ -91,7 +91,7 @@ public class UMDCollegeParkScraper extends AbstractScraper {
                 athlete.setPosition(PositionParser.parse(cells.get(positionIndex).text()));
             }
 
-            athlete.setCollegeClass(CollegeClass.find(cells.get(classIndex).text()));
+            athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
 
             String[] hometownCells = cells.get(hometownIndex).text().split("/");
             LocationParser locationParser = new LocationParser(hometownCells.length > 0 ? hometownCells[0] : null);

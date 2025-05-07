@@ -1,8 +1,8 @@
 package com.gym.parser.scraper;
 
+import com.doubletuck.gym.common.model.AcademicYear;
 import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
-import com.gym.parser.model.CollegeClass;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.NameParser;
 import com.gym.parser.util.PositionParser;
@@ -39,7 +39,6 @@ public class OregonStateScraper extends AbstractScraper {
                         this.year);
     }
 
-
     Document getPageDocument() {
         return getPageDocumentWithButtonClick();
     }
@@ -58,19 +57,19 @@ public class OregonStateScraper extends AbstractScraper {
 
         int nameIndex = 1;
         int positionIndex = 2;
-        int classIndex = 3;
+        int academicYearIndex = 3;
         int hometownIndex = 4;
         int clubIndex = 6;
 
         if (this.year <= 2017) {
             positionIndex = 3;
-            classIndex = 2;
+            academicYearIndex = 2;
             clubIndex = -1;
         }
 
         Elements cells = tableRowElement.select("td");
         // Some rows have a single cell with an advertisement. Ignore these.
-        if (!cells.isEmpty() && cells.size() > 1) {
+        if (cells.size() > 1) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
@@ -80,7 +79,7 @@ public class OregonStateScraper extends AbstractScraper {
             athlete.setLastName(names[1]);
 
             athlete.setPosition(PositionParser.parse(cells.get(positionIndex).text()));
-            athlete.setCollegeClass(CollegeClass.find(cells.get(classIndex).text()));
+            athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
 
             LocationParser locationParser = new LocationParser(cells.get(hometownIndex).text());
             locationParser.parse();
