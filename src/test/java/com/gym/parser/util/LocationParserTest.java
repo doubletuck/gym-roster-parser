@@ -1,6 +1,6 @@
 package com.gym.parser.util;
 
-import com.gym.parser.model.Country;
+import com.doubletuck.gym.common.model.Country;
 import com.gym.parser.model.State;
 import org.junit.jupiter.api.Test;
 
