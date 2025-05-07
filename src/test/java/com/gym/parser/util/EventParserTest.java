@@ -8,18 +8,18 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 public class EventParserTest {
 
     @Test
-    public void positionInputIsNull() {
+    public void EVENTInputIsNull() {
         assertNull(EventParser.parse(null));
     }
 
     @Test
-    public void positionInputIsEmpty() {
+    public void EVENTInputIsEmpty() {
         assertNull(EventParser.parse(""), "Empty string");
         assertNull(EventParser.parse("    "), "Empty string with many spaces");
     }
 
     @Test
-    public void positionReturnedInOlympicOrder() {
+    public void EVENTReturnedInOlympicOrder() {
         String expectedResult = "AA,VT,UB,BB,FX";
         assertEquals(expectedResult, EventParser.parse("AA, VT, UB, BB, FX"), "Order 1");
         assertEquals(expectedResult, EventParser.parse("VT, UB, BB, FX, AA"), "Order 2");
@@ -29,7 +29,7 @@ public class EventParserTest {
     }
 
     @Test
-    public void hasDuplicatePositions() {
+    public void hasDuplicateEVENTs() {
         assertEquals("UB,FX", EventParser.parse("FX, Floor, UB, Floor Exercise, Bars"), "");
     }
 
@@ -50,6 +50,6 @@ public class EventParserTest {
     @Test
     public void ignoresBogusValues() {
         assertEquals("UB,FX", EventParser.parse("BOGUS, FX, badder, BARS, BAD"), "Bogus values interspersed");
-        assertNull(EventParser.parse("This / Is / Bogus"), "No valid position values in delimited string");
+        assertNull(EventParser.parse("This / Is / Bogus"), "No valid EVENT values in delimited string");
     }
 }

@@ -20,9 +20,9 @@ public class CsvRosterExporter {
         COLLEGE_CODE_NAME,
         YEAR,
         FIRST_NAME, LAST_NAME,
-        COLLEGE_CLASS,
+        ACADEMIC_YEAR,
         HOME_TOWN, HOME_STATE, HOME_COUNTRY,
-        CLUB, POSITION;
+        CLUB, EVENT;
     }
 
     public static void writeToFile(Collection<Athlete> athletes, String fileName) throws IOException {
