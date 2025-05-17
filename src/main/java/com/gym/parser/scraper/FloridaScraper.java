@@ -53,20 +53,32 @@ public class FloridaScraper extends AbstractScraper {
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
 
+        int nameIndex = 0;
+        int eventIndex = 1;
+        int academicYearIndex = 3;
+        int hometownIndex = 4;
+
+        if (this.year <= 2014) {
+            nameIndex = 1;
+            eventIndex = 2;
+            academicYearIndex = 4;
+            hometownIndex = 5;
+        }
+
         Elements cells = tableRowElement.select("td");
         if (!cells.isEmpty()) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
 
-            String[] names = NameParser.parse(cells.get(0).text());
+            String[] names = NameParser.parse(cells.get(nameIndex).text());
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setEvent(EventParser.parse(cells.get(1).text()));
-            athlete.setAcademicYear(AcademicYear.find(cells.get(3).text()));
+            athlete.setEvent(EventParser.parse(cells.get(eventIndex).text()));
+            athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
 
-            String[] hometownClubCell = cells.get(4).text().split("/");
+            String[] hometownClubCell = cells.get(hometownIndex).text().split("/");
             LocationParser locationParser = new LocationParser(hometownClubCell.length > 0 ? hometownClubCell[0] : null);
             locationParser.parse();
             athlete.setHomeTown(locationParser.getTown());
