@@ -43,19 +43,31 @@ public class KentuckyScraper extends AbstractScraper {
 
     Athlete parseAthleteRow(Element row) {
         Athlete athlete = null;
+
+        int nameIndex = 0;
+        int academicYearIndex = 2;
+        int hometownIndex = 3;
+
+        if (this.year == 2018) {
+            academicYearIndex = 3;
+            hometownIndex = 4;
+        } else if (this.year <= 2015) {
+            hometownIndex = 4;
+        }
+
         Elements cells = row.select("td");
         if (!cells.isEmpty()) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
 
-            String[] names = NameParser.parse(cells.get(0).text());
+            String[] names = NameParser.parse(cells.get(nameIndex).text());
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setAcademicYear(AcademicYear.find(cells.get(2).text()));
+            athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
 
-            LocationParser locationParser = new LocationParser(cells.get(3).text());
+            LocationParser locationParser = new LocationParser(cells.get(hometownIndex).text());
             locationParser.parse();
             athlete.setHomeTown(locationParser.getTown());
             athlete.setHomeState(locationParser.getState());
