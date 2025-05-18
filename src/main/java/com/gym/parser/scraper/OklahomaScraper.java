@@ -54,10 +54,14 @@ public class OklahomaScraper extends AbstractScraper {
         int academicYearIndex = 3;
         int hometownIndex = 4;
 
-        if (this.year <= 2022) {
+        if (this.year <= 2022 && this.year > 2018) {
             eventIndex = -1;
             academicYearIndex = 2;
             hometownIndex = 3;
+        } else if(this.year <= 2018) {
+            nameIndex = 1;
+            eventIndex = 3;
+            academicYearIndex = 2;
         }
 
         Elements cells = tableRowElement.select("td");
