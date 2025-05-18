@@ -25,9 +25,14 @@ public class MissouriScraper extends AbstractScraper {
     }
 
     String buildRosterUrl() {
-        return String.format("%s/%d?view=2",
-                "https://mutigers.com/sports/womens-gymnastics/roster",
-                this.year);
+        return (this.year <= 2009 && this.year > 2006) ?
+                String.format("%s/%d-%02d?view=2",
+                        "https://mutigers.com/sports/womens-gymnastics/roster",
+                        this.year-1,
+                        this.year%100) :
+                String.format("%s/%d?view=2",
+                        "https://mutigers.com/sports/womens-gymnastics/roster",
+                        this.year);
     }
 
     Logger getLogger() {
@@ -53,21 +58,38 @@ public class MissouriScraper extends AbstractScraper {
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
 
+        int nameIndex = 0;
+        int academicYearIndex = 1;
+        int eventIndex = 3;
+        int hometownIndex = 4;
+
+        if (this.year == 2015) {
+            academicYearIndex = 2;
+            eventIndex = -1;
+            hometownIndex = 3;
+        } else if (this.year <= 2014) {
+            nameIndex = 1;
+            eventIndex = 2;
+            academicYearIndex = 4;
+            hometownIndex = 5;
+        }
+
         Elements cells = tableRowElement.select("td");
         if (!cells.isEmpty()) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
 
-            String[] names = NameParser.parse(cells.get(0).text());
+            String[] names = NameParser.parse(cells.get(nameIndex).text());
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setAcademicYear(AcademicYear.find(cells.get(1).text()));
+            athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
+            if (eventIndex >= 0) {
+                athlete.setEvent(EventParser.parse(cells.get(eventIndex).text()));
+            }
 
-            athlete.setEvent(EventParser.parse(cells.get(3).text()));
-
-            String[] hometownHsCell = cells.get(4).text().split("/");
+            String[] hometownHsCell = cells.get(hometownIndex).text().split("/");
 
             LocationParser locationParser = new LocationParser(hometownHsCell[0]);
             locationParser.parse();
