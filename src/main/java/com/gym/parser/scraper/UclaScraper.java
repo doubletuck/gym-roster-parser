@@ -48,25 +48,41 @@ public class UclaScraper extends AbstractScraper {
 
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
+        int nameIndex = 0;
+        int academicYearIndex = 2;
+        int hometownIndex = 3;
+        int clubIndex = 5;
+
+        if (this.year <= 2018 && this.year > 2015) {
+            clubIndex = -1;
+        } else if (this.year <= 2015) {
+            nameIndex = 1;
+            hometownIndex = 4;
+            clubIndex = -1;
+        }
+
         Elements cells = tableRowElement.select("td");
         if (!cells.isEmpty()) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
 
-            String[] names = NameParser.parse(cells.get(0).text());
+            String[] names = NameParser.parse(cells.get(nameIndex).text());
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setAcademicYear(AcademicYear.find(cells.get(2).text()));
+            athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
 
-            LocationParser locationParser = new LocationParser(cells.get(3).text());
+            String[] hometownCells = cells.get(hometownIndex).text().split("/");
+            LocationParser locationParser = new LocationParser(hometownCells.length > 0 ? hometownCells[0] : null);
             locationParser.parse();
             athlete.setHomeTown(locationParser.getTown());
             athlete.setHomeState(locationParser.getState());
             athlete.setHomeCountry(locationParser.getCountry());
 
-            athlete.setClub(cells.get(5).text());
+            if (clubIndex >= 0) {
+                athlete.setClub(cells.get(clubIndex).text());
+            }
         }
         return athlete;
     }
