@@ -58,9 +58,15 @@ public class UtahScraper extends AbstractScraper {
         int academicYearIndex = 2;
         int locationIndex = 3;
 
-        if (this.year < 2022) {
+        if (this.year < 2022 && this.year > 2019) {
             nameIndex = 1;
             academicYearIndex = 3;
+            locationIndex = 4;
+        } else if (this.year <= 2019 && this.year > 2016) {
+            getLogger().warn("{} - The {} roster in table format is not supported properly. Skipping parsing.", getCollege(), this.year);
+            return athlete;
+        } else if (this.year <= 2016) {
+            nameIndex = 1;
             locationIndex = 4;
         }
 
