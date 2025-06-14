@@ -49,6 +49,7 @@ public class RosterController {
             case ARIZONASTATE -> athletes = new ArizonaStateScraper(year).parseAthletes();
             case ARKANSAS -> athletes = new ArkansasScraper(year).parseAthletes();
             case AUBURN -> athletes = new AuburnScraper(year).parseAthletes();
+            case BRIGHAMYOUNG -> athletes  = new BrighamYoungScraper(year).parseAthletes();
             case CLEMSON -> athletes = new ClemsonScraper(year).parseAthletes();
             case DENVER -> athletes = new DenverScraper(year).parseAthletes();
             case FLORIDA -> athletes = new FloridaScraper(year).parseAthletes();
