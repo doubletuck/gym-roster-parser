@@ -11,11 +11,11 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class NCStateScraper extends AbstractScraper {
+public class NcStateScraper extends AbstractScraper {
 
-    private final static Logger logger = LoggerFactory.getLogger(NCStateScraper.class);
+    private final static Logger logger = LoggerFactory.getLogger(NcStateScraper.class);
 
-    public NCStateScraper(Integer year) {
+    public NcStateScraper(Integer year) {
         super(year);
     }
 
