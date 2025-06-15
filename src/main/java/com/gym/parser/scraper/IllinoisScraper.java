@@ -3,6 +3,7 @@ package com.gym.parser.scraper;
 import com.doubletuck.gym.common.model.AcademicYear;
 import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
+import com.gym.parser.util.EventParser;
 import com.gym.parser.util.LocationParser;
 import com.gym.parser.util.NameParser;
 import org.jsoup.nodes.Document;
@@ -11,75 +12,76 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UtahScraper extends AbstractScraper {
+public class IllinoisScraper extends AbstractScraper {
 
-    private final static Logger logger = LoggerFactory.getLogger(UtahScraper.class);
+    private final static Logger logger = LoggerFactory.getLogger(IllinoisScraper.class);
 
-    public UtahScraper(Integer year) {
+    public IllinoisScraper(Integer year) {
         super(year);
     }
 
     public College getCollege() {
-        return College.UTAH;
+        return College.ILLINOIS;
     }
 
     String buildRosterUrl() {
-        return (this.year < 2022) ?
-            String.format("%s/%d",
-                "https://utahutes.com/sports/womens-gymnastics/roster",
-                this.year) :
-            String.format("%s/%d-%02d",
-                "https://utahutes.com/sports/womens-gymnastics/roster",
-                this.year-1,
-                this.year%100);
+        return String.format("%s%d%s",
+                "https://fightingillini.com/sports/womens-gymnastics/roster/",
+                this.year,
+                "?view=2");
     }
 
     Logger getLogger() {
         return logger;
     }
 
-    Document getPageDocument() {
-        return getPageDocumentWithButtonClick();
-    }
-
     Elements selectAthleteTableRowsFromPage(Document document) {
-        Element table = document.selectFirst("div#rosterListPrint table");
-        if (table == null) {
-            return null;
+        Elements tables = document.select("table");
+        if (!tables.isEmpty()) {
+            for (Element table : tables) {
+                Element caption = table.selectFirst("caption");
+                if (caption != null && caption.text().toLowerCase().contains("gymnastics roster")) {
+                    return table.select("tbody tr");
+                }
+            }
         }
-
-        return table.select("tbody tr");
+        return null;
     }
 
-    Athlete parseAthleteRow(Element tableRowElement) {
+    Athlete parseAthleteRow(Element row) {
         Athlete athlete = null;
 
         int nameIndex = 0;
-        int academicYearIndex = 2;
-        int locationIndex = 3;
+        int academicYearIndex = 1;
+        int eventIndex = 3;
+        int locationIndex = 4;
+        boolean hasRandomNumberAfterName = this.year <= 2024 && this.year > 2016;
 
-        if (this.year < 2022 && this.year > 2019) {
+        if (this.year <= 2018 && this.year > 2016) {
+            eventIndex = 1;
+            academicYearIndex = 2;
+            locationIndex = 3;
+        } else if (this.year <= 2014) {
             nameIndex = 1;
-            academicYearIndex = 3;
-            locationIndex = 4;
-        } else if (this.year <= 2019 && this.year > 2016) {
-            getLogger().warn("{} - The {} roster in table format is not supported properly. Skipping parsing.", getCollege(), this.year);
-            return athlete;
-        } else if (this.year <= 2016) {
-            nameIndex = 1;
-            locationIndex = 4;
+            eventIndex = 2;
+            academicYearIndex = 4;
+            locationIndex = 5;
         }
 
-        Elements cells = tableRowElement.select("td");
+        Elements cells = row.select("th, td");
         if (!cells.isEmpty()) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
 
             String[] names = NameParser.parse(cells.get(nameIndex).text());
+            if (hasRandomNumberAfterName) {
+                names = NameParser.parse(names[0]);
+            }
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
+            athlete.setEvent(EventParser.parse(cells.get(eventIndex).text()));
             athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
 
             String[] hometownHsCell = cells.get(locationIndex).text().split("/");
