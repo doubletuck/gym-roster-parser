@@ -12,21 +12,21 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UNCChapelHillScraper extends AbstractScraper {
+public class UcDavisScraper extends AbstractScraper {
 
-    public final static Logger logger = LoggerFactory.getLogger(UNCChapelHillScraper.class);
+    public final static Logger logger = LoggerFactory.getLogger(UcDavisScraper.class);
 
-    public UNCChapelHillScraper(Integer year) {
+    public UcDavisScraper(Integer year) {
         super(year);
     }
 
     public College getCollege() {
-        return College.UNCCHAPELHILL;
+        return College.UCDAVIS;
     }
 
     String buildRosterUrl() {
-        return String.format("%s/%d",
-                "https://goheels.com/sports/womens-gymnastics/roster",
+        return String.format("%s/%d?view=2",
+                "https://ucdavisaggies.com/sports/womens-gymnastics/roster",
                 this.year);
     }
 
@@ -34,32 +34,34 @@ public class UNCChapelHillScraper extends AbstractScraper {
         return logger;
     }
 
-
-    Document getPageDocument() {
-        return getPageDocumentWithButtonClick();
-    }
-
     Elements selectAthleteTableRowsFromPage(Document document) {
-        Element table = document.selectFirst("div#rosterListPrint table");
-        if (table == null) {
-            return null;
+        Elements tables = document.select("table");
+        if (!tables.isEmpty()) {
+            for (Element table : tables) {
+                Element caption = table.selectFirst("caption");
+                if (caption != null && caption.text().toLowerCase().contains("gymnastics roster")) {
+                    return table.select("tbody tr");
+                }
+            }
         }
-
-        return table.select("tbody tr");
+        return null;
     }
 
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
 
         int nameIndex = 0;
-        int eventIndex = 1;
+        int eventIndex = -1;
         int academicYearIndex = 2;
         int hometownIndex = 3;
+        int clubIndex = 4;
 
-        if (this.year < 2017) {
+        if (this.year <= 2017) {
             nameIndex = 1;
-            eventIndex = 3;
-            hometownIndex = 4;
+            eventIndex = 2;
+            academicYearIndex = 4;
+            hometownIndex = 5;
+            clubIndex = -1;
         }
 
         Elements cells = tableRowElement.select("td");
@@ -72,11 +74,16 @@ public class UNCChapelHillScraper extends AbstractScraper {
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setEvent(EventParser.parse(cells.get(eventIndex).text()));
+            if (eventIndex != -1) {
+                athlete.setEvent(EventParser.parse(cells.get(eventIndex).text()));
+            }
+            if (clubIndex != -1) {
+                athlete.setClub(cells.get(clubIndex).text().trim());
+            }
             athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
 
-            String[] hometownCells = cells.get(hometownIndex).text().split("/");
-            LocationParser locationParser = new LocationParser(hometownCells.length > 0 ? hometownCells[0] : null);
+            String[] hometownClubCell = cells.get(hometownIndex).text().split("/");
+            LocationParser locationParser = new LocationParser(hometownClubCell.length > 0 ? hometownClubCell[0] : null);
             locationParser.parse();
             athlete.setHomeTown(locationParser.getTown());
             athlete.setHomeState(locationParser.getState());
@@ -84,4 +91,6 @@ public class UNCChapelHillScraper extends AbstractScraper {
         }
         return athlete;
     }
+
+
 }

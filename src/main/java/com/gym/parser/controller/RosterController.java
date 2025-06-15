@@ -64,17 +64,18 @@ public class RosterController {
             case MINNESOTA -> athletes = new MinnesotaScraper(year).parseAthletes();
             case MISSOURI -> athletes = new MissouriScraper(year).parseAthletes();
             case NEBRASKA -> athletes = new NebraskaScraper(year).parseAthletes();
-            case NCSTATE -> athletes = new NCStateScraper(year).parseAthletes();
+            case NCSTATE -> athletes = new NcStateScraper(year).parseAthletes();
             case OHIOSTATE -> athletes = new OhioStateScraper(year).parseAthletes();
             case OKLAHOMA -> athletes = new OklahomaScraper(year).parseAthletes();
             case OREGONSTATE -> athletes = new OregonStateScraper(year).parseAthletes();
             case PENNSTATE -> athletes = new PennStateScraper(year).parseAthletes();
             case SOUTHERNUTAH -> athletes = new SouthernUtahScraper(year).parseAthletes();
             case STANFORD -> athletes = new StanfordScraper(year).parseAthletes();
-            case UCBERKELEY -> athletes = new UCBerkeleyScraper(year).parseAthletes();
-            case UCLA -> athletes = new UclaScraper(year).parseAthletes();
-            case UMDCOLLEGEPARK -> athletes = new UMDCollegeParkScraper(year).parseAthletes();
-            case UNCCHAPELHILL -> athletes = new UNCChapelHillScraper(year).parseAthletes();
+            case UCBERKELEY -> athletes = new UcBerkeleyScraper(year).parseAthletes();
+            case UCDAVIS -> athletes = new UcDavisScraper(year).parseAthletes();
+            case UCLA -> athletes = new UcLosAngelesScraper(year).parseAthletes();
+            case UMDCOLLEGEPARK -> athletes = new UmdCollegeParkScraper(year).parseAthletes();
+            case UNCCHAPELHILL -> athletes = new UncChapelHillScraper(year).parseAthletes();
             case UTAH -> athletes = new UtahScraper(year).parseAthletes();
             case WESTVIRGINIA -> athletes = new WestVirginiaScraper(year).parseAthletes();
             default -> {
