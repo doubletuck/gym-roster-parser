@@ -76,6 +76,7 @@ public class RosterController {
             case UMDCOLLEGEPARK -> athletes = new UMDCollegeParkScraper(year).parseAthletes();
             case UNCCHAPELHILL -> athletes = new UNCChapelHillScraper(year).parseAthletes();
             case UTAH -> athletes = new UtahScraper(year).parseAthletes();
+            case WESTVIRGINIA -> athletes = new WestVirginiaScraper(year).parseAthletes();
             default -> {
                 logger.error("The given college '{}' is not supported.", college);
                 throw new RuntimeException(String.format("The given college '%s' is not supported.", college));
