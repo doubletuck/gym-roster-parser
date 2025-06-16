@@ -12,21 +12,22 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class WestVirginiaScraper extends AbstractScraper {
+public class RutgersScraper extends AbstractScraper {
 
-    public final static Logger logger = LoggerFactory.getLogger(WestVirginiaScraper.class);
+    public final static Logger logger = LoggerFactory.getLogger(RutgersScraper.class);
 
-    public WestVirginiaScraper(Integer year) {
+    public RutgersScraper(Integer year) {
         super(year);
     }
 
+    @Override
     public College getCollege() {
-        return College.WESTVIRGINIA;
+        return College.RUTGERS;
     }
 
     String buildRosterUrl() {
         return String.format("%s/%d?view=2",
-                "https://wvusports.com/sports/womens-gymnastics/roster",
+                "https://scarletknights.com/sports/womens-gymnastics/roster",
                 this.year);
     }
 
@@ -51,9 +52,18 @@ public class WestVirginiaScraper extends AbstractScraper {
         Athlete athlete = null;
 
         int nameIndex = 0;
-        int eventIndex = 1;
-        int academicYearIndex = 3;
-        int hometownIndex = 4;
+        int academicYearIndex = 1;
+        int hometownIndex = 2;
+        int eventIndex = 4;
+
+        if (this.year <= 2021  && this.year > 2017) {
+            eventIndex = -1;
+        } else if (this.year <= 2017) {
+            nameIndex = 1;
+            eventIndex = 2;
+            academicYearIndex = 4;
+            hometownIndex = 5;
+        }
 
         Elements cells = tableRowElement.select("td");
         if (!cells.isEmpty()) {
@@ -65,7 +75,9 @@ public class WestVirginiaScraper extends AbstractScraper {
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setEvent(EventParser.parse(cells.get(eventIndex).text()));
+            if (eventIndex != -1) {
+                athlete.setEvent(EventParser.parse(cells.get(eventIndex).text()));
+            }
             athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
 
             String[] hometownClubCell = cells.get(hometownIndex).text().split("/");
@@ -77,5 +89,4 @@ public class WestVirginiaScraper extends AbstractScraper {
         }
         return athlete;
     }
-
 }
