@@ -10,6 +10,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -85,8 +87,13 @@ public abstract class AbstractScraper {
 
             getLogger().info("{} - Clicking button id = `_viewType_table` to view table of athletes on the roster.", getCollege());
             WebElement tableViewButton = driver.findElement(By.id("_viewType_table"));
-            tableViewButton.click();
-
+            try {
+                tableViewButton.click();
+            } catch (ElementClickInterceptedException e) {
+                getLogger().warn("{} - An error occurred when clicking on button = `_viewType_table`. Switching to button click via JavascriptExecutor. Error = {}", getCollege(), e.getMessage());
+                JavascriptExecutor executor = (JavascriptExecutor) driver;
+                executor.executeScript("arguments[0].click();", tableViewButton);
+            }
             getLogger().info("{} - Pause 1000ms to make sure dynamic roster table loads prior to parsing it.", getCollege());
             Thread.sleep(1000);
 
@@ -105,7 +112,6 @@ public abstract class AbstractScraper {
 
         return Jsoup.parse(pageSource);
     }
-
 
     public abstract College getCollege();
     abstract String buildRosterUrl();
