@@ -44,6 +44,7 @@ public class RosterController {
     private List<Athlete> scrapeAthleteRosterFromWebsite(Integer year, College college) {
         List<Athlete> athletes;
         switch (college) {
+            case AIRFORCE -> athletes = new AirForceScraper(year).parseAthletes();
             case ALABAMA -> athletes = new AlabamaScraper(year).parseAthletes();
             case ARIZONA -> athletes = new ArizonaScraper(year).parseAthletes();
             case ARIZONASTATE -> athletes = new ArizonaStateScraper(year).parseAthletes();
