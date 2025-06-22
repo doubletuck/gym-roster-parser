@@ -12,21 +12,21 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class WashingtonScraper extends AbstractScraper {
+public class UpennScraper extends AbstractScraper {
 
-    public final static Logger logger = LoggerFactory.getLogger(WashingtonScraper.class);
+    public final static Logger logger = LoggerFactory.getLogger(UpennScraper.class);
 
-    public WashingtonScraper(Integer year) {
+    public UpennScraper(Integer year) {
         super(year);
     }
 
     public College getCollege() {
-        return College.WASHINGTON;
+        return College.UPENN;
     }
 
     String buildRosterUrl() {
         return String.format("%s/%d?view=2",
-                "https://gohuskies.com/sports/womens-gymnastics/roster",
+                "https://pennathletics.com/sports/womens-gymnastics/roster",
                 this.year);
     }
 
@@ -39,7 +39,7 @@ public class WashingtonScraper extends AbstractScraper {
         if (!tables.isEmpty()) {
             for (Element table : tables) {
                 Element caption = table.selectFirst("caption");
-                if (caption != null && caption.text().toLowerCase().contains("gymnastics roster")) {
+                if (caption != null && caption.text().toLowerCase().contains(this.year + " women's gymnastics")) {
                     return table.select("tbody tr");
                 }
             }
@@ -50,16 +50,16 @@ public class WashingtonScraper extends AbstractScraper {
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
 
-        int nameIndex = 1;
-        int eventIndex = 2;
-        int academicYearIndex = 4;
-        int hometownIndex = 5;
+        int nameIndex = 0;
+        int academicYearIndex = 1;
+        int eventIndex = -1;
+        int hometownIndex = 3;
 
-        if (this.year == 2019) {
-            nameIndex = 0;
-            academicYearIndex = 1;
-            hometownIndex = 2;
-            eventIndex = -1;
+        if (this.year <= 2018) {
+            nameIndex = 1;
+            eventIndex = 2;
+            academicYearIndex = 4;
+            hometownIndex = 5;
         }
 
         Elements cells = tableRowElement.select("td");
