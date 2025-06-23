@@ -77,6 +77,7 @@ public class RosterController {
             case RUTGERS -> athletes = new RutgersScraper(year).parseAthletes();
             case SOUTHERNUTAH -> athletes = new SouthernUtahScraper(year).parseAthletes();
             case STANFORD -> athletes = new StanfordScraper(year).parseAthletes();
+            case TOWSON -> athletes = new TowsonScraper(year).parseAthletes();
             case UCBERKELEY -> athletes = new UcBerkeleyScraper(year).parseAthletes();
             case UCDAVIS -> athletes = new UcDavisScraper(year).parseAthletes();
             case UCLA -> athletes = new UcLosAngelesScraper(year).parseAthletes();
