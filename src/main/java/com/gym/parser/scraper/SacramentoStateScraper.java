@@ -12,26 +12,21 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SanJoseStateScraper extends AbstractScraper {
+public class SacramentoStateScraper extends AbstractScraper {
 
-    public final static Logger logger = LoggerFactory.getLogger(SanJoseStateScraper.class);
+    public final static Logger logger = LoggerFactory.getLogger(SacramentoStateScraper.class);
 
-    public SanJoseStateScraper(Integer year) {
+    public SacramentoStateScraper(Integer year) {
         super(year);
     }
 
     public College getCollege() {
-        return College.SANJOSESTATE;
+        return College.SACRAMENTOSTATE;
     }
 
     String buildRosterUrl() {
-        return this.year <= 2021 && this.year >= 2019 ?
-                String.format("%s/%d-%02d?view=table",
-                        "https://sjsuspartans.com/sports/womens-gymnastics/roster/season",
-                        this.year-1,
-                        this.year%100) :
-                String.format("%s/%d?view=table",
-                        "https://sjsuspartans.com/sports/womens-gymnastics/roster/season",
+        return String.format("%s/%d?view=2",
+                        "https://hornetsports.com/sports/womens-gymnastics/roster",
                         this.year);
     }
 
@@ -42,21 +37,30 @@ public class SanJoseStateScraper extends AbstractScraper {
     Elements selectAthleteTableRowsFromPage(Document document) {
         Elements tables = document.select("table");
         if (!tables.isEmpty()) {
-            return tables.getFirst().select("tbody tr");
+            for (Element table : tables) {
+                Element caption = table.selectFirst("caption");
+                if (caption != null && caption.text().toLowerCase().contains("roster")) {
+                    return table.select("tbody tr");
+                }
+            }
         }
         return null;
-    }
+     }
 
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
 
         int nameIndex = 0;
-        int eventIndex = 1;
-        int academicYearIndex = 3;
+        int academicYearIndex = 1;
+        int clubIndex = 3;
         int hometownIndex = 4;
-        int clubIndex = 6;
+        int eventIndex = -1;
 
-        if (this.year <= 2016) {
+        if (this.year <= 2020) {
+            nameIndex = 1;
+            eventIndex = 2;
+            academicYearIndex = 4;
+            hometownIndex = 5;
             clubIndex = -1;
         }
 
@@ -70,7 +74,9 @@ public class SanJoseStateScraper extends AbstractScraper {
             athlete.setFirstName(names[0]);
             athlete.setLastName(names[1]);
 
-            athlete.setEvent(EventParser.parse(cells.get(eventIndex).text()));
+            if (eventIndex != -1) {
+                athlete.setEvent(EventParser.parse(cells.get(eventIndex).text()));
+            }
             athlete.setAcademicYear(AcademicYear.find(cells.get(academicYearIndex).text()));
             if (clubIndex != -1) {
                 athlete.setClub(cells.get(clubIndex).text().trim());
@@ -85,4 +91,5 @@ public class SanJoseStateScraper extends AbstractScraper {
         }
         return athlete;
     }
+
 }
