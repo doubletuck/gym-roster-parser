@@ -12,21 +12,26 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UcDavisScraper extends AbstractScraper {
+public class LiuScraper extends AbstractScraper {
 
-    public final static Logger logger = LoggerFactory.getLogger(UcDavisScraper.class);
+    public final static Logger logger = LoggerFactory.getLogger(LiuScraper.class);
 
-    public UcDavisScraper(Integer year) {
+    public LiuScraper(Integer year) {
         super(year);
     }
 
     public College getCollege() {
-        return College.UCDAVIS;
+        return College.LIU;
     }
 
     String buildRosterUrl() {
-        return String.format("%s/%d?view=2",
-                "https://ucdavisaggies.com/sports/womens-gymnastics/roster",
+        return (this.year <= 2022 && this.year >= 2021) ?
+            String.format("%s/%d-%02d?view=2",
+                "https://liuathletics.com/sports/womens-gymnastics/roster",
+                this.year-1,
+                this.year%100) :
+            String.format("%s/%d?view=2",
+                "https://liuathletics.com/sports/womens-gymnastics/roster",
                 this.year);
     }
 
@@ -50,22 +55,38 @@ public class UcDavisScraper extends AbstractScraper {
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
 
-        int nameIndex = 0;
-        int eventIndex = -1;
-        int academicYearIndex = 2;
-        int hometownIndex = 3;
-        int clubIndex = 4;
+        int nameIndex = 1;
+        int eventIndex = 2;
+        int academicYearIndex = 4;
+        int hometownIndex = 5;
+        int clubIndex = -1;
 
-        if (this.year <= 2017) {
-            nameIndex = 1;
-            eventIndex = 2;
-            academicYearIndex = 4;
-            hometownIndex = 5;
-            clubIndex = -1;
+        if (this.year == 2024) {
+            nameIndex = 0;
+            eventIndex = -1;
+            academicYearIndex = 1;
+            hometownIndex = 3;
+        } else if (this.year == 2023) {
+            nameIndex = 0;
+            eventIndex = 1;
+            academicYearIndex = 2;
+            hometownIndex = 4;
+        } else if (this.year == 2022) {
+            nameIndex = 0;
+            eventIndex = -1;
+            academicYearIndex = 2;
+            hometownIndex = 3;
+            clubIndex = 4;
+        } else if (this.year == 2021) {
+            nameIndex = 0;
+            eventIndex = -1;
+            academicYearIndex = 2;
+            hometownIndex = 3;
+            clubIndex = 4;
         }
 
         Elements cells = tableRowElement.select("td");
-        if (!cells.isEmpty()) {
+        if (cells.size() > 1) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
