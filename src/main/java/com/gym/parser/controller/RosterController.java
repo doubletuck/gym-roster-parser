@@ -61,6 +61,7 @@ public class RosterController {
             case GEORGEWASHINGTON -> athletes = new GeorgeWashingtonScraper(year).parseAthletes();
             case GEORGIA -> athletes = new GeorgiaScraper(year).parseAthletes();
             case ILLINOIS -> athletes = new IllinoisScraper(year).parseAthletes();
+            case ILLINOISSTATE -> athletes = new IllinoisStateScraper(year).parseAthletes();
             case IOWA -> athletes = new IowaScraper(year).parseAthletes();
             case IOWASTATE -> athletes = new IowaStateScraper(year).parseAthletes();
             case KENTSTATE -> athletes = new KentStateScraper(year).parseAthletes();
