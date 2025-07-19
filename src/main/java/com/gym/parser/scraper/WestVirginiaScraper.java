@@ -33,6 +33,7 @@ public class WestVirginiaScraper extends AbstractScraper {
     Logger getLogger() {
         return logger;
     }
+
     Elements selectAthleteTableRowsFromPage(Document document) {
         Elements tables = document.select("table");
         if (!tables.isEmpty()) {
