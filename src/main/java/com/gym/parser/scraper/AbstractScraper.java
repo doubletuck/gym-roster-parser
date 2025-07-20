@@ -41,8 +41,7 @@ public abstract class AbstractScraper {
         Document document = getPageDocument();
 
         Elements tableRowElements = selectAthleteTableRowsFromPage(document);
-        if (tableRowElements == null) {
-            getLogger().error("{} - The expected identifying DOM tableRowElements were not found when parsing for the athlete roster on the web page.", getCollege());
+        if (tableRowElements == null) {getLogger().error("{} - The expected identifying DOM tableRowElements were not found when parsing for the athlete roster on the web page.", getCollege());
             throw new RuntimeException("The web page could not be parsed as expected.");
         }
 
@@ -72,7 +71,24 @@ public abstract class AbstractScraper {
         return document;
     }
 
+    /**
+     * Override this in the scraper class if there is a selection element
+     * where an option needs to be selected prior to clicking a button
+     * that shows the grid view. This is used in conjunction with the
+     * #getPageDocumentWithButtonClick method.
+     *
+     * @param driver The WebDriver instance that is used to connect to
+     *               the roster web page. It is instantiated in the
+     *               #getPageDocumentWithButtonClick method.
+     */
+    void selectOptionOnPage(WebDriver driver) {
+    }
+
     Document getPageDocumentWithButtonClick() {
+        return getPageDocumentWithButtonClick("_viewType_table");
+    }
+
+    Document getPageDocumentWithButtonClick(String buttonId) {
         getLogger().info("{} - Using selenium chrome driver to access roster data because a button needs to be clicked to dynamically display the roster in a table format.", getCollege());
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
@@ -85,12 +101,14 @@ public abstract class AbstractScraper {
             getLogger().info("{} - Pause 2000ms to make sure web page is fully loaded.", getCollege());
             Thread.sleep(2000);
 
-            getLogger().info("{} - Clicking button id = `_viewType_table` to view table of athletes on the roster.", getCollege());
-            WebElement tableViewButton = driver.findElement(By.id("_viewType_table"));
+            selectOptionOnPage(driver);
+
+            getLogger().info("{} - Clicking button id = `{}` to view table of athletes on the roster.", getCollege(), buttonId);
+            WebElement tableViewButton = driver.findElement(By.id(buttonId));
             try {
                 tableViewButton.click();
             } catch (ElementClickInterceptedException e) {
-                getLogger().warn("{} - An error occurred when clicking on button = `_viewType_table`. Switching to button click via JavascriptExecutor. Error = {}", getCollege(), e.getMessage());
+                getLogger().warn("{} - An error occurred when clicking on button = `{}`. Switching to button click via JavascriptExecutor. Error = {}", getCollege(), buttonId, e.getMessage());
                 JavascriptExecutor executor = (JavascriptExecutor) driver;
                 executor.executeScript("arguments[0].click();", tableViewButton);
             }
