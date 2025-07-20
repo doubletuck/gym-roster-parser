@@ -9,6 +9,10 @@ import com.gym.parser.util.NameParser;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,13 +29,24 @@ public class UtahStateScraper extends AbstractScraper {
     }
 
     String buildRosterUrl() {
-        return String.format("%s/%d?view=2",
+        return String.format("%s/%d",
                 "https://utahstateaggies.com/sports/womens-gymnastics/roster",
                 this.year);
     }
 
     Logger getLogger() {
         return logger;
+    }
+
+    void selectOptionOnPage(WebDriver driver) {
+        getLogger().info("{} - Selecting the value `2` on the `sidearm-roster-select-template` drop-down element to get to the grid view.", getCollege());
+        WebElement dropdown = driver.findElement(By.id("sidearm-roster-select-template"));
+        Select select = new Select(dropdown);
+        select.selectByValue("2");
+    }
+
+    Document getPageDocument() {
+        return getPageDocumentWithButtonClick("sidearm-roster-select-template-button");
     }
 
     Elements selectAthleteTableRowsFromPage(Document document) {
@@ -54,6 +69,12 @@ public class UtahStateScraper extends AbstractScraper {
         int eventIndex = 2;
         int academicYearIndex = 3;
         int hometownIndex = 4;
+
+        if (this.year <= 2017) {
+            nameIndex = 1;
+            academicYearIndex = 4;
+            hometownIndex = 5;
+        }
 
         Elements cells = tableRowElement.select("td");
         if (cells.size() > 1) {
