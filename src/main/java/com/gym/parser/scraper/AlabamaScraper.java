@@ -55,7 +55,7 @@ public class AlabamaScraper extends AbstractScraper {
         int hometownIndex = 4;
 
         Elements cells = tableRowElement.select("td");
-        if (!cells.isEmpty()) {
+        if (cells.size() > 1) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);

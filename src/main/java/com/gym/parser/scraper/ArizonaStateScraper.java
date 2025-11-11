@@ -26,11 +26,11 @@ public class ArizonaStateScraper extends AbstractScraper {
 
     String buildRosterUrl() {
         return (this.year <= 2021) ?
-                String.format("%s/%d?view=2",
-                        "https://thesundevils.com/sports/womens-gymnastics/roster",
+                String.format("%s/%d?view=table",
+                        "https://thesundevils.com/sports/gymnastics/roster/season",
                         this.year) :
-                String.format("%s/%d-%02d?view=2",
-                        "https://thesundevils.com/sports/womens-gymnastics/roster",
+                String.format("%s/%d-%02d?view=table",
+                        "https://thesundevils.com/sports/gymnastics/roster/season",
                         this.year-1,
                         this.year%100);
     }
