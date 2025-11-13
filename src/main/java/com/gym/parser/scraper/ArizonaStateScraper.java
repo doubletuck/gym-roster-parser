@@ -42,12 +42,9 @@ public class ArizonaStateScraper extends AbstractScraper {
     Elements selectAthleteTableRowsFromPage(Document document) {
         Elements tables = document.select("table");
         if (!tables.isEmpty()) {
-            for (Element table : tables) {
-                Element caption = table.selectFirst("caption");
-                if (caption != null && caption.text().toLowerCase().contains("gymnastics roster")) {
-                    return table.select("tbody tr");
-                }
-            }
+            // The athlete roster table is always the first table on the page.
+            Element table = tables.first();
+            return table.select("tbody tr");
         }
         return null;
     }
@@ -55,19 +52,13 @@ public class ArizonaStateScraper extends AbstractScraper {
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
         int nameIndex = 0;
-        int eventIndex = 3;
-        int academicYearIndex = 5;
-        int hometownIndex = 1;
+        int eventIndex = 1;
+        int academicYearIndex = 3;
+        int hometownIndex = 4;
 
-        if (this.year <= 2021) {
-            nameIndex = 1;
-            eventIndex = 2;
-            academicYearIndex = 4;
-            hometownIndex = 5;
-        }
-
-        Elements cells = tableRowElement.select("td");
-        if (!cells.isEmpty()) {
+        Elements cells = tableRowElement.select("th, td");
+        // Ignore rows with advertisements
+        if (cells.size() > 1 ) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
