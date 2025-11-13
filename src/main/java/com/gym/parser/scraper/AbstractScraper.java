@@ -41,7 +41,8 @@ public abstract class AbstractScraper {
         Document document = getPageDocument();
 
         Elements tableRowElements = selectAthleteTableRowsFromPage(document);
-        if (tableRowElements == null) {getLogger().error("{} - The expected identifying DOM tableRowElements were not found when parsing for the athlete roster on the web page.", getCollege());
+        if (tableRowElements == null) {
+            getLogger().error("{} - The expected identifying DOM tableRowElements were not found when parsing for the athlete roster on the web page.", getCollege());
             throw new RuntimeException("The web page could not be parsed as expected.");
         }
 
