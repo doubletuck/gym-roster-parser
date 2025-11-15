@@ -37,12 +37,8 @@ public class EasternMichiganScraper extends AbstractScraper {
     Elements selectAthleteTableRowsFromPage(Document document) {
         Elements tables = document.select("table");
         if (!tables.isEmpty()) {
-            for (Element table : tables) {
-                Element caption = table.selectFirst("caption");
-                if (caption != null && caption.text().toLowerCase().contains("roster")) {
-                    return table.select("tbody tr");
-                }
-            }
+            Element table = tables.first();
+            return table.select("tbody tr");
         }
         return null;
     }
