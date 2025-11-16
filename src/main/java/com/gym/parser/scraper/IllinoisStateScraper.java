@@ -55,7 +55,12 @@ public class IllinoisStateScraper extends AbstractScraper {
         int eventIndex = 3;
         int academicYearIndex = 4;
         int hometownIndex = 5;
+        int clubIndex = -1;
         boolean lastNameFirst = true;
+
+        if (this.year > 2023) {
+            clubIndex = 6;
+        }
 
         if (this.year == 2013 || this.year == 2011) {
             eventIndex = 2;
@@ -90,6 +95,10 @@ public class IllinoisStateScraper extends AbstractScraper {
             athlete.setHomeTown(locationParser.getTown());
             athlete.setHomeState(locationParser.getState());
             athlete.setHomeCountry(locationParser.getCountry());
+
+            if (clubIndex != -1) {
+                athlete.setClub(cells.get(clubIndex).text());
+            }
         }
         return athlete;
     }
