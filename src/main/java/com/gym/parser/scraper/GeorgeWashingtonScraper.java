@@ -1,6 +1,5 @@
 package com.gym.parser.scraper;
 
-import ch.qos.logback.core.hook.ShutdownHook;
 import com.doubletuck.gym.common.model.AcademicYear;
 import com.doubletuck.gym.common.model.College;
 import com.gym.parser.model.Athlete;
@@ -45,7 +44,7 @@ public class GeorgeWashingtonScraper extends AbstractScraper {
             return null;
         }
 
-        return tables.get(0).select("tbody tr");
+        return tables.first().select("tbody tr");
     }
 
     Athlete parseAthleteRow(Element tableRowElement) {
@@ -62,8 +61,8 @@ public class GeorgeWashingtonScraper extends AbstractScraper {
             hometownIndex = 4;
         }
 
-        Elements cells = tableRowElement.select("td");
-        if (!cells.isEmpty()) {
+        Elements cells = tableRowElement.select("th, td");
+        if (cells.size() > 1) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
