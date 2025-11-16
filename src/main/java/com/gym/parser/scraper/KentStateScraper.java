@@ -36,15 +36,9 @@ public class KentStateScraper extends AbstractScraper {
     }
 
     Elements selectAthleteTableRowsFromPage(Document document) {
-        String captionText = String.format("%d-%02d gymnastics", this.year-1, this.year%100);
         Elements tables = document.select("table");
         if (!tables.isEmpty()) {
-            for (Element table : tables) {
-                Element caption = table.selectFirst("caption");
-                if (caption != null && caption.text().toLowerCase().contains(captionText)) {
-                    return table.select("tbody tr");
-                }
-            }
+            return tables.first().select("tbody tr");
         }
         return null;
     }
