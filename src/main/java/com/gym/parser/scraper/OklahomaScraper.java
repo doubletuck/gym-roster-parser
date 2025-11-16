@@ -64,8 +64,8 @@ public class OklahomaScraper extends AbstractScraper {
             academicYearIndex = 2;
         }
 
-        Elements cells = tableRowElement.select("td");
-        if (!cells.isEmpty()) {
+        Elements cells = tableRowElement.select("th, td");
+        if (cells.size() > 1) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
