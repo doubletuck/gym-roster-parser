@@ -61,8 +61,8 @@ public class UcBerkeleyScraper extends AbstractScraper {
         int hometownIndex = this.year > 2019 ? 3 : 5;
         boolean hometownHasClub = this.year > 2019;
 
-        Elements cells = tableRowElement.select("td");
-        if (!cells.isEmpty()) {
+        Elements cells = tableRowElement.select("th, td");
+        if (cells.size() > 1) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
