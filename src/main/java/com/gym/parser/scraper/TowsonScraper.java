@@ -72,7 +72,7 @@ public class TowsonScraper extends AbstractScraper {
             eventIndex = 2;
         }
 
-        Elements cells = tableRowElement.select("td");
+        Elements cells = tableRowElement.select("th, td");
         if (cells.size() > 1) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
