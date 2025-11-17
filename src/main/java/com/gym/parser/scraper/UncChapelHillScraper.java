@@ -25,7 +25,12 @@ public class UncChapelHillScraper extends AbstractScraper {
     }
 
     String buildRosterUrl() {
-        return String.format("%s/%d",
+        return (this.year >= 2026) ?
+            String.format("%s/%d-%02d",
+                "https://goheels.com/sports/womens-gymnastics/roster",
+                this.year-1,
+                this.year%100) :
+            String.format("%s/%d",
                 "https://goheels.com/sports/womens-gymnastics/roster",
                 this.year);
     }
@@ -62,8 +67,8 @@ public class UncChapelHillScraper extends AbstractScraper {
             hometownIndex = 4;
         }
 
-        Elements cells = tableRowElement.select("td");
-        if (!cells.isEmpty()) {
+        Elements cells = tableRowElement.select("th, td");
+        if (cells.size() > 1) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
