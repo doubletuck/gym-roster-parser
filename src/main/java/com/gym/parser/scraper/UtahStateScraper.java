@@ -29,7 +29,12 @@ public class UtahStateScraper extends AbstractScraper {
     }
 
     String buildRosterUrl() {
-        return String.format("%s/%d",
+        return (this.year >= 2026) ?
+            String.format("%s/%d-%02d",
+                "https://utahstateaggies.com/sports/womens-gymnastics/roster",
+                this.year-1,
+                this.year%100) :
+            String.format("%s/%d",
                 "https://utahstateaggies.com/sports/womens-gymnastics/roster",
                 this.year);
     }
@@ -76,7 +81,7 @@ public class UtahStateScraper extends AbstractScraper {
             hometownIndex = 5;
         }
 
-        Elements cells = tableRowElement.select("td");
+        Elements cells = tableRowElement.select("th, td");
         if (cells.size() > 1) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
