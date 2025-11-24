@@ -25,10 +25,16 @@ public class BrighamYoungScraper extends AbstractScraper {
     }
 
     String buildRosterUrl() {
-        return String.format("%s%d%s",
-                "https://byucougars.com/sports/womens-gymnastics/roster/season/",
-                this.year,
-                "?view=table");
+        return (this.year >= 2026) ?
+                String.format("%s%d-%02d%s",
+                        "https://byucougars.com/sports/womens-gymnastics/roster/season/",
+                        this.year - 1,
+                        this.year,
+                        "?view=table") :
+                String.format("%s%d%s",
+                        "https://byucougars.com/sports/womens-gymnastics/roster/season/",
+                        this.year,
+                        "?view=table");
     }
 
     Logger getLogger() {
@@ -48,12 +54,17 @@ public class BrighamYoungScraper extends AbstractScraper {
     Athlete parseAthleteRow(Element row) {
         Athlete athlete = null;
 
-        int nameIndex = 0;
-        int eventIndex = 1;
-        int academicYearIndex = 3;
-        int locationIndex = 4;
+        int nameIndex = 1;
+        int eventIndex = 2;
+        int academicYearIndex = 4;
+        int locationIndex = 5;
 
-        if (this.year <= 2022) {
+        if (this.year <= 2025 && this.year > 2022) {
+            nameIndex = 0;
+            eventIndex = 1;
+            academicYearIndex = 3;
+            locationIndex = 4;
+        } else if (this.year <= 2022) {
             nameIndex = 1;
             eventIndex = 2;
             academicYearIndex = 5;
@@ -61,7 +72,7 @@ public class BrighamYoungScraper extends AbstractScraper {
         }
 
         Elements cells = row.select("th, td");
-        if (!cells.isEmpty()) {
+        if (cells.size() > 1) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);

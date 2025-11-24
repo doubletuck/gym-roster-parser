@@ -25,7 +25,7 @@ public class WashingtonScraper extends AbstractScraper {
     }
 
     String buildRosterUrl() {
-        return String.format("%s/%d?view=2",
+        return String.format("%s/%d",
                 "https://gohuskies.com/sports/womens-gymnastics/roster",
                 this.year);
     }
@@ -34,26 +34,26 @@ public class WashingtonScraper extends AbstractScraper {
         return logger;
     }
 
+    Document getPageDocument() {
+        return getPageDocumentWithButtonClick();
+    }
+
     Elements selectAthleteTableRowsFromPage(Document document) {
-        Elements tables = document.select("table");
-        if (!tables.isEmpty()) {
-            for (Element table : tables) {
-                Element caption = table.selectFirst("caption");
-                if (caption != null && caption.text().toLowerCase().contains("gymnastics roster")) {
-                    return table.select("tbody tr");
-                }
-            }
+        Element table = document.selectFirst("div#rosterListPrint table");
+        if (table == null) {
+            return null;
         }
-        return null;
+
+        return table.select("tbody tr");
     }
 
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
 
         int nameIndex = 1;
-        int eventIndex = 2;
-        int academicYearIndex = 4;
-        int hometownIndex = 5;
+        int academicYearIndex = 2;
+        int eventIndex = 3;
+        int hometownIndex = 4;
 
         if (this.year == 2019) {
             nameIndex = 0;
@@ -62,7 +62,7 @@ public class WashingtonScraper extends AbstractScraper {
             eventIndex = -1;
         }
 
-        Elements cells = tableRowElement.select("td");
+        Elements cells = tableRowElement.select("th, td");
         if (cells.size() > 1) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());

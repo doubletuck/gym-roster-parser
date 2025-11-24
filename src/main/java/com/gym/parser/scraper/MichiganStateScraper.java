@@ -64,7 +64,7 @@ public class MichiganStateScraper extends AbstractScraper {
         }
 
         Elements cells = tableRowElement.select("td");
-        if (!cells.isEmpty()) {
+        if (cells.size() > 1) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);

@@ -35,17 +35,9 @@ public class FloridaScraper extends AbstractScraper {
     }
 
     Elements selectAthleteTableRowsFromPage(Document document) {
-        // There are multiple tables on the page with similar/same class
-        // values and no ids. Athlete roster does have a caption value.
-        // Using the caption to help identify the correct table.
         Elements tables = document.select("table");
         if (!tables.isEmpty()) {
-            for (Element table : tables) {
-                Element caption = table.selectFirst("caption");
-                if (caption != null && caption.text().toLowerCase().contains("gymnastics roster")) {
-                    return table.select("tbody tr");
-                }
-            }
+            return tables.first().select("tbody tr");
         }
         return null;
     }

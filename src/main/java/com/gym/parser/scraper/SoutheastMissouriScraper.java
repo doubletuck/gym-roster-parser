@@ -61,7 +61,7 @@ public class SoutheastMissouriScraper extends AbstractScraper {
         int hometownIndex = 4;
         int clubIndex = 5;
 
-        Elements cells = tableRowElement.select("td");
+        Elements cells = tableRowElement.select("th, td");
         if (cells.size() > 1) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());

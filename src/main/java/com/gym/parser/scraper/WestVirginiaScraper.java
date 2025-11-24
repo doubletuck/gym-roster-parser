@@ -36,15 +36,10 @@ public class WestVirginiaScraper extends AbstractScraper {
 
     Elements selectAthleteTableRowsFromPage(Document document) {
         Elements tables = document.select("table");
-        if (!tables.isEmpty()) {
-            for (Element table : tables) {
-                Element caption = table.selectFirst("caption");
-                if (caption != null && caption.text().toLowerCase().contains("gymnastics roster")) {
-                    return table.select("tbody tr");
-                }
-            }
+        if (tables.isEmpty()) {
+            return null;
         }
-        return null;
+        return tables.getFirst().select("tbody tr");
     }
 
     Athlete parseAthleteRow(Element tableRowElement) {
@@ -55,8 +50,8 @@ public class WestVirginiaScraper extends AbstractScraper {
         int academicYearIndex = 3;
         int hometownIndex = 4;
 
-        Elements cells = tableRowElement.select("td");
-        if (!cells.isEmpty()) {
+        Elements cells = tableRowElement.select("th, td");
+        if (cells.size() > 1) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);

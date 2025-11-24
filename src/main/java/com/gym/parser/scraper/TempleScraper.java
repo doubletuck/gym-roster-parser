@@ -25,9 +25,14 @@ public class TempleScraper extends AbstractScraper {
     }
 
     String buildRosterUrl() {
-        return String.format("%s/%d",
-                "https://owlsports.com/sports/womens-gymnastics/roster",
-                this.year);
+        return (this.year >= 2026) ?
+                String.format("%s/%d-%02d",
+                    "https://owlsports.com/sports/womens-gymnastics/roster",
+                    this.year-1,
+                    this.year%100) :
+                String.format("%s/%d",
+                    "https://owlsports.com/sports/womens-gymnastics/roster",
+                    this.year);
     }
 
     Logger getLogger() {
@@ -72,7 +77,7 @@ public class TempleScraper extends AbstractScraper {
             clubIndex = -1;
         }
 
-        Elements cells = tableRowElement.select("td");
+        Elements cells = tableRowElement.select("th, td");
         if (cells.size() > 1) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());

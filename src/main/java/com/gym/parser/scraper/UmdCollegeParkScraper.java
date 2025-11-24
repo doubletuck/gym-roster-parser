@@ -50,14 +50,6 @@ public class UmdCollegeParkScraper extends AbstractScraper {
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
 
-        // 2025 - 2023
-        // name = 0, event = -1, class = 1, hometown = 3
-        // 2022
-        // name = 0, event = 1, class = 3, hometown = 5
-        // 2021 - 2018
-        // name = 0, event = 1, class = 3, hometown = 4
-        // 2017 - 2007
-        // name = 1, event = 2, class = 4, hometown = 5
         int nameIndex = 0;
         int eventIndex = -1;
         int academicYearIndex = 1;
@@ -77,8 +69,8 @@ public class UmdCollegeParkScraper extends AbstractScraper {
             hometownIndex = 5;
         }
 
-        Elements cells = tableRowElement.select("td");
-        if (!cells.isEmpty()) {
+        Elements cells = tableRowElement.select("th, td");
+        if (cells.size() > 1) {
             athlete = new Athlete();
             athlete.setCollege(getCollege());
             athlete.setYear(this.year);
