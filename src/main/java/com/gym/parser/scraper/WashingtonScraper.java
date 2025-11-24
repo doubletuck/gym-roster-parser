@@ -46,18 +46,6 @@ public class WashingtonScraper extends AbstractScraper {
 
         return table.select("tbody tr");
     }
-//    Elements selectAthleteTableRowsFromPage(Document document) {
-//        Elements tables = document.select("table");
-//        if (!tables.isEmpty()) {
-//            for (Element table : tables) {
-//                Element caption = table.selectFirst("caption");
-//                if (caption != null && caption.text().toLowerCase().contains("gymnastics roster")) {
-//                    return table.select("tbody tr");
-//                }
-//            }
-//        }
-//        return null;
-//    }
 
     Athlete parseAthleteRow(Element tableRowElement) {
         Athlete athlete = null;
