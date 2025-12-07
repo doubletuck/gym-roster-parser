@@ -33,7 +33,7 @@ public class RosterController {
         File exportFile = new File(params.getFileName());
         List<Athlete> athletes = scrapeAthleteRosterFromWebsite(params.getYear(), params.getCollege());
         try {
-            CsvRosterExporter.writeToFile(athletes, exportFile);
+            CsvRosterExporter.writeToFile(athletes, exportFile, params.isOverwriteExistingFile());
         } catch (IOException e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
