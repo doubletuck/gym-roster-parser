@@ -9,4 +9,5 @@ public class ExportParameters {
     private College college;
     private Integer year;
     private String fileName;
+    private boolean overwriteExistingFile;
 }

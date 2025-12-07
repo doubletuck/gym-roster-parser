@@ -1,17 +1,17 @@
 COLLEGE_CODE_NAME,YEAR,FIRST_NAME,LAST_NAME,ACADEMIC_YEAR,HOME_TOWN,HOME_STATE,HOME_COUNTRY,CLUB,EVENT
-TOWSON,2016,Mary Elle,Arduino,,Albany,NY,USA,,
-TOWSON,2016,Cortni,Baker,,Andover,MA,USA,,
-TOWSON,2016,Lauren,Cahalan,,Reisterstown,MD,USA,,
-TOWSON,2016,Bayleigh,Fobes,,Howell,NJ,USA,,
-TOWSON,2016,Bailey,Gallagher,,Sinking Spring,PA,USA,,
-TOWSON,2016,Noelle,Harada,,Lake Zurich,IL,USA,,
-TOWSON,2016,Katie,McGrady,,Allison Park,PA,USA,,
-TOWSON,2016,Tyra,McKellar,,Frederick,MD,USA,,
-TOWSON,2016,Amanda,Pratt,,Abbottstown,PA,USA,,
-TOWSON,2016,Brittney,Ranti,,Silver Spring,MD,USA,,
-TOWSON,2016,Aysia,Sharif,,Springfield,MA,USA,,
-TOWSON,2016,Bridget,Steffen,,Chesapeake,VA,USA,,
-TOWSON,2016,Lydia,Thompson,,Bel Air,MD,USA,,
-TOWSON,2016,Erin,Tucker,,Staten Island,NY,USA,,
-TOWSON,2016,Vicki,Vesecky,,Leesburg,VA,USA,,
-TOWSON,2016,Gabriella,Yarussi,,Waxhaw,NC,USA,,
+TOWSON,2016,Mary Elle,Arduino,FR,Albany,NY,USA,,AA
+TOWSON,2016,Cortni,Baker,FR,Andover,MA,USA,,AA
+TOWSON,2016,Lauren,Cahalan,SO,Reisterstown,MD,USA,,AA
+TOWSON,2016,Bayleigh,Fobes,JR,Howell,NJ,USA,,AA
+TOWSON,2016,Bailey,Gallagher,JR,Sinking Spring,PA,USA,,AA
+TOWSON,2016,Noelle,Harada,SO,Lake Zurich,IL,USA,,AA
+TOWSON,2016,Katie,McGrady,SO,Allison Park,PA,USA,,AA
+TOWSON,2016,Tyra,McKellar,SO,Frederick,MD,USA,,AA
+TOWSON,2016,Amanda,Pratt,FR,Abbottstown,PA,USA,,AA
+TOWSON,2016,Brittney,Ranti,FR,Silver Spring,MD,USA,,AA
+TOWSON,2016,Aysia,Sharif,FR,Springfield,MA,USA,,AA
+TOWSON,2016,Bridget,Steffen,JR,Chesapeake,VA,USA,,AA
+TOWSON,2016,Lydia,Thompson,SR,Bel Air,MD,USA,,AA
+TOWSON,2016,Erin,Tucker,FR,Staten Island,NY,USA,,AA
+TOWSON,2016,Vicki,Vesecky,SR,Leesburg,VA,USA,,AA
+TOWSON,2016,Gabriella,Yarussi,SO,Waxhaw,NC,USA,,AA

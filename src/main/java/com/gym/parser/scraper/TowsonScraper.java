@@ -65,9 +65,9 @@ public class TowsonScraper extends AbstractScraper {
             eventIndex = 2;
             academicYearIndex = 4;
             hometownIndex = 5;
-        } else if (this.year <= 2023 && this.year > 2015) {
+        } else if (this.year <= 2023 && this.year > 2017) {
             academicYearIndex = 2;
-        } else if (this.year == 2015) {
+        } else if (this.year > 2014 && this.year <= 2017) {
             academicYearIndex = 1;
             eventIndex = 2;
         }

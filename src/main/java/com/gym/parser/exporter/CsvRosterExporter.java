@@ -25,20 +25,13 @@ public class CsvRosterExporter {
         CLUB, EVENT;
     }
 
-    public static void writeToFile(Collection<Athlete> athletes, String fileName) throws IOException {
-        if (fileName == null || fileName.isEmpty()) {
-            throw new IllegalArgumentException("A file name must be provided to export the roster.");
-        }
-        writeToFile(athletes, new File(fileName));
-    }
-
-    public static void writeToFile(Collection<Athlete> athletes, File file) throws IOException {
+    public static void writeToFile(Collection<Athlete> athletes, File file, boolean overwriteExistingFile) throws IOException {
         if (file == null) {
             throw new IllegalArgumentException("A file path and name must be provided to export the roster.");
         }
 
-        if (file.exists()) {
-            throw new IOException(String.format("The file '%s' already exists. Cannot proceed with the export to avoid overwriting the existing file.", file.getAbsolutePath()));
+        if (!overwriteExistingFile && file.exists()) {
+            throw new IOException(String.format("The file '%s' already exists. Terminating the export to avoid overwriting the existing file.", file.getAbsolutePath()));
         }
 
         try {
