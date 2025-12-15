@@ -1,9 +1,9 @@
 # Local Development Environment
-This document provide steps for setting up a development environment for developing and running this module locally.
+This document provides steps for setting up a development environment for developing and running this module locally.
 
 
 ## Prerequisites
-Refer to [Development Setup](docs/development-setup.md) for prerequisite software and local environment setup information.
+Refer to [Development Setup](development-setup.md) for prerequisite software and local environment setup information.
 
 ## Installing
 ```text
