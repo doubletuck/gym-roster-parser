@@ -94,6 +94,7 @@ public class RosterController {
             case SOUTHEASTMISSOURI -> athletes = new SoutheastMissouriScraper(year).parseAthletes();
             case SOUTHERNUTAH -> athletes = new SouthernUtahScraper(year).parseAthletes();
             case STANFORD -> athletes = new StanfordScraper(year).parseAthletes();
+            case TEXASWOMANS -> athletes = new TexasWomansScraper(year).parseAthletes();
             case TEMPLE -> athletes = new TempleScraper(year).parseAthletes();
             case TOWSON -> athletes = new TowsonScraper(year).parseAthletes();
             case UCBERKELEY -> athletes = new UcBerkeleyScraper(year).parseAthletes();
