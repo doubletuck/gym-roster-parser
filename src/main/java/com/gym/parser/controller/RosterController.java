@@ -106,6 +106,7 @@ public class RosterController {
             case UTAH -> athletes = new UtahScraper(year).parseAthletes();
             case UTAHSTATE -> athletes = new UtahStateScraper(year).parseAthletes();
             case WASHINGTON -> athletes = new WashingtonScraper(year).parseAthletes();
+            case WESTCHESTER -> athletes = new WestChesterScraper(year).parseAthletes();
             case WESTERNMICHIGAN -> athletes = new WesternMichiganScraper(year).parseAthletes();
             case WESTVIRGINIA -> athletes = new WestVirginiaScraper(year).parseAthletes();
             case WILLIAMMARY -> athletes = new WilliamMaryScraper(year).parseAthletes();
